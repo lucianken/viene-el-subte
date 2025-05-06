@@ -1,0 +1,668 @@
+{
+  "1076S": [
+    "LineaA"
+  ],
+  "1075S": [
+    "LineaA"
+  ],
+  "1074S": [
+    "LineaA"
+  ],
+  "1073S": [
+    "LineaA"
+  ],
+  "1072S": [
+    "LineaA"
+  ],
+  "1071S": [
+    "LineaA"
+  ],
+  "1069S": [
+    "LineaA"
+  ],
+  "1068S": [
+    "LineaA"
+  ],
+  "1067S": [
+    "LineaA"
+  ],
+  "1066S": [
+    "LineaA"
+  ],
+  "1065S": [
+    "LineaA"
+  ],
+  "1064S": [
+    "LineaA"
+  ],
+  "1063S": [
+    "LineaA"
+  ],
+  "1062S": [
+    "LineaA"
+  ],
+  "1061S": [
+    "LineaA"
+  ],
+  "1060S": [
+    "LineaA"
+  ],
+  "1059S": [
+    "LineaA"
+  ],
+  "1059N": [
+    "LineaA"
+  ],
+  "1060N": [
+    "LineaA"
+  ],
+  "1061N": [
+    "LineaA"
+  ],
+  "1062N": [
+    "LineaA"
+  ],
+  "1063N": [
+    "LineaA"
+  ],
+  "1064N": [
+    "LineaA"
+  ],
+  "1065N": [
+    "LineaA"
+  ],
+  "1066N": [
+    "LineaA"
+  ],
+  "1067N": [
+    "LineaA"
+  ],
+  "1068N": [
+    "LineaA"
+  ],
+  "1070N": [
+    "LineaA"
+  ],
+  "1071N": [
+    "LineaA"
+  ],
+  "1072N": [
+    "LineaA"
+  ],
+  "1073N": [
+    "LineaA"
+  ],
+  "1074N": [
+    "LineaA"
+  ],
+  "1075N": [
+    "LineaA"
+  ],
+  "1076N": [
+    "LineaA"
+  ],
+  "1093S": [
+    "LineaB"
+  ],
+  "1092S": [
+    "LineaB"
+  ],
+  "1091S": [
+    "LineaB"
+  ],
+  "1090S": [
+    "LineaB"
+  ],
+  "1089S": [
+    "LineaB"
+  ],
+  "1088S": [
+    "LineaB"
+  ],
+  "1087S": [
+    "LineaB"
+  ],
+  "1086S": [
+    "LineaB"
+  ],
+  "1085S": [
+    "LineaB"
+  ],
+  "1083S": [
+    "LineaB"
+  ],
+  "1084S": [
+    "LineaB"
+  ],
+  "1082S": [
+    "LineaB"
+  ],
+  "1081S": [
+    "LineaB"
+  ],
+  "1080S": [
+    "LineaB"
+  ],
+  "1079S": [
+    "LineaB"
+  ],
+  "1078S": [
+    "LineaB"
+  ],
+  "1077S": [
+    "LineaB"
+  ],
+  "1077N": [
+    "LineaB"
+  ],
+  "1078N": [
+    "LineaB"
+  ],
+  "1079N": [
+    "LineaB"
+  ],
+  "1080N": [
+    "LineaB"
+  ],
+  "1081N": [
+    "LineaB"
+  ],
+  "1082N": [
+    "LineaB"
+  ],
+  "1084N": [
+    "LineaB"
+  ],
+  "1083N": [
+    "LineaB"
+  ],
+  "1085N": [
+    "LineaB"
+  ],
+  "1086N": [
+    "LineaB"
+  ],
+  "1087N": [
+    "LineaB"
+  ],
+  "1088N": [
+    "LineaB"
+  ],
+  "1089N": [
+    "LineaB"
+  ],
+  "1090N": [
+    "LineaB"
+  ],
+  "1091N": [
+    "LineaB"
+  ],
+  "1092N": [
+    "LineaB"
+  ],
+  "1093N": [
+    "LineaB"
+  ],
+  "1102E": [
+    "LineaC"
+  ],
+  "1101E": [
+    "LineaC"
+  ],
+  "1100E": [
+    "LineaC"
+  ],
+  "1099E": [
+    "LineaC"
+  ],
+  "1098E": [
+    "LineaC"
+  ],
+  "1097E": [
+    "LineaC"
+  ],
+  "1096E": [
+    "LineaC"
+  ],
+  "1095E": [
+    "LineaC"
+  ],
+  "1094E": [
+    "LineaC"
+  ],
+  "1094O": [
+    "LineaC"
+  ],
+  "1095O": [
+    "LineaC"
+  ],
+  "1096O": [
+    "LineaC"
+  ],
+  "1097O": [
+    "LineaC"
+  ],
+  "1098O": [
+    "LineaC"
+  ],
+  "1099O": [
+    "LineaC"
+  ],
+  "1100O": [
+    "LineaC"
+  ],
+  "1101O": [
+    "LineaC"
+  ],
+  "1102O": [
+    "LineaC"
+  ],
+  "1118S": [
+    "LineaD"
+  ],
+  "1117S": [
+    "LineaD"
+  ],
+  "1116S": [
+    "LineaD"
+  ],
+  "1115S": [
+    "LineaD"
+  ],
+  "1114S": [
+    "LineaD"
+  ],
+  "1113S": [
+    "LineaD"
+  ],
+  "1112S": [
+    "LineaD"
+  ],
+  "1111S": [
+    "LineaD"
+  ],
+  "1110S": [
+    "LineaD"
+  ],
+  "1109S": [
+    "LineaD"
+  ],
+  "1108S": [
+    "LineaD"
+  ],
+  "1107S": [
+    "LineaD"
+  ],
+  "1106S": [
+    "LineaD"
+  ],
+  "1105S": [
+    "LineaD"
+  ],
+  "1104S": [
+    "LineaD"
+  ],
+  "1103S": [
+    "LineaD"
+  ],
+  "1103N": [
+    "LineaD"
+  ],
+  "1104N": [
+    "LineaD"
+  ],
+  "1105N": [
+    "LineaD"
+  ],
+  "1106N": [
+    "LineaD"
+  ],
+  "1107N": [
+    "LineaD"
+  ],
+  "1108N": [
+    "LineaD"
+  ],
+  "1109N": [
+    "LineaD"
+  ],
+  "1110N": [
+    "LineaD"
+  ],
+  "1111N": [
+    "LineaD"
+  ],
+  "1112N": [
+    "LineaD"
+  ],
+  "1113N": [
+    "LineaD"
+  ],
+  "1114N": [
+    "LineaD"
+  ],
+  "1115N": [
+    "LineaD"
+  ],
+  "1116N": [
+    "LineaD"
+  ],
+  "1117N": [
+    "LineaD"
+  ],
+  "1118N": [
+    "LineaD"
+  ],
+  "1164S": [
+    "LineaE"
+  ],
+  "1165S": [
+    "LineaE"
+  ],
+  "1166S": [
+    "LineaE"
+  ],
+  "1119S": [
+    "LineaE"
+  ],
+  "1120S": [
+    "LineaE"
+  ],
+  "1121S": [
+    "LineaE"
+  ],
+  "1122S": [
+    "LineaE"
+  ],
+  "1123S": [
+    "LineaE"
+  ],
+  "1124S": [
+    "LineaE"
+  ],
+  "1125S": [
+    "LineaE"
+  ],
+  "1126S": [
+    "LineaE"
+  ],
+  "1127S": [
+    "LineaE"
+  ],
+  "1128S": [
+    "LineaE"
+  ],
+  "1129S": [
+    "LineaE"
+  ],
+  "1130S": [
+    "LineaE"
+  ],
+  "1131S": [
+    "LineaE"
+  ],
+  "1132S": [
+    "LineaE"
+  ],
+  "1133S": [
+    "LineaE"
+  ],
+  "1133N": [
+    "LineaE"
+  ],
+  "1132N": [
+    "LineaE"
+  ],
+  "1131N": [
+    "LineaE"
+  ],
+  "1130N": [
+    "LineaE"
+  ],
+  "1129N": [
+    "LineaE"
+  ],
+  "1128N": [
+    "LineaE"
+  ],
+  "1127N": [
+    "LineaE"
+  ],
+  "1126N": [
+    "LineaE"
+  ],
+  "1125N": [
+    "LineaE"
+  ],
+  "1124N": [
+    "LineaE"
+  ],
+  "1123N": [
+    "LineaE"
+  ],
+  "1122N": [
+    "LineaE"
+  ],
+  "1121N": [
+    "LineaE"
+  ],
+  "1120N": [
+    "LineaE"
+  ],
+  "1119N": [
+    "LineaE"
+  ],
+  "1166N": [
+    "LineaE"
+  ],
+  "1165N": [
+    "LineaE"
+  ],
+  "1164N": [
+    "LineaE"
+  ],
+  "1163E": [
+    "LineaH"
+  ],
+  "1162E": [
+    "LineaH"
+  ],
+  "1161E": [
+    "LineaH"
+  ],
+  "1160E": [
+    "LineaH"
+  ],
+  "1141E": [
+    "LineaH"
+  ],
+  "1140E": [
+    "LineaH"
+  ],
+  "1139E": [
+    "LineaH"
+  ],
+  "1138E": [
+    "LineaH"
+  ],
+  "1137E": [
+    "LineaH"
+  ],
+  "1136E": [
+    "LineaH"
+  ],
+  "1135E": [
+    "LineaH"
+  ],
+  "1134E": [
+    "LineaH"
+  ],
+  "1134O": [
+    "LineaH"
+  ],
+  "1135O": [
+    "LineaH"
+  ],
+  "1136O": [
+    "LineaH"
+  ],
+  "1137O": [
+    "LineaH"
+  ],
+  "1138O": [
+    "LineaH"
+  ],
+  "1139O": [
+    "LineaH"
+  ],
+  "1140O": [
+    "LineaH"
+  ],
+  "1141O": [
+    "LineaH"
+  ],
+  "1160O": [
+    "LineaH"
+  ],
+  "1161O": [
+    "LineaH"
+  ],
+  "1162O": [
+    "LineaH"
+  ],
+  "1163O": [
+    "LineaH"
+  ],
+  "1142N": [
+    "PM-Civico",
+    "PM-Savio"
+  ],
+  "1143N": [
+    "PM-Civico",
+    "PM-Savio"
+  ],
+  "1144N": [
+    "PM-Civico",
+    "PM-Savio"
+  ],
+  "1145N": [
+    "PM-Civico",
+    "PM-Savio"
+  ],
+  "1146N": [
+    "PM-Civico",
+    "PM-Savio"
+  ],
+  "1147N": [
+    "PM-Civico",
+    "PM-Savio"
+  ],
+  "1148N": [
+    "PM-Civico",
+    "PM-Savio"
+  ],
+  "1149N": [
+    "PM-Civico",
+    "PM-Savio"
+  ],
+  "1150N": [
+    "PM-Civico",
+    "PM-Savio"
+  ],
+  "1151N": [
+    "PM-Civico",
+    "PM-Savio"
+  ],
+  "1152N": [
+    "PM-Civico",
+    "PM-Savio"
+  ],
+  "1153N": [
+    "PM-Civico",
+    "PM-Savio"
+  ],
+  "1154N": [
+    "PM-Civico"
+  ],
+  "1155N": [
+    "PM-Civico"
+  ],
+  "1155S": [
+    "PM-Civico"
+  ],
+  "1154S": [
+    "PM-Civico"
+  ],
+  "1153S": [
+    "PM-Civico",
+    "PM-Savio"
+  ],
+  "1152S": [
+    "PM-Civico",
+    "PM-Savio"
+  ],
+  "1151S": [
+    "PM-Civico",
+    "PM-Savio"
+  ],
+  "1150S": [
+    "PM-Civico",
+    "PM-Savio"
+  ],
+  "1149S": [
+    "PM-Civico",
+    "PM-Savio"
+  ],
+  "1148S": [
+    "PM-Civico",
+    "PM-Savio"
+  ],
+  "1147S": [
+    "PM-Civico",
+    "PM-Savio"
+  ],
+  "1146S": [
+    "PM-Civico",
+    "PM-Savio"
+  ],
+  "1145S": [
+    "PM-Civico",
+    "PM-Savio"
+  ],
+  "1144S": [
+    "PM-Civico",
+    "PM-Savio"
+  ],
+  "1143S": [
+    "PM-Civico",
+    "PM-Savio"
+  ],
+  "1142S": [
+    "PM-Civico",
+    "PM-Savio"
+  ],
+  "1156N": [
+    "PM-Savio"
+  ],
+  "1157N": [
+    "PM-Savio"
+  ],
+  "1158N": [
+    "PM-Savio"
+  ],
+  "1159N": [
+    "PM-Savio"
+  ],
+  "1159S": [
+    "PM-Savio"
+  ],
+  "1158S": [
+    "PM-Savio"
+  ],
+  "1157S": [
+    "PM-Savio"
+  ],
+  "1156S": [
+    "PM-Savio"
+  ]
+}

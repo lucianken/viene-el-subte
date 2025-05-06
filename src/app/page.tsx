@@ -1,103 +1,174 @@
-import Image from "next/image";
+"use client";
+
+import { useState, useEffect } from 'react';
+import LineSelector from '@/components/LineSelector';
+import StopSelector from '@/components/StopSelector';
+import DirectionSelector from '@/components/DirectionSelector';
+import ArrivalsView from '@/components/ArrivalsView';
+import SearchBar from '@/components/SearchBar';
+import { Route, Stop } from '@/types';
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+  const [routes, setRoutes] = useState<Route[]>([]);
+  const [selectedRoute, setSelectedRoute] = useState<Route | null>(null);
+  const [selectedStop, setSelectedStop] = useState<Stop | null>(null);
+  const [selectedDirection, setSelectedDirection] = useState<string | null>(null);
+  const [searchActive, setSearchActive] = useState(false);
+  const [loading, setLoading] = useState(true);
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+  // Cargar rutas al inicio
+  useEffect(() => {
+    async function fetchRoutes() {
+      try {
+        const response = await fetch('/api/routes');
+        if (!response.ok) throw new Error('Error al cargar rutas');
+        const data = await response.json();
+        setRoutes(data);
+        setLoading(false);
+      } catch (error) {
+        console.error('Error fetching routes:', error);
+        setLoading(false);
+      }
+    }
+
+    fetchRoutes();
+  }, []);
+
+  // Resetear selecciones cuando cambia la ruta
+  useEffect(() => {
+    setSelectedStop(null);
+    setSelectedDirection(null);
+  }, [selectedRoute]);
+
+  // Resetear dirección cuando cambia la parada
+  useEffect(() => {
+    setSelectedDirection(null);
+  }, [selectedStop]);
+
+  const handleSearchSelect = (stop: Stop, route: Route, direction: string) => {
+    setSelectedRoute(route);
+    setSelectedStop(stop);
+    setSelectedDirection(direction);
+    setSearchActive(false);
+  };
+
+  return (
+    <main className="min-h-screen bg-gray-100">
+      <header className="bg-blue-600 text-white p-4 shadow-md">
+        <div className="max-w-5xl mx-auto flex justify-between items-center">
+          <h1 className="text-2xl font-bold">¿Dónde está el subte?</h1>
+          <button 
+            onClick={() => setSearchActive(!searchActive)}
+            className="px-4 py-2 bg-white text-blue-600 rounded-full font-medium flex items-center"
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            </svg>
+            Buscar
+          </button>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
+      </header>
+
+      <div className="max-w-5xl mx-auto p-4">
+        {searchActive && (
+          <div className="mb-6">
+            <SearchBar onSelect={handleSearchSelect} onClose={() => setSearchActive(false)} />
+          </div>
+        )}
+
+        {loading ? (
+          <div className="flex justify-center items-center h-64">
+            <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+          </div>
+        ) : (
+          <>
+            {!selectedRoute && (
+              <section className="mb-8">
+                <h2 className="text-xl font-semibold mb-4 text-gray-800">Seleccioná una línea</h2>
+                <LineSelector routes={routes} onSelect={setSelectedRoute} />
+              </section>
+            )}
+
+            {selectedRoute && !selectedStop && (
+              <section className="mb-8">
+                <div className="flex items-center justify-between mb-4">
+                  <h2 className="text-xl font-semibold text-gray-800">Seleccioná una parada</h2>
+                  <button 
+                    onClick={() => setSelectedRoute(null)}
+                    className="text-blue-600 flex items-center"
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                    </svg>
+                    Volver
+                  </button>
+                </div>
+                <StopSelector 
+                  routeId={selectedRoute.route_id} 
+                  route={selectedRoute}
+                  onSelect={setSelectedStop} 
+                />
+              </section>
+            )}
+
+            {selectedRoute && selectedStop && !selectedDirection && (
+              <section className="mb-8">
+                <div className="flex items-center justify-between mb-4">
+                  <h2 className="text-xl font-semibold text-gray-800">Seleccioná una dirección</h2>
+                  <button 
+                    onClick={() => setSelectedStop(null)}
+                    className="text-blue-600 flex items-center"
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                    </svg>
+                    Volver
+                  </button>
+                </div>
+                <DirectionSelector 
+                  routeId={selectedRoute.route_id} 
+                  stopId={selectedStop.stop_id} 
+                  route={selectedRoute}
+                  stop={selectedStop}
+                  onSelect={setSelectedDirection} 
+                />
+              </section>
+            )}
+
+            {selectedRoute && selectedStop && selectedDirection && (
+              <section>
+                <div className="flex items-center justify-between mb-4">
+                  <h2 className="text-xl font-semibold text-gray-800">Próximas llegadas</h2>
+                  <button 
+                    onClick={() => setSelectedDirection(null)}
+                    className="text-blue-600 flex items-center"
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                    </svg>
+                    Volver
+                  </button>
+                </div>
+                <ArrivalsView 
+                  routeId={selectedRoute.route_id}
+                  stopId={selectedStop.stop_id}
+                  direction={selectedDirection}
+                  routeColor={selectedRoute.route_color || "CCCCCC"}
+                  routeName={selectedRoute.route_short_name}
+                  route={selectedRoute}
+                  stop={selectedStop}
+                />
+              </section>
+            )}
+          </>
+        )}
+      </div>
+
+      <footer className="bg-gray-800 text-white p-4 mt-12">
+        <div className="max-w-5xl mx-auto text-center">
+          <p>¿Dónde está el subte? © 2025 - Datos GTFS de Buenos Aires</p>
+        </div>
       </footer>
-    </div>
+    </main>
   );
 }

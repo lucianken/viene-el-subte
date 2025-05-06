@@ -1,0 +1,3 @@
+﻿fare_id,price,currency_type,payment_method,transfers,agency_id,transfer_duration
+4,869,ARS,1,,3,
+5,304.15,ARS,0,,3,

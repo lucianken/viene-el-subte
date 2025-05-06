@@ -1,0 +1,482 @@
+[
+  {
+    "route_id": "LineaC",
+    "service_id": "5",
+    "trip_id": "C11",
+    "trip_headsign": "Retiro",
+    "trip_short_name": "",
+    "direction_id": "1",
+    "block_id": "",
+    "shape_id": "C1"
+  },
+  {
+    "route_id": "LineaC",
+    "service_id": "6",
+    "trip_id": "C12",
+    "trip_headsign": "Retiro",
+    "trip_short_name": "",
+    "direction_id": "1",
+    "block_id": "",
+    "shape_id": "C1"
+  },
+  {
+    "route_id": "LineaC",
+    "service_id": "7",
+    "trip_id": "C13",
+    "trip_headsign": "Retiro",
+    "trip_short_name": "",
+    "direction_id": "1",
+    "block_id": "",
+    "shape_id": "C1"
+  },
+  {
+    "route_id": "LineaC",
+    "service_id": "5",
+    "trip_id": "C01",
+    "trip_headsign": "Constitución",
+    "trip_short_name": "",
+    "direction_id": "0",
+    "block_id": "",
+    "shape_id": "C0"
+  },
+  {
+    "route_id": "LineaC",
+    "service_id": "6",
+    "trip_id": "C02",
+    "trip_headsign": "Constitución",
+    "trip_short_name": "",
+    "direction_id": "0",
+    "block_id": "",
+    "shape_id": "C0"
+  },
+  {
+    "route_id": "LineaC",
+    "service_id": "7",
+    "trip_id": "C03",
+    "trip_headsign": "Constitución",
+    "trip_short_name": "",
+    "direction_id": "0",
+    "block_id": "",
+    "shape_id": "C0"
+  },
+  {
+    "route_id": "LineaA",
+    "service_id": "5",
+    "trip_id": "A11",
+    "trip_headsign": "Plaza de Mayo",
+    "trip_short_name": "",
+    "direction_id": "1",
+    "block_id": "",
+    "shape_id": "A1"
+  },
+  {
+    "route_id": "LineaA",
+    "service_id": "6",
+    "trip_id": "A12",
+    "trip_headsign": "Plaza de Mayo",
+    "trip_short_name": "",
+    "direction_id": "1",
+    "block_id": "",
+    "shape_id": "A1"
+  },
+  {
+    "route_id": "LineaA",
+    "service_id": "7",
+    "trip_id": "A13",
+    "trip_headsign": "Plaza de Mayo",
+    "trip_short_name": "",
+    "direction_id": "1",
+    "block_id": "",
+    "shape_id": "A1"
+  },
+  {
+    "route_id": "LineaA",
+    "service_id": "5",
+    "trip_id": "A01",
+    "trip_headsign": "San Pedrito",
+    "trip_short_name": "",
+    "direction_id": "0",
+    "block_id": "",
+    "shape_id": "A0"
+  },
+  {
+    "route_id": "LineaA",
+    "service_id": "6",
+    "trip_id": "A02",
+    "trip_headsign": "San Pedrito",
+    "trip_short_name": "",
+    "direction_id": "0",
+    "block_id": "",
+    "shape_id": "A0"
+  },
+  {
+    "route_id": "LineaA",
+    "service_id": "7",
+    "trip_id": "A03",
+    "trip_headsign": "San Pedrito",
+    "trip_short_name": "",
+    "direction_id": "0",
+    "block_id": "",
+    "shape_id": "A0"
+  },
+  {
+    "route_id": "LineaB",
+    "service_id": "5",
+    "trip_id": "B11",
+    "trip_headsign": "Leandro N. Alem",
+    "trip_short_name": "",
+    "direction_id": "1",
+    "block_id": "",
+    "shape_id": "B1"
+  },
+  {
+    "route_id": "LineaB",
+    "service_id": "6",
+    "trip_id": "B12",
+    "trip_headsign": "Leandro N. Alem",
+    "trip_short_name": "",
+    "direction_id": "1",
+    "block_id": "",
+    "shape_id": "B1"
+  },
+  {
+    "route_id": "LineaB",
+    "service_id": "7",
+    "trip_id": "B13",
+    "trip_headsign": "Leandro N. Alem",
+    "trip_short_name": "",
+    "direction_id": "1",
+    "block_id": "",
+    "shape_id": "B1"
+  },
+  {
+    "route_id": "LineaB",
+    "service_id": "5",
+    "trip_id": "B01",
+    "trip_headsign": "Juan Manuel de Rosas",
+    "trip_short_name": "",
+    "direction_id": "0",
+    "block_id": "",
+    "shape_id": "B0"
+  },
+  {
+    "route_id": "LineaB",
+    "service_id": "6",
+    "trip_id": "B02",
+    "trip_headsign": "Juan Manuel de Rosas",
+    "trip_short_name": "",
+    "direction_id": "0",
+    "block_id": "",
+    "shape_id": "B0"
+  },
+  {
+    "route_id": "LineaB",
+    "service_id": "7",
+    "trip_id": "B03",
+    "trip_headsign": "Juan Manuel de Rosas",
+    "trip_short_name": "",
+    "direction_id": "0",
+    "block_id": "",
+    "shape_id": "B0"
+  },
+  {
+    "route_id": "LineaD",
+    "service_id": "5",
+    "trip_id": "D11",
+    "trip_headsign": "Catedral",
+    "trip_short_name": "",
+    "direction_id": "1",
+    "block_id": "",
+    "shape_id": "D1"
+  },
+  {
+    "route_id": "LineaD",
+    "service_id": "6",
+    "trip_id": "D12",
+    "trip_headsign": "Catedral",
+    "trip_short_name": "",
+    "direction_id": "1",
+    "block_id": "",
+    "shape_id": "D1"
+  },
+  {
+    "route_id": "LineaD",
+    "service_id": "7",
+    "trip_id": "D13",
+    "trip_headsign": "Catedral",
+    "trip_short_name": "",
+    "direction_id": "1",
+    "block_id": "",
+    "shape_id": "D1"
+  },
+  {
+    "route_id": "LineaD",
+    "service_id": "5",
+    "trip_id": "D01",
+    "trip_headsign": "Congreso de Tucumán",
+    "trip_short_name": "",
+    "direction_id": "0",
+    "block_id": "",
+    "shape_id": "D0"
+  },
+  {
+    "route_id": "LineaD",
+    "service_id": "6",
+    "trip_id": "D02",
+    "trip_headsign": "Congreso de Tucumán",
+    "trip_short_name": "",
+    "direction_id": "0",
+    "block_id": "",
+    "shape_id": "D0"
+  },
+  {
+    "route_id": "LineaD",
+    "service_id": "7",
+    "trip_id": "D03",
+    "trip_headsign": "Congreso de Tucumán",
+    "trip_short_name": "",
+    "direction_id": "0",
+    "block_id": "",
+    "shape_id": "D0"
+  },
+  {
+    "route_id": "LineaE",
+    "service_id": "5",
+    "trip_id": "E11",
+    "trip_headsign": "Retiro",
+    "trip_short_name": "",
+    "direction_id": "1",
+    "block_id": "",
+    "shape_id": "E1"
+  },
+  {
+    "route_id": "LineaE",
+    "service_id": "6",
+    "trip_id": "E12",
+    "trip_headsign": "Retiro",
+    "trip_short_name": "",
+    "direction_id": "1",
+    "block_id": "",
+    "shape_id": "E1"
+  },
+  {
+    "route_id": "LineaE",
+    "service_id": "7",
+    "trip_id": "E13",
+    "trip_headsign": "Retiro",
+    "trip_short_name": "",
+    "direction_id": "1",
+    "block_id": "",
+    "shape_id": "E1"
+  },
+  {
+    "route_id": "LineaE",
+    "service_id": "5",
+    "trip_id": "E01",
+    "trip_headsign": "Plaza de los Virreyes",
+    "trip_short_name": "",
+    "direction_id": "0",
+    "block_id": "",
+    "shape_id": "E0"
+  },
+  {
+    "route_id": "LineaH",
+    "service_id": "5",
+    "trip_id": "H11",
+    "trip_headsign": "Facultad de Derecho",
+    "trip_short_name": "",
+    "direction_id": "1",
+    "block_id": "",
+    "shape_id": "H1"
+  },
+  {
+    "route_id": "LineaH",
+    "service_id": "6",
+    "trip_id": "H12",
+    "trip_headsign": "Facultad de Derecho",
+    "trip_short_name": "",
+    "direction_id": "1",
+    "block_id": "",
+    "shape_id": "H1"
+  },
+  {
+    "route_id": "LineaH",
+    "service_id": "7",
+    "trip_id": "H13",
+    "trip_headsign": "Facultad de Derecho",
+    "trip_short_name": "",
+    "direction_id": "1",
+    "block_id": "",
+    "shape_id": "H1"
+  },
+  {
+    "route_id": "LineaH",
+    "service_id": "5",
+    "trip_id": "H01",
+    "trip_headsign": "Hospitales",
+    "trip_short_name": "",
+    "direction_id": "0",
+    "block_id": "",
+    "shape_id": "H0"
+  },
+  {
+    "route_id": "LineaH",
+    "service_id": "6",
+    "trip_id": "H02",
+    "trip_headsign": "Hospitales",
+    "trip_short_name": "",
+    "direction_id": "0",
+    "block_id": "",
+    "shape_id": "H0"
+  },
+  {
+    "route_id": "LineaH",
+    "service_id": "7",
+    "trip_id": "H03",
+    "trip_headsign": "Hospitales",
+    "trip_short_name": "",
+    "direction_id": "0",
+    "block_id": "",
+    "shape_id": "H0"
+  },
+  {
+    "route_id": "LineaE",
+    "service_id": "6",
+    "trip_id": "E02",
+    "trip_headsign": "Plaza de los Virreyes",
+    "trip_short_name": "",
+    "direction_id": "0",
+    "block_id": "",
+    "shape_id": "E0"
+  },
+  {
+    "route_id": "LineaE",
+    "service_id": "7",
+    "trip_id": "E03",
+    "trip_headsign": "Plaza de los Virreyes",
+    "trip_short_name": "",
+    "direction_id": "0",
+    "block_id": "",
+    "shape_id": "E0"
+  },
+  {
+    "route_id": "PM-Civico",
+    "service_id": "5",
+    "trip_id": "P1-01",
+    "trip_headsign": "Centro Cívico",
+    "trip_short_name": "",
+    "direction_id": "0",
+    "block_id": "",
+    "shape_id": "P1-0"
+  },
+  {
+    "route_id": "PM-Civico",
+    "service_id": "6",
+    "trip_id": "P1-02",
+    "trip_headsign": "Centro Cívico",
+    "trip_short_name": "",
+    "direction_id": "0",
+    "block_id": "",
+    "shape_id": "P1-0"
+  },
+  {
+    "route_id": "PM-Civico",
+    "service_id": "7",
+    "trip_id": "P1-03",
+    "trip_headsign": "Centro Cívico",
+    "trip_short_name": "",
+    "direction_id": "0",
+    "block_id": "",
+    "shape_id": "P1-0"
+  },
+  {
+    "route_id": "PM-Civico",
+    "service_id": "5",
+    "trip_id": "P1-11",
+    "trip_headsign": "Saguier",
+    "trip_short_name": "",
+    "direction_id": "1",
+    "block_id": "",
+    "shape_id": "P1-1"
+  },
+  {
+    "route_id": "PM-Civico",
+    "service_id": "6",
+    "trip_id": "P1-12",
+    "trip_headsign": "Saguier",
+    "trip_short_name": "",
+    "direction_id": "1",
+    "block_id": "",
+    "shape_id": "P1-1"
+  },
+  {
+    "route_id": "PM-Civico",
+    "service_id": "7",
+    "trip_id": "P1-13",
+    "trip_headsign": "Saguier",
+    "trip_short_name": "",
+    "direction_id": "1",
+    "block_id": "",
+    "shape_id": "P1-1"
+  },
+  {
+    "route_id": "PM-Savio",
+    "service_id": "5",
+    "trip_id": "P2-01",
+    "trip_headsign": "General Savio",
+    "trip_short_name": "",
+    "direction_id": "0",
+    "block_id": "",
+    "shape_id": "P2-0"
+  },
+  {
+    "route_id": "PM-Savio",
+    "service_id": "6",
+    "trip_id": "P2-02",
+    "trip_headsign": "General Savio",
+    "trip_short_name": "",
+    "direction_id": "0",
+    "block_id": "",
+    "shape_id": "P2-0"
+  },
+  {
+    "route_id": "PM-Savio",
+    "service_id": "7",
+    "trip_id": "P2-03",
+    "trip_headsign": "General Savio",
+    "trip_short_name": "",
+    "direction_id": "0",
+    "block_id": "",
+    "shape_id": "P2-0"
+  },
+  {
+    "route_id": "PM-Savio",
+    "service_id": "5",
+    "trip_id": "P2-11",
+    "trip_headsign": "Saguier",
+    "trip_short_name": "",
+    "direction_id": "1",
+    "block_id": "",
+    "shape_id": "P2-1"
+  },
+  {
+    "route_id": "PM-Savio",
+    "service_id": "6",
+    "trip_id": "P2-12",
+    "trip_headsign": "Saguier",
+    "trip_short_name": "",
+    "direction_id": "1",
+    "block_id": "",
+    "shape_id": "P2-1"
+  },
+  {
+    "route_id": "PM-Savio",
+    "service_id": "7",
+    "trip_id": "P2-13",
+    "trip_headsign": "Saguier",
+    "trip_short_name": "",
+    "direction_id": "1",
+    "block_id": "",
+    "shape_id": "P2-1"
+  }
+]

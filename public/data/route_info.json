@@ -1,0 +1,50 @@
+{
+  "LineaA": {
+    "shortName": "A",
+    "longName": "Plaza de Mayo - San Pedrito",
+    "color": "A5C8FF",
+    "textColor": "000000"
+  },
+  "LineaB": {
+    "shortName": "B",
+    "longName": "Leandro N. Alem - Juan Manuel de Rosas",
+    "color": "FF0000",
+    "textColor": "000000"
+  },
+  "LineaC": {
+    "shortName": "C",
+    "longName": "Retiro - Constitución",
+    "color": "0000FF",
+    "textColor": "FFFFFF"
+  },
+  "LineaD": {
+    "shortName": "D",
+    "longName": "Catedral - Congreso de Tucumán",
+    "color": "00AC67",
+    "textColor": "000000"
+  },
+  "LineaE": {
+    "shortName": "E",
+    "longName": "Retiro - Plaza de los Virreyes",
+    "color": "8300BB",
+    "textColor": "FFFFFF"
+  },
+  "LineaH": {
+    "shortName": "H",
+    "longName": "Facultad de Derecho - Hospitales",
+    "color": "FFF300",
+    "textColor": "000000"
+  },
+  "PM-Civico": {
+    "shortName": "PM-C",
+    "longName": "Saguier - Centro Cívico",
+    "color": "FFBD33",
+    "textColor": "000000"
+  },
+  "PM-Savio": {
+    "shortName": "PM-S",
+    "longName": "Saguier - Savio",
+    "color": "FFBD33",
+    "textColor": "000000"
+  }
+}

@@ -1,0 +1,90 @@
+[
+  {
+    "route_id": "LineaA",
+    "agency_id": "3",
+    "route_short_name": "A",
+    "route_long_name": "Plaza de Mayo - San Pedrito",
+    "route_desc": "",
+    "route_type": "1",
+    "route_url": "",
+    "route_color": "A5C8FF",
+    "route_text_color": "000000"
+  },
+  {
+    "route_id": "LineaB",
+    "agency_id": "3",
+    "route_short_name": "B",
+    "route_long_name": "Leandro N. Alem - Juan Manuel de Rosas",
+    "route_desc": "",
+    "route_type": "1",
+    "route_url": "",
+    "route_color": "FF0000",
+    "route_text_color": "000000"
+  },
+  {
+    "route_id": "LineaC",
+    "agency_id": "3",
+    "route_short_name": "C",
+    "route_long_name": "Retiro - Constitución",
+    "route_desc": "",
+    "route_type": "1",
+    "route_url": "",
+    "route_color": "0000FF",
+    "route_text_color": "FFFFFF"
+  },
+  {
+    "route_id": "LineaD",
+    "agency_id": "3",
+    "route_short_name": "D",
+    "route_long_name": "Catedral - Congreso de Tucumán",
+    "route_desc": "",
+    "route_type": "1",
+    "route_url": "",
+    "route_color": "00AC67",
+    "route_text_color": "000000"
+  },
+  {
+    "route_id": "LineaE",
+    "agency_id": "3",
+    "route_short_name": "E",
+    "route_long_name": "Retiro - Plaza de los Virreyes",
+    "route_desc": "",
+    "route_type": "1",
+    "route_url": "",
+    "route_color": "8300BB",
+    "route_text_color": "FFFFFF"
+  },
+  {
+    "route_id": "LineaH",
+    "agency_id": "3",
+    "route_short_name": "H",
+    "route_long_name": "Facultad de Derecho - Hospitales",
+    "route_desc": "",
+    "route_type": "1",
+    "route_url": "",
+    "route_color": "FFF300",
+    "route_text_color": "000000"
+  },
+  {
+    "route_id": "PM-Civico",
+    "agency_id": "3",
+    "route_short_name": "PM-C",
+    "route_long_name": "Saguier - Centro Cívico",
+    "route_desc": "",
+    "route_type": "0",
+    "route_url": "",
+    "route_color": "FFBD33",
+    "route_text_color": "000000"
+  },
+  {
+    "route_id": "PM-Savio",
+    "agency_id": "3",
+    "route_short_name": "PM-S",
+    "route_long_name": "Saguier - Savio",
+    "route_desc": "",
+    "route_type": "0",
+    "route_url": "",
+    "route_color": "FFBD33",
+    "route_text_color": "000000"
+  }
+]

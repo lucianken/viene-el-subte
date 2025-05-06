@@ -1,0 +1,1224 @@
+{
+  "LineaA_0": [
+    {
+      "stopId": "1076S",
+      "stopName": "Plaza de Mayo",
+      "sequence": 1
+    },
+    {
+      "stopId": "1075S",
+      "stopName": "Peru",
+      "sequence": 2
+    },
+    {
+      "stopId": "1074S",
+      "stopName": "Piedras",
+      "sequence": 3
+    },
+    {
+      "stopId": "1073S",
+      "stopName": "Lima",
+      "sequence": 4
+    },
+    {
+      "stopId": "1072S",
+      "stopName": "Saenz Peña",
+      "sequence": 5
+    },
+    {
+      "stopId": "1071S",
+      "stopName": "Congreso",
+      "sequence": 6
+    },
+    {
+      "stopId": "1069S",
+      "stopName": "Alberti",
+      "sequence": 7
+    },
+    {
+      "stopId": "1068S",
+      "stopName": "Plaza Miserere",
+      "sequence": 8
+    },
+    {
+      "stopId": "1067S",
+      "stopName": "Loria",
+      "sequence": 9
+    },
+    {
+      "stopId": "1066S",
+      "stopName": "Castro Barros",
+      "sequence": 10
+    },
+    {
+      "stopId": "1065S",
+      "stopName": "Rio de Janeiro",
+      "sequence": 11
+    },
+    {
+      "stopId": "1064S",
+      "stopName": "Acoyte",
+      "sequence": 12
+    },
+    {
+      "stopId": "1063S",
+      "stopName": "Primera Junta",
+      "sequence": 13
+    },
+    {
+      "stopId": "1062S",
+      "stopName": "Puan",
+      "sequence": 14
+    },
+    {
+      "stopId": "1061S",
+      "stopName": "Carabobo",
+      "sequence": 15
+    },
+    {
+      "stopId": "1060S",
+      "stopName": "San Jose de Flores",
+      "sequence": 16
+    },
+    {
+      "stopId": "1059S",
+      "stopName": "San Pedrito",
+      "sequence": 17
+    }
+  ],
+  "LineaA_1": [
+    {
+      "stopId": "1059N",
+      "stopName": "San Pedrito",
+      "sequence": 1
+    },
+    {
+      "stopId": "1060N",
+      "stopName": "San Jose de Flores",
+      "sequence": 2
+    },
+    {
+      "stopId": "1061N",
+      "stopName": "Carabobo",
+      "sequence": 3
+    },
+    {
+      "stopId": "1062N",
+      "stopName": "Puan",
+      "sequence": 4
+    },
+    {
+      "stopId": "1063N",
+      "stopName": "Primera Junta",
+      "sequence": 5
+    },
+    {
+      "stopId": "1064N",
+      "stopName": "Acoyte",
+      "sequence": 6
+    },
+    {
+      "stopId": "1065N",
+      "stopName": "Rio de Janeiro",
+      "sequence": 7
+    },
+    {
+      "stopId": "1066N",
+      "stopName": "Castro Barros",
+      "sequence": 8
+    },
+    {
+      "stopId": "1067N",
+      "stopName": "Loria",
+      "sequence": 9
+    },
+    {
+      "stopId": "1068N",
+      "stopName": "Plaza Miserere",
+      "sequence": 10
+    },
+    {
+      "stopId": "1070N",
+      "stopName": "Pasco",
+      "sequence": 11
+    },
+    {
+      "stopId": "1071N",
+      "stopName": "Congreso",
+      "sequence": 12
+    },
+    {
+      "stopId": "1072N",
+      "stopName": "Saenz Peña",
+      "sequence": 13
+    },
+    {
+      "stopId": "1073N",
+      "stopName": "Lima",
+      "sequence": 14
+    },
+    {
+      "stopId": "1074N",
+      "stopName": "Piedras",
+      "sequence": 15
+    },
+    {
+      "stopId": "1075N",
+      "stopName": "Peru",
+      "sequence": 16
+    },
+    {
+      "stopId": "1076N",
+      "stopName": "Plaza de Mayo",
+      "sequence": 17
+    }
+  ],
+  "LineaB_0": [
+    {
+      "stopId": "1093S",
+      "stopName": "Leandro N. Alem",
+      "sequence": 1
+    },
+    {
+      "stopId": "1092S",
+      "stopName": "Florida",
+      "sequence": 2
+    },
+    {
+      "stopId": "1091S",
+      "stopName": "Carlos Pellegrini",
+      "sequence": 3
+    },
+    {
+      "stopId": "1090S",
+      "stopName": "Uruguay",
+      "sequence": 4
+    },
+    {
+      "stopId": "1089S",
+      "stopName": "Callao",
+      "sequence": 5
+    },
+    {
+      "stopId": "1088S",
+      "stopName": "Pasteur",
+      "sequence": 6
+    },
+    {
+      "stopId": "1087S",
+      "stopName": "Pueyrredon",
+      "sequence": 7
+    },
+    {
+      "stopId": "1086S",
+      "stopName": "Carlos Gardel",
+      "sequence": 8
+    },
+    {
+      "stopId": "1085S",
+      "stopName": "Medrano",
+      "sequence": 9
+    },
+    {
+      "stopId": "1083S",
+      "stopName": "Angel Gallardo",
+      "sequence": 10
+    },
+    {
+      "stopId": "1084S",
+      "stopName": "Malabia",
+      "sequence": 11
+    },
+    {
+      "stopId": "1082S",
+      "stopName": "Dorrego",
+      "sequence": 12
+    },
+    {
+      "stopId": "1081S",
+      "stopName": "Federico Lacroze",
+      "sequence": 13
+    },
+    {
+      "stopId": "1080S",
+      "stopName": "Tronador - Villa Ortuzar",
+      "sequence": 14
+    },
+    {
+      "stopId": "1079S",
+      "stopName": "De Los Incas - Parque Chas",
+      "sequence": 15
+    },
+    {
+      "stopId": "1078S",
+      "stopName": "Echeverria",
+      "sequence": 16
+    },
+    {
+      "stopId": "1077S",
+      "stopName": "Juan Manuel de Rosas",
+      "sequence": 17
+    }
+  ],
+  "LineaB_1": [
+    {
+      "stopId": "1077N",
+      "stopName": "Juan Manuel de Rosas",
+      "sequence": 1
+    },
+    {
+      "stopId": "1078N",
+      "stopName": "Echeverria",
+      "sequence": 2
+    },
+    {
+      "stopId": "1079N",
+      "stopName": "De Los Incas - Parque Chas",
+      "sequence": 3
+    },
+    {
+      "stopId": "1080N",
+      "stopName": "Tronador - Villa Ortuzar",
+      "sequence": 4
+    },
+    {
+      "stopId": "1081N",
+      "stopName": "Federico Lacroze",
+      "sequence": 5
+    },
+    {
+      "stopId": "1082N",
+      "stopName": "Dorrego",
+      "sequence": 6
+    },
+    {
+      "stopId": "1084N",
+      "stopName": "Malabia",
+      "sequence": 7
+    },
+    {
+      "stopId": "1083N",
+      "stopName": "Angel Gallardo",
+      "sequence": 8
+    },
+    {
+      "stopId": "1085N",
+      "stopName": "Medrano",
+      "sequence": 9
+    },
+    {
+      "stopId": "1086N",
+      "stopName": "Carlos Gardel",
+      "sequence": 10
+    },
+    {
+      "stopId": "1087N",
+      "stopName": "Pueyrredon",
+      "sequence": 11
+    },
+    {
+      "stopId": "1088N",
+      "stopName": "Pasteur",
+      "sequence": 12
+    },
+    {
+      "stopId": "1089N",
+      "stopName": "Callao",
+      "sequence": 13
+    },
+    {
+      "stopId": "1090N",
+      "stopName": "Uruguay",
+      "sequence": 14
+    },
+    {
+      "stopId": "1091N",
+      "stopName": "Carlos Pellegrini",
+      "sequence": 15
+    },
+    {
+      "stopId": "1092N",
+      "stopName": "Florida",
+      "sequence": 16
+    },
+    {
+      "stopId": "1093N",
+      "stopName": "Leandro N. Alem",
+      "sequence": 17
+    }
+  ],
+  "LineaC_0": [
+    {
+      "stopId": "1102E",
+      "stopName": "Retiro",
+      "sequence": 1
+    },
+    {
+      "stopId": "1101E",
+      "stopName": "General San Martin",
+      "sequence": 2
+    },
+    {
+      "stopId": "1100E",
+      "stopName": "Lavalle",
+      "sequence": 3
+    },
+    {
+      "stopId": "1099E",
+      "stopName": "Diagonal Norte",
+      "sequence": 4
+    },
+    {
+      "stopId": "1098E",
+      "stopName": "Avenida de Mayo",
+      "sequence": 5
+    },
+    {
+      "stopId": "1097E",
+      "stopName": "Moreno",
+      "sequence": 6
+    },
+    {
+      "stopId": "1096E",
+      "stopName": "Independencia",
+      "sequence": 7
+    },
+    {
+      "stopId": "1095E",
+      "stopName": "San Juan",
+      "sequence": 8
+    },
+    {
+      "stopId": "1094E",
+      "stopName": "Constitucion",
+      "sequence": 9
+    }
+  ],
+  "LineaC_1": [
+    {
+      "stopId": "1094O",
+      "stopName": "Constitucion",
+      "sequence": 1
+    },
+    {
+      "stopId": "1095O",
+      "stopName": "San Juan",
+      "sequence": 2
+    },
+    {
+      "stopId": "1096O",
+      "stopName": "Independencia",
+      "sequence": 3
+    },
+    {
+      "stopId": "1097O",
+      "stopName": "Moreno",
+      "sequence": 4
+    },
+    {
+      "stopId": "1098O",
+      "stopName": "Avenida de Mayo",
+      "sequence": 5
+    },
+    {
+      "stopId": "1099O",
+      "stopName": "Diagonal Norte",
+      "sequence": 6
+    },
+    {
+      "stopId": "1100O",
+      "stopName": "Lavalle",
+      "sequence": 7
+    },
+    {
+      "stopId": "1101O",
+      "stopName": "General San Martin",
+      "sequence": 8
+    },
+    {
+      "stopId": "1102O",
+      "stopName": "Retiro",
+      "sequence": 9
+    }
+  ],
+  "LineaD_0": [
+    {
+      "stopId": "1118S",
+      "stopName": "Catedral",
+      "sequence": 1
+    },
+    {
+      "stopId": "1117S",
+      "stopName": "9 de Julio",
+      "sequence": 2
+    },
+    {
+      "stopId": "1116S",
+      "stopName": "Tribunales",
+      "sequence": 3
+    },
+    {
+      "stopId": "1115S",
+      "stopName": "Callao",
+      "sequence": 4
+    },
+    {
+      "stopId": "1114S",
+      "stopName": "Facultad de Medicina",
+      "sequence": 5
+    },
+    {
+      "stopId": "1113S",
+      "stopName": "Pueyrredon",
+      "sequence": 6
+    },
+    {
+      "stopId": "1112S",
+      "stopName": "Agüero",
+      "sequence": 7
+    },
+    {
+      "stopId": "1111S",
+      "stopName": "Bulnes",
+      "sequence": 8
+    },
+    {
+      "stopId": "1110S",
+      "stopName": "Scalabrini Ortiz",
+      "sequence": 9
+    },
+    {
+      "stopId": "1109S",
+      "stopName": "Plaza Italia",
+      "sequence": 10
+    },
+    {
+      "stopId": "1108S",
+      "stopName": "Palermo",
+      "sequence": 11
+    },
+    {
+      "stopId": "1107S",
+      "stopName": "Ministro Carranza",
+      "sequence": 12
+    },
+    {
+      "stopId": "1106S",
+      "stopName": "Olleros",
+      "sequence": 13
+    },
+    {
+      "stopId": "1105S",
+      "stopName": "Jose Hernandez",
+      "sequence": 14
+    },
+    {
+      "stopId": "1104S",
+      "stopName": "Juramento",
+      "sequence": 15
+    },
+    {
+      "stopId": "1103S",
+      "stopName": "Congreso de Tucuman",
+      "sequence": 16
+    }
+  ],
+  "LineaD_1": [
+    {
+      "stopId": "1103N",
+      "stopName": "Congreso de Tucuman",
+      "sequence": 1
+    },
+    {
+      "stopId": "1104N",
+      "stopName": "Juramento",
+      "sequence": 2
+    },
+    {
+      "stopId": "1105N",
+      "stopName": "Jose Hernandez",
+      "sequence": 3
+    },
+    {
+      "stopId": "1106N",
+      "stopName": "Olleros",
+      "sequence": 4
+    },
+    {
+      "stopId": "1107N",
+      "stopName": "Ministro Carranza",
+      "sequence": 5
+    },
+    {
+      "stopId": "1108N",
+      "stopName": "Palermo",
+      "sequence": 6
+    },
+    {
+      "stopId": "1109N",
+      "stopName": "Plaza Italia",
+      "sequence": 7
+    },
+    {
+      "stopId": "1110N",
+      "stopName": "Scalabrini Ortiz",
+      "sequence": 8
+    },
+    {
+      "stopId": "1111N",
+      "stopName": "Bulnes",
+      "sequence": 9
+    },
+    {
+      "stopId": "1112N",
+      "stopName": "Agüero",
+      "sequence": 10
+    },
+    {
+      "stopId": "1113N",
+      "stopName": "Pueyrredon",
+      "sequence": 11
+    },
+    {
+      "stopId": "1114N",
+      "stopName": "Facultad de Medicina",
+      "sequence": 12
+    },
+    {
+      "stopId": "1115N",
+      "stopName": "Callao",
+      "sequence": 13
+    },
+    {
+      "stopId": "1116N",
+      "stopName": "Tribunales",
+      "sequence": 14
+    },
+    {
+      "stopId": "1117N",
+      "stopName": "9 de Julio",
+      "sequence": 15
+    },
+    {
+      "stopId": "1118N",
+      "stopName": "Catedral",
+      "sequence": 16
+    }
+  ],
+  "LineaE_0": [
+    {
+      "stopId": "1164S",
+      "stopName": "Retiro",
+      "sequence": 1
+    },
+    {
+      "stopId": "1165S",
+      "stopName": "Catalinas",
+      "sequence": 2
+    },
+    {
+      "stopId": "1166S",
+      "stopName": "Correo Central",
+      "sequence": 3
+    },
+    {
+      "stopId": "1119S",
+      "stopName": "Bolivar",
+      "sequence": 4
+    },
+    {
+      "stopId": "1120S",
+      "stopName": "Belgrano",
+      "sequence": 5
+    },
+    {
+      "stopId": "1121S",
+      "stopName": "Independencia",
+      "sequence": 6
+    },
+    {
+      "stopId": "1122S",
+      "stopName": "San Jose",
+      "sequence": 7
+    },
+    {
+      "stopId": "1123S",
+      "stopName": "Entre Rios",
+      "sequence": 8
+    },
+    {
+      "stopId": "1124S",
+      "stopName": "Pichincha",
+      "sequence": 9
+    },
+    {
+      "stopId": "1125S",
+      "stopName": "Jujuy",
+      "sequence": 10
+    },
+    {
+      "stopId": "1126S",
+      "stopName": "General Urquiza",
+      "sequence": 11
+    },
+    {
+      "stopId": "1127S",
+      "stopName": "Boedo",
+      "sequence": 12
+    },
+    {
+      "stopId": "1128S",
+      "stopName": "La Plata",
+      "sequence": 13
+    },
+    {
+      "stopId": "1129S",
+      "stopName": "Jose Maria Moreno",
+      "sequence": 14
+    },
+    {
+      "stopId": "1130S",
+      "stopName": "Emilio Mitre",
+      "sequence": 15
+    },
+    {
+      "stopId": "1131S",
+      "stopName": "Medalla Milagrosa",
+      "sequence": 16
+    },
+    {
+      "stopId": "1132S",
+      "stopName": "Varela",
+      "sequence": 17
+    },
+    {
+      "stopId": "1133S",
+      "stopName": "Plaza de los Virreyes",
+      "sequence": 18
+    }
+  ],
+  "LineaE_1": [
+    {
+      "stopId": "1133N",
+      "stopName": "Plaza de los Virreyes",
+      "sequence": 1
+    },
+    {
+      "stopId": "1132N",
+      "stopName": "Varela",
+      "sequence": 2
+    },
+    {
+      "stopId": "1131N",
+      "stopName": "Medalla Milagrosa",
+      "sequence": 3
+    },
+    {
+      "stopId": "1130N",
+      "stopName": "Emilio Mitre",
+      "sequence": 4
+    },
+    {
+      "stopId": "1129N",
+      "stopName": "Jose Maria Moreno",
+      "sequence": 5
+    },
+    {
+      "stopId": "1128N",
+      "stopName": "La Plata",
+      "sequence": 6
+    },
+    {
+      "stopId": "1127N",
+      "stopName": "Boedo",
+      "sequence": 7
+    },
+    {
+      "stopId": "1126N",
+      "stopName": "General Urquiza",
+      "sequence": 8
+    },
+    {
+      "stopId": "1125N",
+      "stopName": "Jujuy",
+      "sequence": 9
+    },
+    {
+      "stopId": "1124N",
+      "stopName": "Pichincha",
+      "sequence": 10
+    },
+    {
+      "stopId": "1123N",
+      "stopName": "Entre Rios",
+      "sequence": 11
+    },
+    {
+      "stopId": "1122N",
+      "stopName": "San Jose",
+      "sequence": 12
+    },
+    {
+      "stopId": "1121N",
+      "stopName": "Independencia",
+      "sequence": 13
+    },
+    {
+      "stopId": "1120N",
+      "stopName": "Belgrano",
+      "sequence": 14
+    },
+    {
+      "stopId": "1119N",
+      "stopName": "Bolivar",
+      "sequence": 15
+    },
+    {
+      "stopId": "1166N",
+      "stopName": "Correo Central",
+      "sequence": 16
+    },
+    {
+      "stopId": "1165N",
+      "stopName": "Catalinas",
+      "sequence": 17
+    },
+    {
+      "stopId": "1164N",
+      "stopName": "Retiro",
+      "sequence": 18
+    }
+  ],
+  "LineaH_0": [
+    {
+      "stopId": "1163E",
+      "stopName": "Facultad de Derecho",
+      "sequence": 1
+    },
+    {
+      "stopId": "1162E",
+      "stopName": "Las Heras",
+      "sequence": 2
+    },
+    {
+      "stopId": "1161E",
+      "stopName": "Santa Fe",
+      "sequence": 3
+    },
+    {
+      "stopId": "1160E",
+      "stopName": "Cordoba",
+      "sequence": 4
+    },
+    {
+      "stopId": "1141E",
+      "stopName": "Corrientes",
+      "sequence": 5
+    },
+    {
+      "stopId": "1140E",
+      "stopName": "Once",
+      "sequence": 6
+    },
+    {
+      "stopId": "1139E",
+      "stopName": "Venezuela",
+      "sequence": 7
+    },
+    {
+      "stopId": "1138E",
+      "stopName": "Humberto 1",
+      "sequence": 8
+    },
+    {
+      "stopId": "1137E",
+      "stopName": "Inclan",
+      "sequence": 9
+    },
+    {
+      "stopId": "1136E",
+      "stopName": "Caseros",
+      "sequence": 10
+    },
+    {
+      "stopId": "1135E",
+      "stopName": "Parque Patricios",
+      "sequence": 11
+    },
+    {
+      "stopId": "1134E",
+      "stopName": "Hospitales",
+      "sequence": 12
+    }
+  ],
+  "LineaH_1": [
+    {
+      "stopId": "1134O",
+      "stopName": "Hospitales",
+      "sequence": 1
+    },
+    {
+      "stopId": "1135O",
+      "stopName": "Parque Patricios",
+      "sequence": 2
+    },
+    {
+      "stopId": "1136O",
+      "stopName": "Caseros",
+      "sequence": 3
+    },
+    {
+      "stopId": "1137O",
+      "stopName": "Inclan",
+      "sequence": 4
+    },
+    {
+      "stopId": "1138O",
+      "stopName": "Humberto 1",
+      "sequence": 5
+    },
+    {
+      "stopId": "1139O",
+      "stopName": "Venezuela",
+      "sequence": 6
+    },
+    {
+      "stopId": "1140O",
+      "stopName": "Once",
+      "sequence": 7
+    },
+    {
+      "stopId": "1141O",
+      "stopName": "Corrientes",
+      "sequence": 8
+    },
+    {
+      "stopId": "1160O",
+      "stopName": "Cordoba",
+      "sequence": 9
+    },
+    {
+      "stopId": "1161O",
+      "stopName": "Santa Fe",
+      "sequence": 10
+    },
+    {
+      "stopId": "1162O",
+      "stopName": "Las Heras",
+      "sequence": 11
+    },
+    {
+      "stopId": "1163O",
+      "stopName": "Facultad de Derecho",
+      "sequence": 12
+    }
+  ],
+  "PM-Civico_0": [
+    {
+      "stopId": "1142N",
+      "stopName": "Intendente Saguier",
+      "sequence": 1
+    },
+    {
+      "stopId": "1143N",
+      "stopName": "Balbastro",
+      "sequence": 2
+    },
+    {
+      "stopId": "1144N",
+      "stopName": "Mariano Acosta",
+      "sequence": 3
+    },
+    {
+      "stopId": "1145N",
+      "stopName": "Somellera",
+      "sequence": 4
+    },
+    {
+      "stopId": "1146N",
+      "stopName": "Ana Maria Janer",
+      "sequence": 5
+    },
+    {
+      "stopId": "1147N",
+      "stopName": "Ntra. Sra. de Fatima",
+      "sequence": 6
+    },
+    {
+      "stopId": "1148N",
+      "stopName": "Fernandez de la Cruz",
+      "sequence": 7
+    },
+    {
+      "stopId": "1149N",
+      "stopName": "Presidente Illia",
+      "sequence": 8
+    },
+    {
+      "stopId": "1150N",
+      "stopName": "Parque de la Ciudad",
+      "sequence": 9
+    },
+    {
+      "stopId": "1151N",
+      "stopName": "Cecilia Grierson",
+      "sequence": 10
+    },
+    {
+      "stopId": "1152N",
+      "stopName": "Escalada",
+      "sequence": 11
+    },
+    {
+      "stopId": "1153N",
+      "stopName": "Pola",
+      "sequence": 12
+    },
+    {
+      "stopId": "1154N",
+      "stopName": "Ana Diaz",
+      "sequence": 13
+    },
+    {
+      "stopId": "1155N",
+      "stopName": "Centro Civico",
+      "sequence": 14
+    }
+  ],
+  "PM-Civico_1": [
+    {
+      "stopId": "1155S",
+      "stopName": "Centro Civico",
+      "sequence": 1
+    },
+    {
+      "stopId": "1154S",
+      "stopName": "Ana Diaz",
+      "sequence": 2
+    },
+    {
+      "stopId": "1153S",
+      "stopName": "Pola",
+      "sequence": 3
+    },
+    {
+      "stopId": "1152S",
+      "stopName": "Escalada",
+      "sequence": 4
+    },
+    {
+      "stopId": "1151S",
+      "stopName": "Cecilia Grierson",
+      "sequence": 5
+    },
+    {
+      "stopId": "1150S",
+      "stopName": "Parque de la Ciudad",
+      "sequence": 6
+    },
+    {
+      "stopId": "1149S",
+      "stopName": "Presidente Illia",
+      "sequence": 7
+    },
+    {
+      "stopId": "1148S",
+      "stopName": "Fernandez de la Cruz",
+      "sequence": 8
+    },
+    {
+      "stopId": "1147S",
+      "stopName": "Ntra. Sra. de Fatima",
+      "sequence": 9
+    },
+    {
+      "stopId": "1146S",
+      "stopName": "Ana Maria Janer",
+      "sequence": 10
+    },
+    {
+      "stopId": "1145S",
+      "stopName": "Somellera",
+      "sequence": 11
+    },
+    {
+      "stopId": "1144S",
+      "stopName": "Mariano Acosta",
+      "sequence": 12
+    },
+    {
+      "stopId": "1143S",
+      "stopName": "Balbastro",
+      "sequence": 13
+    },
+    {
+      "stopId": "1142S",
+      "stopName": "Intendente Saguier",
+      "sequence": 14
+    }
+  ],
+  "PM-Savio_0": [
+    {
+      "stopId": "1142N",
+      "stopName": "Intendente Saguier",
+      "sequence": 1
+    },
+    {
+      "stopId": "1143N",
+      "stopName": "Balbastro",
+      "sequence": 2
+    },
+    {
+      "stopId": "1144N",
+      "stopName": "Mariano Acosta",
+      "sequence": 3
+    },
+    {
+      "stopId": "1145N",
+      "stopName": "Somellera",
+      "sequence": 4
+    },
+    {
+      "stopId": "1146N",
+      "stopName": "Ana Maria Janer",
+      "sequence": 5
+    },
+    {
+      "stopId": "1147N",
+      "stopName": "Ntra. Sra. de Fatima",
+      "sequence": 6
+    },
+    {
+      "stopId": "1148N",
+      "stopName": "Fernandez de la Cruz",
+      "sequence": 7
+    },
+    {
+      "stopId": "1149N",
+      "stopName": "Presidente Illia",
+      "sequence": 8
+    },
+    {
+      "stopId": "1150N",
+      "stopName": "Parque de la Ciudad",
+      "sequence": 9
+    },
+    {
+      "stopId": "1151N",
+      "stopName": "Cecilia Grierson",
+      "sequence": 10
+    },
+    {
+      "stopId": "1152N",
+      "stopName": "Escalada",
+      "sequence": 11
+    },
+    {
+      "stopId": "1153N",
+      "stopName": "Pola",
+      "sequence": 12
+    },
+    {
+      "stopId": "1156N",
+      "stopName": "Larrazabal",
+      "sequence": 13
+    },
+    {
+      "stopId": "1157N",
+      "stopName": "Nicolas Descalzi",
+      "sequence": 14
+    },
+    {
+      "stopId": "1158N",
+      "stopName": "Gabino Ezeiza",
+      "sequence": 15
+    },
+    {
+      "stopId": "1159N",
+      "stopName": "General Savio",
+      "sequence": 16
+    }
+  ],
+  "PM-Savio_1": [
+    {
+      "stopId": "1159S",
+      "stopName": "General Savio",
+      "sequence": 1
+    },
+    {
+      "stopId": "1158S",
+      "stopName": "Gabino Ezeiza",
+      "sequence": 2
+    },
+    {
+      "stopId": "1157S",
+      "stopName": "Nicolas Descalzi",
+      "sequence": 3
+    },
+    {
+      "stopId": "1156S",
+      "stopName": "Larrazabal",
+      "sequence": 4
+    },
+    {
+      "stopId": "1153S",
+      "stopName": "Pola",
+      "sequence": 5
+    },
+    {
+      "stopId": "1152S",
+      "stopName": "Escalada",
+      "sequence": 6
+    },
+    {
+      "stopId": "1151S",
+      "stopName": "Cecilia Grierson",
+      "sequence": 7
+    },
+    {
+      "stopId": "1150S",
+      "stopName": "Parque de la Ciudad",
+      "sequence": 8
+    },
+    {
+      "stopId": "1149S",
+      "stopName": "Presidente Illia",
+      "sequence": 9
+    },
+    {
+      "stopId": "1148S",
+      "stopName": "Fernandez de la Cruz",
+      "sequence": 10
+    },
+    {
+      "stopId": "1147S",
+      "stopName": "Ntra. Sra. de Fatima",
+      "sequence": 11
+    },
+    {
+      "stopId": "1146S",
+      "stopName": "Ana Maria Janer",
+      "sequence": 12
+    },
+    {
+      "stopId": "1145S",
+      "stopName": "Somellera",
+      "sequence": 13
+    },
+    {
+      "stopId": "1144S",
+      "stopName": "Mariano Acosta",
+      "sequence": 14
+    },
+    {
+      "stopId": "1143S",
+      "stopName": "Balbastro",
+      "sequence": 15
+    },
+    {
+      "stopId": "1142S",
+      "stopName": "Intendente Saguier",
+      "sequence": 16
+    }
+  ]
+}
