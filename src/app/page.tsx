@@ -52,7 +52,11 @@ export default function Home() {
 
   // El tipo de 'directionInfoFromSearch' en handleSearchSelect dependerá de lo que tu SearchBar devuelva.
   // Idealmente, SearchBar debería devolver un objeto compatible con DirectionOption o suficiente info.
-  const handleSearchSelect = (stop: Stop, route: Route, directionInfoFromSearch: any /* Reemplazar 'any' con el tipo correcto que devuelve SearchBar */) => {
+  const handleSearchSelect = (
+    stop: Stop, 
+    route: Route, 
+    directionInfoFromSearch: DirectionOption | string /* Tipo corregido aquí */
+  ) => {
     setSelectedRoute(route);
     setSelectedStop(stop);
 
@@ -67,7 +71,7 @@ export default function Home() {
     //   setSelectedDirectionInfo(null); // O manejarlo de otra forma.
     // }
     // Por ahora, para simplificar y si tu SearchBar está incompleto en este aspecto:
-    if (directionInfoFromSearch && typeof directionInfoFromSearch === 'string') { // Si solo devuelve un ID o nombre
+    if (directionInfoFromSearch && typeof directionInfoFromSearch === 'string') { // Si solo devuelve un string o nombre
         console.warn("SearchBar devuelve solo un string para dirección, ArrivalsView podría no tener toda la info necesaria para /api/realtime");
         // Esto es una simplificación, necesitarías una forma de obtener el rawDirectionId y el platform stopId
         // Para un cambio mínimo y asumiendo que 'directionInfoFromSearch' es el platformStopId:
@@ -82,7 +86,8 @@ export default function Home() {
             rawDirectionId: 0 // Placeholder, LA API /api/realtime LO NECESITA
         });
 
-    } else if (directionInfoFromSearch && directionInfoFromSearch.stopId && typeof directionInfoFromSearch.rawDirectionId !== 'undefined') {
+    } else if (directionInfoFromSearch && typeof directionInfoFromSearch !== 'string' && directionInfoFromSearch.stopId && typeof directionInfoFromSearch.rawDirectionId !== 'undefined') {
+        // Se verifica que no sea string antes de acceder a propiedades como .stopId
         setSelectedDirectionInfo(directionInfoFromSearch as DirectionOption);
     }
 

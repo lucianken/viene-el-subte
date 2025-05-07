@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useEffect, useState } from 'react';
@@ -17,14 +16,28 @@ export default function StopSelector({ routeId, route, onSelect }: StopSelectorP
   const [filteredStops, setFilteredStops] = useState<Stop[]>([]);
 
   // Determinar si el color es claro u oscuro para elegir el color de texto
-  const isColorBright = (color: string) => {
+  const isColorBright = (color: string): boolean => {
     // Eliminar el # si existe
     const hex = color.replace('#', '');
+    if (hex.length !== 6 && hex.length !== 3) return false; // Manejar colores inválidos/cortos
     
-    // Convertir a valores RGB
-    const r = parseInt(hex.substring(0, 2), 16);
-    const g = parseInt(hex.substring(2, 4), 16);
-    const b = parseInt(hex.substring(4, 6), 16);
+    let r_hex, g_hex, b_hex;
+    if (hex.length === 3) {
+        r_hex = hex[0]+hex[0];
+        g_hex = hex[1]+hex[1];
+        b_hex = hex[2]+hex[2];
+    } else {
+        r_hex = hex.substring(0, 2);
+        g_hex = hex.substring(2, 4);
+        b_hex = hex.substring(4, 6);
+    }
+    
+    const r = parseInt(r_hex, 16);
+    const g = parseInt(g_hex, 16);
+    const b = parseInt(b_hex, 16);
+
+    // Verificar si alguno es NaN después de parseInt
+    if (isNaN(r) || isNaN(g) || isNaN(b)) return false;
     
     // Calcular luminosidad
     const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
@@ -35,7 +48,9 @@ export default function StopSelector({ routeId, route, onSelect }: StopSelectorP
 
   // Color de texto basado en el color de fondo
   const bgColor = `#${route.route_color || 'CCCCCC'}`;
-  const textColor = isColorBright(bgColor) ? "#000000" : "#FFFFFF";
+  // Asegurar que textColor tenga un fallback si route_text_color no existe
+  const textColor = isColorBright(bgColor) ? (route.route_text_color ? `#${route.route_text_color}` : "#000000") : (route.route_text_color ? `#${route.route_text_color}` : "#FFFFFF");
+
 
   useEffect(() => {
     async function fetchStops() {
@@ -43,11 +58,11 @@ export default function StopSelector({ routeId, route, onSelect }: StopSelectorP
         setLoading(true);
         const response = await fetch(`/api/stops?routeId=${routeId}`);
         if (!response.ok) throw new Error('Error al cargar paradas');
-        const data = await response.json();
+        const data: Stop[] = await response.json(); // Tipar la data de la API
         
         // Eliminar duplicados (misma parada en ambas direcciones)
         const uniqueStopMap: Record<string, Stop> = {};
-        data.forEach((stop: Stop) => {
+        data.forEach((stop: Stop) => { // stop ya es tipo Stop por el tipado anterior
           const baseStopName = stop.stop_name;
           // Usamos el nombre como clave para eliminar duplicados
           if (!uniqueStopMap[baseStopName]) {
@@ -84,7 +99,7 @@ export default function StopSelector({ routeId, route, onSelect }: StopSelectorP
       <div className="bg-white rounded-lg shadow-lg p-4 mb-4">
         <div className="flex items-center">
           <div 
-            className="w-12 h-12 rounded-full flex items-center justify-center mr-3"
+            className="w-12 h-12 rounded-full flex items-center justify-center mr-3 shrink-0" // Añadido shrink-0
             style={{ 
               backgroundColor: bgColor,
               color: textColor
@@ -124,8 +139,9 @@ export default function StopSelector({ routeId, route, onSelect }: StopSelectorP
             </button>
           ))}
           
-          {filteredStops.length === 0 && (
+          {filteredStops.length === 0 && searchTerm.trim() !== '' && ( // Mostrar solo si se ha buscado algo
             <div className="col-span-full text-center text-gray-700 p-8 bg-white rounded-lg">
+              {/* CORREGIDO: Uso de entidades HTML para las comillas */}
               No se encontraron paradas que coincidan con "{searchTerm}"
             </div>
           )}

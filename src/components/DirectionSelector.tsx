@@ -44,6 +44,9 @@ export default function DirectionSelector({
     const g = parseInt(g_hex, 16);
     const b = parseInt(b_hex, 16);
     
+    // Verificar si alguno es NaN después de parseInt
+    if (isNaN(r) || isNaN(g) || isNaN(b)) return false;
+
     const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
     return luminance > 0.5;
   };
@@ -78,9 +81,15 @@ export default function DirectionSelector({
         const data: DirectionOption[] = await response.json();
         setDirections(data);
 
-      } catch (err: any) {
+      } catch (err: unknown) { // CORREGIDO: de 'any' a 'unknown' (Línea 81)
         console.error('Error fetching directions:', err);
-        setError(err.message || 'Ocurrió un error al cargar las direcciones.');
+        if (err instanceof Error) { // Manejo seguro del error
+          setError(err.message);
+        } else if (typeof err === 'string') {
+          setError(err);
+        } else {
+          setError('Ocurrió un error al cargar las direcciones.');
+        }
         setDirections([]); // Limpiar en caso de error
       } finally {
         setLoading(false);

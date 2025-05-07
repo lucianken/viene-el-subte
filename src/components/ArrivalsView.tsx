@@ -1,7 +1,7 @@
 // src/components/ArrivalsView.tsx
 "use client";
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react'; // Añadido useCallback
 import StopLineView from './StopLineView';
 import { Route, Stop } from '@/types';
 
@@ -93,7 +93,7 @@ export default function ArrivalsView({
   }, []);
 
   // Obtener headsign oficial (si trips.json está disponible)
-  const getOfficialHeadsign = (currentRouteId: string, currentDirectionId: string): string => {
+  const getOfficialHeadsign = useCallback((currentRouteId: string, currentDirectionId: string): string => {
     if (localTrips.length === 0) return "Desconocida"; // No intentar si falló la carga
     const matchingTrip = localTrips.find(trip => 
         trip.route_id === currentRouteId &&
@@ -101,7 +101,7 @@ export default function ArrivalsView({
         trip.trip_headsign && trip.trip_headsign.trim() !== ""
     );
     return matchingTrip?.trip_headsign || "Desconocida";
-  };
+  }, [localTrips]); // Dependencia: localTrips
 
   // Calcular el headsign general a mostrar
   useEffect(() => {
@@ -125,7 +125,7 @@ export default function ArrivalsView({
         }
     }
     setGeneralDirectionHeadsign(headsignToShow);
-  }, [apiData, localTrips, routeId, direction, route.route_long_name]);
+  }, [apiData, localTrips, routeId, direction, route.route_long_name, getOfficialHeadsign]); // CORREGIDO: Añadido getOfficialHeadsign
 
   // --- Funciones Helper ---
   const isColorBright = (color: string): boolean => {
@@ -168,7 +168,7 @@ export default function ArrivalsView({
   const circleText = isColorBright(headerBgColor) ? (routeColor ? `text-[#${routeColor}]` : "text-blue-600") : "text-white";
 
   // --- Fetching ---
-  const fetchData = async () => {
+  const fetchData = useCallback(async () => { // Envuelta en useCallback
     if (!routeId || !stopId || !direction) {
         setError("Faltan parámetros para cargar datos.");
         setLoading(false); // Detener carga si faltan parámetros
@@ -183,21 +183,27 @@ export default function ArrivalsView({
       }
       const data: ArrivalsViewApiResponse = await response.json();
       setApiData(data);
-    } catch (err: any) {
+    } catch (err: unknown) { // CORREGIDO: de 'any' a 'unknown'
       console.error('Error fetching realtime data:', err);
-      setError(err.message || 'No se pudieron cargar los datos.');
+      if (err instanceof Error) { // Manejo seguro del error
+        setError(err.message);
+      } else if (typeof err === 'string') {
+        setError(err);
+      } else {
+        setError('No se pudieron cargar los datos. Error desconocido.');
+      }
       setApiData(null); 
     } finally {
       setLoading(false);
       setUpdating(false);
     }
-  };
+  }, [routeId, stopId, direction]); // Dependencias de fetchData (setError, setLoading, etc. son estables)
 
   useEffect(() => {
     fetchData(); // Carga inicial
     const interval = setInterval(fetchData, 15000); // Actualizar cada 15s
     return () => clearInterval(interval);
-  }, [routeId, stopId, direction]);
+  }, [fetchData]); // CORREGIDO: Añadido fetchData como dependencia
 
   // Timer para la hora actual
   useEffect(() => {
