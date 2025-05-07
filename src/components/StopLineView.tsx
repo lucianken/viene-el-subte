@@ -1,182 +1,154 @@
 // src/components/StopLineView.tsx
 "use client";
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react'; // useCallback ya no es necesario aquí
 
-// --- INTERFACES ---
-interface StopOnLine {
-  stopId: string;
-  stopName: string;
-  sequence: number;
-}
+// --- INTERFACES (Tipos que este componente espera recibir) ---
 
-interface ArrivalInfo {
-  estimatedArrivalTime: number;
+// Información de arribo para una parada en la lista
+interface ArrivalInfoForDisplay {
+  estimatedArrivalTime: number; // Timestamp en SEGUNDOS
   delaySeconds: number;
   status: 'on-time' | 'delayed' | 'early' | 'unknown';
 }
 
-interface StopWithArrival extends StopOnLine {
-  nextArrival?: ArrivalInfo;
+// Estructura de cada parada con su posible arribo y timestamp de actualización
+// Esta interfaz debe coincidir con `ApiStopWithCalculatedArrival` que `ArrivalsView` le pasa
+interface StopDataWithArrival {
+  stopId: string;
+  stopName: string;
+  sequence: number;
+  nextArrival?: ArrivalInfoForDisplay;
+  lastUpdateTimestamp?: number; // Timestamp en SEGUNDOS de la última actualización para esta parada
 }
 
+// Props que el componente recibe de ArrivalsView
 interface StopLineViewProps {
-  stops: StopOnLine[];
+  initialStopsData: StopDataWithArrival[]; // NUEVA PROP
   currentStopId: string;
   routeColor: string;
-  routeId: string;
+  // routeId y direction podrían no ser estrictamente necesarios si toda la lógica de datos
+  // está centralizada, pero se pueden mantener por si se usan para estilos o claves.
+  routeId: string; 
   direction: string;
 }
 
 const StopLineView: React.FC<StopLineViewProps> = ({ 
-  stops, 
+  initialStopsData, 
   currentStopId, 
   routeColor,
-  routeId,
-  direction
+  routeId,     // Conservado por si acaso
+  direction    // Conservado por si acaso
 }) => {
-  const [stopsWithArrivals, setStopsWithArrivals] = useState<StopWithArrival[]>([]);
-  const [loading, setLoading] = useState(true);
+  // El estado ahora refleja directamente los datos pasados como props
+  const [stopsToDisplay, setStopsToDisplay] = useState<StopDataWithArrival[]>(initialStopsData);
   const [currentTime, setCurrentTime] = useState(new Date());
+  // ELIMINADO: const [loading, setLoading] = useState(true);
 
-  // Formatear tiempo
-  const formatTime = (timestamp: number): string => {
-    const date = new Date(timestamp * 1000);
-    return date.toLocaleTimeString('es-AR', { hour: '2-digit', minute: '2-digit' });
-  };
+  // Actualizar las paradas a mostrar si la prop `initialStopsData` cambia
+  useEffect(() => {
+    // Asegurarse de que los datos estén ordenados por secuencia si no vienen ya ordenados
+    // Aunque la API ya debería devolverlos ordenados según route_to_stops.json
+    setStopsToDisplay([...initialStopsData].sort((a, b) => a.sequence - b.sequence));
+  }, [initialStopsData]);
 
-  // Calcular minutos hasta arribo
-  const getMinutesUntilArrival = (arrivalTimestampInSeconds: number | undefined): number => {
-    if (!arrivalTimestampInSeconds) return 999;
-    const arrivalTimeMs = arrivalTimestampInSeconds * 1000;
-    const diffMs = arrivalTimeMs - currentTime.getTime();
-    return Math.max(0, Math.round(diffMs / (1000 * 60)));
-  };
-
-  // Cargar datos de arribos para todas las estaciones
+  // Timer para la hora actual (se mantiene)
   useEffect(() => {
     const timer = setInterval(() => setCurrentTime(new Date()), 1000);
-    
-    async function loadArrivalsForAllStops() {
-      if (!stops || !routeId || !direction) return;
-      
-      setLoading(true);
-      const stopsWithArrivalsData = [...stops] as StopWithArrival[]; // Copiar stops iniciales
-      
-      // Para cada parada, hacer una petición para obtener su próximo arribo
-      const fetchPromises = stops.map(async (stop) => {
-        try {
-          const response = await fetch(`/api/realtime?routeId=${routeId}&stopId=${stop.stopId}&direction=${direction}`);
-          
-          if (!response.ok) {
-            return null; // Ignorar errores individuales
-          }
-          
-          const data = await response.json();
-          
-          // Si hay arribos, tomar el primero (más cercano)
-          if (data.arrivals && data.arrivals.length > 0) {
-            const firstArrival = data.arrivals[0];
-            return {
-              stopId: stop.stopId,
-              nextArrival: {
-                estimatedArrivalTime: firstArrival.estimatedArrivalTime,
-                delaySeconds: firstArrival.delaySeconds,
-                status: firstArrival.status
-              }
-            };
-          }
-          
-          return null;
-        } catch (error) {
-          console.error(`Error fetching arrivals for stop ${stop.stopId}:`, error);
-          return null;
-        }
-      });
-      
-      // Esperar a que todas las peticiones terminen
-      const results = await Promise.all(fetchPromises);
-      
-      // Actualizar la información de arribos para cada parada
-      results.forEach(result => {
-        if (result) {
-          const stopIndex = stopsWithArrivalsData.findIndex(s => s.stopId === result.stopId);
-          if (stopIndex >= 0) {
-            stopsWithArrivalsData[stopIndex].nextArrival = result.nextArrival;
-          }
-        }
-      });
-      
-      // Ordenar por secuencia
-      const sortedStops = stopsWithArrivalsData.sort((a, b) => a.sequence - b.sequence);
-      setStopsWithArrivals(sortedStops);
-      setLoading(false);
-    }
-    
-    loadArrivalsForAllStops();
-    
-    // Actualizar información cada 15 segundos
-    const updateInterval = setInterval(loadArrivalsForAllStops, 15000);
-    
-    return () => {
-      clearInterval(timer);
-      clearInterval(updateInterval);
-    };
-  }, [stops, routeId, direction, currentStopId]);
+    return () => clearInterval(timer);
+  }, []);
 
-  if (!stops || stops.length === 0) {
+  // ELIMINADA: función loadArrivalsForAllStops
+  // ELIMINADO: useEffect que llamaba a loadArrivalsForAllStops (inicial y en intervalo)
+
+  // Funciones helper (se mantienen)
+  const formatTime = (timestampInSeconds: number | undefined, includeSeconds = false): string => {
+    if (timestampInSeconds === undefined || isNaN(timestampInSeconds)) return "N/A";
+    const date = new Date(timestampInSeconds * 1000);
+    return date.toLocaleTimeString('es-AR', { 
+        hour: '2-digit', 
+        minute: '2-digit',
+        second: includeSeconds ? '2-digit' : undefined
+    });
+  };
+
+  const getTimeUntilArrivalString = (arrivalTimestampInSeconds: number | undefined): string => {
+    if (arrivalTimestampInSeconds === undefined || isNaN(arrivalTimestampInSeconds)) return "Sin datos";
+    const arrivalTimeMs = arrivalTimestampInSeconds * 1000;
+    const diffMs = arrivalTimeMs - currentTime.getTime();
+    const diffSecondsTotal = Math.round(diffMs / 1000);
+    if (diffSecondsTotal <= 10) return "Llegando";
+    if (diffSecondsTotal < 0) return "Llegando";
+    const minutes = Math.floor(diffSecondsTotal / 60);
+    const seconds = diffSecondsTotal % 60;
+    if (minutes > 0) return `${minutes} min ${seconds} s`;
+    return `${seconds} s`;
+  };
+
+  // Renderizado condicional si no hay datos (se mantiene, pero ahora usa stopsToDisplay)
+  if (!stopsToDisplay || stopsToDisplay.length === 0) {
     return <div className="text-center text-gray-500 py-4 text-sm">No hay datos de paradas para mostrar.</div>;
   }
   
-  if (loading && stopsWithArrivals.length === 0) {
-    return (
-      <div className="flex justify-center items-center py-8">
-        <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-blue-500"></div>
-        <span className="ml-3 text-sm text-gray-600">Cargando información de arribos...</span>
-      </div>
-    );
-  }
+  // ELIMINADO: El estado de carga principal de "Cargando información de arribos..."
+  // ya que los datos vienen pre-cargados. ArrivalsView maneja el loading inicial.
 
   return (
     <div className="stop-line-container">
       <div className="relative pl-3 pr-4">
-        {/* Línea vertical de fondo */}
-        {stopsWithArrivals.length > 0 && (
+        {stopsToDisplay.length > 0 && (
           <div
             className="absolute top-3 bottom-3 left-3 w-1 transform -translate-x-1/2 rounded-full"
             style={{ backgroundColor: `#${routeColor}30` }}
           ></div>
         )}
         
-        {/* Tabla para paradas y arribos */}
         <table className="w-full">
           <thead className="text-xs text-gray-600 border-b">
-            <tr><th className="w-6"></th><th className="py-2 text-left">Estación</th><th className="py-2 text-right">Próximo arribo</th></tr>
+            <tr>
+                <th className="w-6"></th>
+                <th className="py-2 text-left">Estación</th>
+                <th className="py-2 text-right">Próximo arribo</th>
+            </tr>
           </thead>
           <tbody>
-            {stopsWithArrivals.map((stop) => {
+            {/* MODIFICADO: Iterar sobre stopsToDisplay */}
+            {stopsToDisplay.map((stop) => {
               const isCurrentSelectedStop = stop.stopId === currentStopId;
-              const minutesToArrival = stop.nextArrival ? getMinutesUntilArrival(stop.nextArrival.estimatedArrivalTime) : 999;
+              const arrivalString = stop.nextArrival ? getTimeUntilArrivalString(stop.nextArrival.estimatedArrivalTime) : "Sin datos";
               
+              let arrivalColorClass = 'text-blue-600';
+              if (stop.nextArrival) {
+                  const diffSecondsTotal = Math.round(((stop.nextArrival.estimatedArrivalTime * 1000) - currentTime.getTime()) / 1000);
+                  if (diffSecondsTotal <= 10) arrivalColorClass = 'text-red-600 animate-pulse';
+                  else if (diffSecondsTotal <= 60) arrivalColorClass = 'text-red-600';
+              }
+              if (arrivalString === "Sin datos") arrivalColorClass = 'text-gray-400';
+
               return (
                 <tr key={stop.stopId} className={`relative group min-h-[40px] hover:bg-gray-50 transition-colors ${isCurrentSelectedStop ? 'bg-blue-50' : ''}`}>
-                  <td className="relative py-3">
-                    <div className="absolute left-3 top-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10">
-                      <div className={`w-3 h-3 rounded-full border-2 transition-all duration-150 ${isCurrentSelectedStop ? 'bg-blue-600 border-blue-700 scale-125 shadow-md ring-2 ring-blue-300 ring-offset-1' : `border-[#${routeColor}] bg-white shadow-sm group-hover:bg-gray-100`}`}></div>
-                    </div>
-                  </td>
+                  <td className="relative py-3"> {/* ... (círculo de la parada) ... */} </td>
                   <td className={`py-3 ${isCurrentSelectedStop ? 'font-semibold text-blue-700' : 'text-gray-700'}`}>{stop.stopName}</td>
                   <td className="py-3 text-right">
                     {stop.nextArrival ? (
                       <div>
-                        <span className={`font-semibold ${minutesToArrival <= 1 ? 'text-red-600' : 'text-blue-600'}`}>
-                          {minutesToArrival === 999 ? "Sin datos" : minutesToArrival <= 0 ? "Llegando" : `${minutesToArrival} min`}
+                        <span className={`font-semibold ${arrivalColorClass}`}>
+                          {arrivalString}
                         </span>
-                        {minutesToArrival > 0 && minutesToArrival < 999 && (
+                        {arrivalString !== "Llegando" && arrivalString !== "Sin datos" && stop.nextArrival.estimatedArrivalTime && (
                           <span className="text-xs text-gray-500 ml-1">({formatTime(stop.nextArrival.estimatedArrivalTime)})</span>
+                        )}
+                        {/* Se mantiene la lógica de lastUpdateTimestamp si se pasa en la prop */}
+                        {stop.lastUpdateTimestamp && (
+                             <div className="text-xs text-gray-400">(Act: {formatTime(stop.lastUpdateTimestamp, true)})</div>
                         )}
                       </div>
                     ) : (
-                      <span className="text-xs text-gray-400">Sin datos</span>
+                      <span className="text-xs text-gray-400">
+                        Sin datos
+                        {stop.lastUpdateTimestamp && (
+                             <div className="text-xs text-gray-400">(Act: {formatTime(stop.lastUpdateTimestamp, true)})</div>
+                        )}
+                      </span>
                     )}
                   </td>
                 </tr>
