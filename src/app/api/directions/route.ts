@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import fs from 'fs';
 import path from 'path';
 
-// Interfaces (ajustar direction_id si siempre es string en el JSON, o convertir al comparar)
+// Interfaces
 interface Trip {
     route_id: string;
     service_id: string; 
@@ -20,8 +20,16 @@ interface StopOnRoute {
     sequence: number; 
 }
 
+// Definición para elementos en routes.json
+interface RouteInfo {
+    route_id: string;
+    route_long_name?: string;
+    // Agrega otras propiedades de RouteInfo que puedas necesitar
+}
+
 type TripsData = Trip[];
 type RouteToStopsData = Record<string, StopOnRoute[]>; 
+type RoutesJsonData = RouteInfo[]; // Tipo para routes.json
 
 export interface DirectionOption {
     stopId: string;         
@@ -61,7 +69,8 @@ export async function GET(request: NextRequest) {
     try {
         const trips = loadJsonData<TripsData>('trips.json');
         const routeToStops = loadJsonData<RouteToStopsData>('route_to_stops.json');
-        const routesData = loadJsonData<any[]>('routes.json'); // Para el fallback de nombre de ruta
+        // CORREGIDO: Usar el tipo específico RoutesJsonData
+        const routesData = loadJsonData<RoutesJsonData>('routes.json'); 
 
         if (!trips || !routeToStops || !routesData) {
             return NextResponse.json(
@@ -94,9 +103,8 @@ export async function GET(request: NextRequest) {
                             trip.trip_headsign && trip.trip_headsign.trim() !== ""
                     );
 
-                    if (relevantTrip) {
-                        // trip_headsign ya fue validado en la condición del find
-                        headsign = relevantTrip.trip_headsign!; // Usar '!' porque ya sabemos que no es null/undefined/vacío
+                    if (relevantTrip && relevantTrip.trip_headsign) { // Asegurar que trip_headsign existe
+                        headsign = relevantTrip.trip_headsign;
                     } else {
                         console.warn(`No se encontró trip_headsign para ${routeId}, direction_id ${currentDirectionIdNum}. Intentando fallback con nombre de ruta.`);
                         // Fallback usando route_long_name

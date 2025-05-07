@@ -47,11 +47,7 @@ interface StopOnLine {
   stopName: string;
   sequence: number; 
 }
-interface VehiclePosition {
-  tripId: string; 
-  currentStopId?: string | null; 
-  nextStopId?: string | null;    
-}
+// ELIMINADO: interface VehiclePosition ya que no se usa y 'vehicles' se envía vacío.
 
 type RouteToStopsData = Record<string, { stopId: string; stopName: string; sequence: number }[]>;
 interface LocalTrip {
@@ -177,8 +173,8 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
               // Determinar estado del arribo
               let arrivalStatus: Arrival['status'] = 'unknown';
               if (delayInSeconds === 0) arrivalStatus = 'on-time';
-              else if (delayInSeconds < 0 && delayInSeconds >= -180) arrivalStatus = 'early';
-              else if (delayInSeconds < -180 || delayInSeconds > 180) arrivalStatus = 'delayed';
+              else if (delayInSeconds < 0 && delayInSeconds >= -180) arrivalStatus = 'early'; // Ajustar umbrales si es necesario
+              else if (delayInSeconds < -180 || delayInSeconds > 180) arrivalStatus = 'delayed'; // Ajustar umbrales si es necesario
               
               // Determinar destino final
               let officialTripHeadsign = "Desconocido";
@@ -200,19 +196,19 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
               }
               
               processedArrivals.push({
-                tripId: entity.ID,
+                tripId: entity.ID, // Usar entity.ID que es el trip_id en GTFS-RT
                 routeId: tripInfo.Route_Id,
                 headsign: officialTripHeadsign,
-                estimatedArrivalTime: estimatedArrivalTime,
+                estimatedArrivalTime: estimatedArrivalTime, // Este es el tiempo ya calculado
                 delaySeconds: delayInSeconds,
                 status: arrivalStatus,
-                departureTimeFromTerminal: tripInfo.start_time,
-                vehicleId: entity.ID
+                departureTimeFromTerminal: tripInfo.start_time, // De la API externa
+                vehicleId: entity.ID // Puede ser el mismo que tripId si no hay vehicle_id separado
               });
             }
           } else {
             // No hay reporte válido para esta estación
-            console.log(`[API /api/realtime] Sin reporte válido para estación ${targetStation.stop_name}`);
+            console.log(`[API /api/realtime] Sin reporte válido para estación ${targetStation.stop_name} (R:${tripInfo.Route_Id} D:${tripDirectionIdNum})`);
           }
         }
       }
@@ -250,8 +246,18 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       timestamp: externalData.Header.timestamp * 1000 // Convertir a milisegundos como espera el frontend
     });
 
-  } catch (error: any) {
-    console.error(`[API /api/realtime] CATCH BLOCK ERROR: ${error.message}`, error.stack);
-    return NextResponse.json({ error: 'Error al procesar datos en tiempo real.' }, { status: 500 });
+  } catch (error: unknown) { // CORREGIDO: de 'any' a 'unknown'
+    let errorMessage = 'Error al procesar datos en tiempo real.';
+    let errorStack = undefined;
+
+    if (error instanceof Error) {
+      errorMessage = error.message;
+      errorStack = error.stack;
+    } else if (typeof error === 'string') {
+      errorMessage = error;
+    }
+    
+    console.error(`[API /api/realtime] CATCH BLOCK ERROR: ${errorMessage}`, errorStack || error);
+    return NextResponse.json({ error: errorMessage }, { status: 500 });
   }
 }
