@@ -2,6 +2,8 @@
 "use client";
 
 import { useEffect, useState } from 'react';
+import StopLineView from './StopLineView';
+import { Route, Stop } from '@/types';
 
 // --- INTERFACES (Confirmadas con la última versión de /api/realtime) ---
 interface ArrivalFromApi {
@@ -11,8 +13,8 @@ interface ArrivalFromApi {
   estimatedArrivalTime: number; // Timestamp en SEGUNDOS
   delaySeconds: number;
   status: 'on-time' | 'delayed' | 'early' | 'unknown';
-  departureTimeFromTerminal?: string; // Puede que no se use mucho ahora
-  vehicleId?: string; // Puede que no se use mucho ahora
+  departureTimeFromTerminal?: string;
+  vehicleId?: string;
 }
 
 interface StopOnLine {
@@ -21,7 +23,7 @@ interface StopOnLine {
   sequence: number;
 }
 
-interface VehiclePosition { // Aunque la API devuelve [], mantenemos la interfaz por si acaso
+interface VehiclePosition {
   tripId: string;
   currentStopId?: string | null;
   nextStopId?: string | null;
@@ -30,7 +32,7 @@ interface VehiclePosition { // Aunque la API devuelve [], mantenemos la interfaz
 interface ArrivalsViewApiResponse { 
   arrivals: ArrivalFromApi[];
   stops: StopOnLine[];
-  vehicles: VehiclePosition[]; // SIEMPRE SERÁ [] CON LA LÓGICA ACTUAL DE LA API
+  vehicles: VehiclePosition[];
   timestamp: number; // Timestamp en MILISEGUNDOS
 }
 
@@ -43,17 +45,14 @@ interface LocalTrip {
     direction_id: string | number;
 }
 
-import StopLineView from './StopLineView';
-import { Route, Stop } from '@/types'; // Tus tipos generales
-
 interface ArrivalsViewProps {
   routeId: string;
-  stopId: string; // El ID de la parada física seleccionada por el usuario
-  direction: string; // "0" o "1"
+  stopId: string;
+  direction: string;
   routeColor: string;
-  routeName: string; // Nombre corto, ej: "A"
-  route: Route;   // Objeto Route completo
-  stop: Stop;     // Objeto Stop seleccionado por el usuario (con stop_name)
+  routeName: string;
+  route: Route;
+  stop: Stop;
 }
 
 export default function ArrivalsView({ 
@@ -126,7 +125,7 @@ export default function ArrivalsView({
         }
     }
     setGeneralDirectionHeadsign(headsignToShow);
-  }, [apiData, localTrips, routeId, direction, route.route_long_name]); // Dependencias correctas
+  }, [apiData, localTrips, routeId, direction, route.route_long_name]);
 
   // --- Funciones Helper ---
   const isColorBright = (color: string): boolean => {
@@ -196,9 +195,9 @@ export default function ArrivalsView({
 
   useEffect(() => {
     fetchData(); // Carga inicial
-    const interval = setInterval(fetchData, 30000); // Actualizar cada 30s
+    const interval = setInterval(fetchData, 15000); // Actualizar cada 15s
     return () => clearInterval(interval);
-  }, [routeId, stopId, direction]); // Dependencias correctas
+  }, [routeId, stopId, direction]);
 
   // Timer para la hora actual
   useEffect(() => {
@@ -255,7 +254,7 @@ export default function ArrivalsView({
           </div>
           <div className={`text-sm text-right sm:text-left ${secondaryHeaderTextClass}`}>
             <p className={mainHeaderTextClass}>Hora: {formatTime(currentTime, true)}</p>
-            <p>Act: {formatTime(apiData.timestamp) ?? '...'}</p> {/* Usar ?? por si acaso */}
+            <p>Act: {formatTime(apiData.timestamp) ?? '...'}</p>
           </div>
         </div>
         {updating && (
@@ -289,13 +288,17 @@ export default function ArrivalsView({
                     </div>
                     <div className="flex-grow">
                       <p className="font-medium text-gray-800">{displayHeadsign}</p>
-                      <p className="text-sm text-gray-500">
+                      <div className="text-sm text-gray-500 flex flex-wrap items-center gap-x-2">
                         <span className={`font-semibold ${minutesToArrival <= 1 ? 'text-red-600' : 'text-blue-600'}`}>
-                          {minutesToArrival === 999 ? "N/A" : (minutesToArrival <= 0 ? "Llegando" : `${minutesToArrival} min`)}
+                          {minutesToArrival === 999 ? "N/A" : (
+                            minutesToArrival <= 0 
+                              ? "Llegando" 
+                              : `${minutesToArrival} min (${formatTime(new Date(arrival.estimatedArrivalTime * 1000))})`
+                          )}
                         </span>
                         {arrival.departureTimeFromTerminal && typeof arrival.departureTimeFromTerminal === 'string' &&
-                         <span className="ml-2 text-xs">(Salió {arrival.departureTimeFromTerminal.substring(0, 5)})</span>}
-                      </p>
+                         <span className="text-xs text-gray-500">(Reporte de inicio de servicio: {arrival.departureTimeFromTerminal.substring(0, 5)})</span>}
+                      </div>
                     </div>
                   </li>
                 );
@@ -314,9 +317,10 @@ export default function ArrivalsView({
           {apiData.stops && apiData.stops.length > 0 ? (
             <StopLineView 
               stops={apiData.stops}
-              vehicles={[]} // Pasar array vacío explícitamente
               currentStopId={stopId} 
               routeColor={routeColor}
+              routeId={routeId}
+              direction={direction}
             />
           ) : ( 
             <div className="py-4 text-center text-gray-500 text-sm">

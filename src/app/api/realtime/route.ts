@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import fs from 'fs';
 import path from 'path';
 
-// --- INTERFACES (Basadas en la estructura esperada del API externa y nuestra respuesta) ---
+// --- INTERFACES ---
 interface ExternalApiArrivalDepartureInfo {
   time?: number; 
   delay?: number; 
@@ -31,7 +31,7 @@ interface ExternalApiResponse {
   Entity: ExternalApiEntity[];   
 }
 
-// --- INTERFACES PARA NUESTRA RESPUESTA (LO QUE ESPERA ArrivalsView) ---
+// --- INTERFACES PARA NUESTRA RESPUESTA ---
 interface Arrival {
   tripId: string; 
   routeId: string;
@@ -85,8 +85,8 @@ function loadLocalJsonData<T>(filePathFromPublic: string): T | null {
 export async function GET(request: NextRequest): Promise<NextResponse> {
   const searchParams = request.nextUrl.searchParams;
   const routeIdParam = searchParams.get('routeId');
-  const stopIdParam = searchParams.get('stopId'); // Parada de interés para el usuario
-  const directionIdParam = searchParams.get('direction'); // "0" o "1"
+  const stopIdParam = searchParams.get('stopId'); 
+  const directionIdParam = searchParams.get('direction'); 
 
   console.log(`[API /api/realtime] Request: R:${routeIdParam}, S:${stopIdParam}, D:${directionIdParam}`);
 
@@ -103,34 +103,27 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       return NextResponse.json({ error: 'Error de config del servidor (realtime).' },{ status: 500 });
   }
 
-  try { // Inicio bloque try
-    // --- CAMBIO: VOLVER A USAR FETCH ---
+  try { 
     console.log(`[API /api/realtime] Iniciando fetch a API de transporte para Subtes.`);
     const externalResponse = await fetch(
       `https://apitransporte.buenosaires.gob.ar/subtes/forecastGTFS?client_id=${CLIENT_ID}&client_secret=${CLIENT_SECRET}`,
       { 
-          method: 'GET', // Especificar método GET
-          headers: { // Añadir headers si son necesarios (ej. Aceptar JSON)
-              'Accept': 'application/json',
-          },
-          next: { revalidate: 20 } // Revalidar caché cada 20 segundos
+          method: 'GET',
+          headers: { 'Accept': 'application/json' },
+          next: { revalidate: 20 }
       } 
     );
-    // --- FIN DEL CAMBIO ---
 
     if (!externalResponse.ok) {
       const errorBody = await externalResponse.text(); 
       console.error(`[API /api/realtime] Error desde API externa: ${externalResponse.status} ${externalResponse.statusText}. Respuesta: ${errorBody.substring(0, 500)}...`); 
-      // Devolver un error más informativo al cliente si es posible
       let errorMsg = `Error ${externalResponse.status} al contactar servicio de subterráneos.`;
       if (externalResponse.status === 401 || externalResponse.status === 403) {
           errorMsg = "Error de autenticación con el servicio de subterráneos. Revisa las credenciales.";
       } else if (externalResponse.status === 429) {
           errorMsg = "Límite de peticiones excedido al servicio de subterráneos.";
       }
-      // Puedes intentar parsear el errorBody como JSON si esperas un formato específico
-      // try { const parsedError = JSON.parse(errorBody); errorMsg = parsedError.message || errorMsg; } catch(e){}
-      return NextResponse.json({ error: errorMsg }, { status: 502 }); // 502 Bad Gateway es apropiado
+      return NextResponse.json({ error: errorMsg }, { status: 502 });
     }
 
     const externalData: ExternalApiResponse = await externalResponse.json();
@@ -141,111 +134,107 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
         throw new Error("Respuesta inválida del servicio de subterráneos.");
     }
 
-    console.log(`[API /api/realtime] Respuesta API externa OK: Timestamp ${externalData.Header.timestamp}, Entidades ${externalData.Entity.length}`);
+    // Formatear timestamp del header como hora legible
+    const headerTime = externalData.Header.timestamp;
+    const headerDate = new Date(headerTime * 1000);
+    const headerTimeFormatted = headerDate.toLocaleTimeString('es-AR');
+    
+    console.log(`[API /api/realtime] Respuesta API externa OK: Timestamp ${headerTime}, Hora ${headerTimeFormatted}, Entidades ${externalData.Entity.length}`);
 
     const processedArrivals: Arrival[] = [];
-    const processedVehicles: VehiclePosition[] = [];
     const targetDirectionIdNum = parseInt(directionIdParam, 10);
-
     const localTripsData = loadLocalJsonData<LocalTrip[]>('data/trips.json'); 
 
     console.log(`[API /api/realtime] Procesando entidades para R:${routeIdParam}, D:${targetDirectionIdNum}. Parada usuario:${stopIdParam}`);
 
-    externalData.Entity.forEach((entity: ExternalApiEntity) => { // Inicio forEach entity
+    // Procesar las entidades para encontrar arribos a la parada solicitada
+    externalData.Entity.forEach((entity: ExternalApiEntity) => {
       const tripInfo = entity.Linea;
       let tripDirectionIdNum: number | null = null;
+      
       if (tripInfo.Direction_ID !== undefined && tripInfo.Direction_ID !== null) {
           const parsedNum = parseInt(tripInfo.Direction_ID.toString(), 10);
           if (!isNaN(parsedNum)) tripDirectionIdNum = parsedNum;
       }
-
-      if (tripInfo.Route_Id === routeIdParam && tripDirectionIdNum === targetDirectionIdNum) { // Inicio if trip coincide
-        let stopForArrivalCalculationFound = false;
-        let vehicleCurrentStop: ExternalApiStation | null = null;
-        let vehicleNextStop: ExternalApiStation | null = null;
-        const nowTimestamp = externalData.Header.timestamp;
-
-        for (let i = 0; i < tripInfo.Estaciones.length; i++) { // Inicio for estaciones
-          const estacion: ExternalApiStation = tripInfo.Estaciones[i];
+    
+      // Solo procesar si coincide línea y dirección
+      if (tripInfo.Route_Id === routeIdParam && tripDirectionIdNum === targetDirectionIdNum) {
+        // Buscar la parada específica que interesa al usuario
+        const targetStation = tripInfo.Estaciones.find(est => est.stop_id === stopIdParam);
+        
+        if (targetStation && targetStation.arrival?.time) {
+          const arrivalTime = targetStation.arrival.time;
+          const delayInSeconds = targetStation.arrival?.delay !== undefined ? Number(targetStation.arrival.delay) : 0;
           
-          // --- Cálculo de Llegadas ---
-          if (estacion.stop_id === stopIdParam) {
-            stopForArrivalCalculationFound = true;
-            const arrivalTime = estacion.arrival?.time;
-            // Solo procesar si hay tiempo de llegada y es futuro o muy reciente
-            if (arrivalTime !== undefined && arrivalTime >= nowTimestamp - 60) { 
-              const delayInSeconds = estacion.arrival?.delay !== undefined ? Number(estacion.arrival.delay) : 0;
+          // CAMBIO CLAVE: Verificar si es un reporte real o no
+          const isValidReport = delayInSeconds > 0 || (arrivalTime !== headerTime);
+          
+          if (isValidReport) {
+            // Solo procesar si el arribo es futuro o muy reciente (últimos 60 segundos)
+            const estimatedArrivalTime = headerTime + delayInSeconds;
+            
+            if (estimatedArrivalTime >= headerTime - 60) {
+              // Determinar estado del arribo
               let arrivalStatus: Arrival['status'] = 'unknown';
               if (delayInSeconds === 0) arrivalStatus = 'on-time';
-              else if (delayInSeconds < 0 && delayInSeconds >= -180) arrivalStatus = 'early'; 
-              else if (delayInSeconds < -180 || delayInSeconds > 180) arrivalStatus = 'delayed'; 
+              else if (delayInSeconds < 0 && delayInSeconds >= -180) arrivalStatus = 'early';
+              else if (delayInSeconds < -180 || delayInSeconds > 180) arrivalStatus = 'delayed';
               
+              // Determinar destino final
               let officialTripHeadsign = "Desconocido";
               if (localTripsData) {
-                  const matchingLocalTrip = localTripsData.find((t: LocalTrip) => 
-                      t.route_id === tripInfo.Route_Id && 
-                      t.direction_id?.toString() === tripDirectionIdNum?.toString() && 
+                  const matchingLocalTrip = localTripsData.find((t: LocalTrip) =>
+                      t.route_id === tripInfo.Route_Id &&
+                      t.direction_id?.toString() === tripDirectionIdNum?.toString() &&
                       t.trip_headsign && t.trip_headsign.trim() !== ""
                   );
-                  if (matchingLocalTrip?.trip_headsign) officialTripHeadsign = matchingLocalTrip.trip_headsign;
-                  else officialTripHeadsign = tripInfo.Estaciones[tripInfo.Estaciones.length - 1]?.stop_name || 'Desconocido';
+                  
+                  if (matchingLocalTrip?.trip_headsign) {
+                      officialTripHeadsign = matchingLocalTrip.trip_headsign;
+                  } else {
+                      // Si no hay info en localTripsData, usamos la última estación como terminal
+                      officialTripHeadsign = tripInfo.Estaciones[tripInfo.Estaciones.length - 1]?.stop_name || 'Desconocido';
+                  }
               } else {
                   officialTripHeadsign = tripInfo.Estaciones[tripInfo.Estaciones.length - 1]?.stop_name || 'Desconocido';
               }
               
               processedArrivals.push({
-                tripId: entity.ID, routeId: tripInfo.Route_Id, headsign: officialTripHeadsign,
-                estimatedArrivalTime: arrivalTime, delaySeconds: delayInSeconds, status: arrivalStatus,
-                departureTimeFromTerminal: tripInfo.start_time, vehicleId: entity.ID,
+                tripId: entity.ID,
+                routeId: tripInfo.Route_Id,
+                headsign: officialTripHeadsign,
+                estimatedArrivalTime: estimatedArrivalTime,
+                delaySeconds: delayInSeconds,
+                status: arrivalStatus,
+                departureTimeFromTerminal: tripInfo.start_time,
+                vehicleId: entity.ID
               });
             }
-          } // Fin if parada de interés
+          } else {
+            // No hay reporte válido para esta estación
+            console.log(`[API /api/realtime] Sin reporte válido para estación ${targetStation.stop_name}`);
+          }
+        }
+      }
+    });
 
-          // --- Cálculo Posición Vehículo ---
-          const arrivalTime = estacion.arrival?.time;
-          const departureTime = estacion.departure?.time;
-          if (arrivalTime !== undefined) {
-              if (arrivalTime <= nowTimestamp) { 
-                  vehicleCurrentStop = estacion; 
-                  vehicleNextStop = (i + 1 < tripInfo.Estaciones.length) ? tripInfo.Estaciones[i + 1] : null;
-              } else { 
-                  if (!vehicleNextStop) { 
-                      vehicleNextStop = estacion; 
-                      if (i === 0 && !vehicleCurrentStop) vehicleCurrentStop = null; 
-                  }
-                  break; 
-              }
-          } // Fin if arrivalTime existe
-        } // Fin for estaciones
-
-        // Agregar vehículo a la lista (todos los de la línea/dirección)
-        processedVehicles.push({
-            tripId: entity.ID,
-            currentStopId: vehicleCurrentStop?.stop_id || null,
-            nextStopId: vehicleNextStop?.stop_id || null,
-        });
-
-      } // Fin if trip coincide
-    }); // Fin forEach entity
-
+    // Ordenamos los arribos por tiempo estimado (más cercano primero)
     processedArrivals.sort((a, b) => a.estimatedArrivalTime - b.estimatedArrivalTime);
     
-    // --- Logging Final ---
+    // Logging y procesamiento final
     if (processedArrivals.length > 0) {
         console.log(`[API /api/realtime] Próximas llegadas para ${stopIdParam} (R:${routeIdParam} D:${directionIdParam}):`);
         processedArrivals.forEach((arr: Arrival) => {
             const arrivalD = new Date(arr.estimatedArrivalTime * 1000);
             const serverNow = new Date();
             const minutesDiff = Math.max(0, Math.round((arrivalD.getTime() - serverNow.getTime()) / (1000 * 60)));
-            console.log(`  - Trip ${arr.tripId} (Hacia ${arr.headsign}): ${minutesDiff} min (ETA: ${arrivalD.toLocaleTimeString('es-AR')}, Delay: ${arr.delaySeconds}s)`);
+            console.log(`  - Trip ${arr.tripId} (Hacia ${arr.headsign}): ${minutesDiff} min (ETA: ${arrivalD.toLocaleTimeString('es-AR')}, Header: ${headerTimeFormatted}, Delay: ${arr.delaySeconds}s)`);
         });
     } else {
         console.log(`[API /api/realtime] No se encontraron llegadas futuras para ${stopIdParam} (R:${routeIdParam} D:${directionIdParam}).`);
     }
-    processedVehicles.forEach((v: VehiclePosition) => {
-        console.log(`  - Vehículo/Servicio (ID ${v.tripId}): Desde ${v.currentStopId || 'Inicio'} -> Hacia ${v.nextStopId || 'Terminal'}`);
-    });
 
+    // Obtener información de todas las paradas para esta línea/dirección
     const routeToStops = loadLocalJsonData<RouteToStopsData>('data/route_to_stops.json');
     let stopsForLineView: StopOnLine[] = [];
     if (routeToStops) {
@@ -253,16 +242,16 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       stopsForLineView = routeToStops[directionKey] || [];
     }
 
+    // Devolvemos la respuesta
     return NextResponse.json({
       arrivals: processedArrivals,
       stops: stopsForLineView,
-      vehicles: processedVehicles, // Devolveremos la lista de vehículos/servicios activos
-      timestamp: externalData.Header.timestamp * 1000 
+      vehicles: [], // Array vacío para mantener la estructura de respuesta esperada
+      timestamp: externalData.Header.timestamp * 1000 // Convertir a milisegundos como espera el frontend
     });
 
-  } catch (error: any) { // Inicio CATCH
+  } catch (error: any) {
     console.error(`[API /api/realtime] CATCH BLOCK ERROR: ${error.message}`, error.stack);
-    // Devolver un error genérico al cliente, el detalle ya se logueó
     return NextResponse.json({ error: 'Error al procesar datos en tiempo real.' }, { status: 500 });
-  } // Fin CATCH
-} // Fin export async function GET
+  }
+}
