@@ -142,7 +142,7 @@ export default function StopSelector({ routeId, route, onSelect }: StopSelectorP
           {filteredStops.length === 0 && searchTerm.trim() !== '' && ( // Mostrar solo si se ha buscado algo
             <div className="col-span-full text-center text-gray-700 p-8 bg-white rounded-lg">
               {/* CORREGIDO: Uso de entidades HTML para las comillas */}
-              No se encontraron paradas que coincidan con "{searchTerm}"
+              No se encontraron paradas que coincidan con &quot;{searchTerm}&quot;
             </div>
           )}
         </div>

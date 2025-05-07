@@ -172,7 +172,7 @@ export default function SearchBar({ onSelect, onClose }: SearchBarProps) {
       {searchTerm.trim().length >= 2 && results.length === 0 && !loading && (
         <div className="absolute w-full bg-white mt-2 rounded-lg shadow-lg p-4 text-center text-gray-500">
           {/* CORREGIDO: Uso de entidades HTML para las comillas */}
-          No se encontraron resultados para "{searchTerm}"
+          No se encontraron resultados para &quot;{searchTerm}&quot;
         </div>
       )}
     </div>
