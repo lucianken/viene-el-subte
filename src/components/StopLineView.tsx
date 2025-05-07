@@ -150,11 +150,7 @@ const StopLineView: React.FC<StopLineViewProps> = ({
         {/* Tabla para paradas y arribos */}
         <table className="w-full">
           <thead className="text-xs text-gray-600 border-b">
-            <tr>
-              <th className="w-6"></th> {/* Columna para el punto/círculo */}
-              <th className="py-2 text-left">Estación</th>
-              <th className="py-2 text-right">Próximo arribo</th>
-            </tr>
+            <tr><th className="w-6"></th><th className="py-2 text-left">Estación</th><th className="py-2 text-right">Próximo arribo</th></tr>
           </thead>
           <tbody>
             {stopsWithArrivals.map((stop) => {
@@ -162,50 +158,21 @@ const StopLineView: React.FC<StopLineViewProps> = ({
               const minutesToArrival = stop.nextArrival ? getMinutesUntilArrival(stop.nextArrival.estimatedArrivalTime) : 999;
               
               return (
-                <tr 
-                  key={stop.stopId} 
-                  className={`relative group min-h-[40px] hover:bg-gray-50 transition-colors ${
-                    isCurrentSelectedStop ? 'bg-blue-50' : ''
-                  }`}
-                >
-                  {/* Punto de la parada */}
+                <tr key={stop.stopId} className={`relative group min-h-[40px] hover:bg-gray-50 transition-colors ${isCurrentSelectedStop ? 'bg-blue-50' : ''}`}>
                   <td className="relative py-3">
                     <div className="absolute left-3 top-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10">
-                      <div
-                        className={`w-3 h-3 rounded-full border-2 transition-all duration-150 ${
-                          isCurrentSelectedStop
-                            ? 'bg-blue-600 border-blue-700 scale-125 shadow-md ring-2 ring-blue-300 ring-offset-1'
-                            : `border-[#${routeColor}] bg-white shadow-sm group-hover:bg-gray-100`
-                        }`}
-                      ></div>
+                      <div className={`w-3 h-3 rounded-full border-2 transition-all duration-150 ${isCurrentSelectedStop ? 'bg-blue-600 border-blue-700 scale-125 shadow-md ring-2 ring-blue-300 ring-offset-1' : `border-[#${routeColor}] bg-white shadow-sm group-hover:bg-gray-100`}`}></div>
                     </div>
                   </td>
-                  
-                  {/* Nombre de la estación */}
-                  <td className={`py-3 ${
-                    isCurrentSelectedStop ? 'font-semibold text-blue-700' : 'text-gray-700'
-                  }`}>
-                    {stop.stopName}
-                  </td>
-                  
-                  {/* Próximo arribo */}
+                  <td className={`py-3 ${isCurrentSelectedStop ? 'font-semibold text-blue-700' : 'text-gray-700'}`}>{stop.stopName}</td>
                   <td className="py-3 text-right">
                     {stop.nextArrival ? (
                       <div>
-                        <span className={`font-semibold ${
-                          minutesToArrival <= 1 ? 'text-red-600' : 'text-blue-600'
-                        }`}>
-                          {minutesToArrival === 999 ? 
-                            "Sin datos" : 
-                            minutesToArrival <= 0 ?
-                              "Llegando" :
-                              `${minutesToArrival} min`
-                          }
+                        <span className={`font-semibold ${minutesToArrival <= 1 ? 'text-red-600' : 'text-blue-600'}`}>
+                          {minutesToArrival === 999 ? "Sin datos" : minutesToArrival <= 0 ? "Llegando" : `${minutesToArrival} min`}
                         </span>
                         {minutesToArrival > 0 && minutesToArrival < 999 && (
-                          <span className="text-xs text-gray-500 ml-1">
-                            ({formatTime(stop.nextArrival.estimatedArrivalTime)})
-                          </span>
+                          <span className="text-xs text-gray-500 ml-1">({formatTime(stop.nextArrival.estimatedArrivalTime)})</span>
                         )}
                       </div>
                     ) : (
