@@ -1,175 +1,268 @@
-import { NextResponse } from 'next/server';
-import { NextRequest } from 'next/server';
+// src/app/api/realtime/route.ts
+import { NextRequest, NextResponse } from 'next/server';
 import fs from 'fs';
 import path from 'path';
 
-export async function GET(request: NextRequest) {
-  const searchParams = request.nextUrl.searchParams;
-  const routeId = searchParams.get('routeId');
-  const stopId = searchParams.get('stopId');
-  const direction = searchParams.get('direction');
-  
-  if (!routeId || !stopId || !direction) {
-    return NextResponse.json(
-      { error: 'Se requieren los parámetros routeId, stopId y direction' },
-      { status: 400 }
-    );
-  }
-  
-  try {
-    // Para el MVP, simularemos datos en tiempo real
-    // En una implementación real, aquí se consultaría tu API externa
-    
-    // Cargar datos necesarios
-    const routeToStopsPath = path.join(process.cwd(), 'public/data/route_to_stops.json');
-    const routesPath = path.join(process.cwd(), 'public/data/routes.json');
-    const tripsPath = path.join(process.cwd(), 'public/data/trips.json');
-    
-    if (!fs.existsSync(routeToStopsPath) || !fs.existsSync(routesPath) || !fs.existsSync(tripsPath)) {
-      return NextResponse.json(
-        { error: 'No se encontraron datos necesarios' },
-        { status: 404 }
-      );
-    }
-    
-    // Leer archivos
-    const routeToStopsData = fs.readFileSync(routeToStopsPath, 'utf8');
-    const routesData = fs.readFileSync(routesPath, 'utf8');
-    const tripsData = fs.readFileSync(tripsPath, 'utf8');
-    
-    const routeToStops = JSON.parse(routeToStopsData);
-    const routes = JSON.parse(routesData);
-    const trips = JSON.parse(tripsData);
-    
-    // Obtener las paradas en esta dirección
-    const directionKey = `${routeId}_${direction}`;
-    const stopsInDirection = routeToStops[directionKey] || [];
-    
-    // Encontrar el viaje representativo para esta dirección
-    const directionalTrips = trips.filter(
-      (trip: any) => trip.route_id === routeId && trip.direction_id === direction
-    );
-    
-    // Para el MVP, simular llegadas
-    const now = new Date();
-    
-    // Generar llegadas simuladas
-    const arrivals = [];
-    
-    // Si hay viajes, simular algunos arribos
-    if (directionalTrips.length > 0) {
-      const trip = directionalTrips[0];
-      
-      // Simular de 1 a 3 próximas llegadas (siempre al menos una)
-      const numArrivals = 1 + Math.floor(Math.random() * 3);
-      
-      for (let i = 0; i < numArrivals; i++) {
-        // Tiempo aleatorio entre 2 y 15 minutos
-        const minutesUntilArrival = 2 + Math.floor(Math.random() * 14);
-        
-        // Retraso aleatorio entre 0 y 5 minutos
-        const delayMinutes = Math.floor(Math.random() * 6);
-        
-        // Estado basado en el retraso
-        let status = 'on-time';
-        if (delayMinutes > 3) status = 'delayed';
-        else if (delayMinutes > 0) status = 'early';
-        
-        // Hora de salida (60 minutos antes de la llegada)
-        const departureTime = new Date(now);
-        departureTime.setMinutes(departureTime.getMinutes() - 60 + delayMinutes);
-        
-        // Hora programada
-        const scheduledTime = new Date(now);
-        scheduledTime.setMinutes(scheduledTime.getMinutes() + minutesUntilArrival);
-        
-        // Hora estimada (con retraso)
-        const estimatedTime = new Date(scheduledTime);
-        estimatedTime.setMinutes(estimatedTime.getMinutes() + delayMinutes);
-        
-        // Agregar a la lista de llegadas
-        arrivals.push({
-          tripId: trip.trip_id,
-          routeId: routeId,
-          routeName: routes.find((r: any) => r.route_id === routeId)?.route_short_name || '',
-          headsign: trip.trip_headsign || '',
-          scheduledTime: scheduledTime.toLocaleTimeString('es-AR', { hour: '2-digit', minute: '2-digit' }),
-          estimatedTime: estimatedTime.toLocaleTimeString('es-AR', { hour: '2-digit', minute: '2-digit' }),
-          delay: delayMinutes * 60, // en segundos
-          status,
-          departureTime: departureTime.toLocaleTimeString('es-AR', { hour: '2-digit', minute: '2-digit' })
-        });
-      }
-      
-      // Ordenar por tiempo de llegada
-      arrivals.sort((a: any, b: any) => {
-        const timeA = new Date(`2025-01-01T${a.estimatedTime}`);
-        const timeB = new Date(`2025-01-01T${b.estimatedTime}`);
-        return timeA.getTime() - timeB.getTime();
-      });
-    }
-    
-    // Simular posiciones de vehículos
-    const vehicles = [];
-    
-    // Si hay llegadas, simular vehículos en la ruta
-    if (arrivals.length > 0 && stopsInDirection.length > 0) {
-      // El índice de la parada actual
-      const currentStopIndex = stopsInDirection.findIndex((stop: any) => stop.stopId === stopId);
-      
-      if (currentStopIndex !== -1) {
-        // Para cada llegada, simular un vehículo
-        for (let i = 0; i < arrivals.length; i++) {
-          // Calcular posición basada en tiempo de llegada
-          // Asegurarnos de que delay sea tratado como número
-          const delayValue = typeof arrivals[i].delay === 'number' ? 
-            arrivals[i].delay : 
-            Number(arrivals[i].delay);
-          
-          const minutesUntilArrival = delayValue / 60;
-          let vehicleStopIndex = currentStopIndex;
-          
-          // Ajustar posición según el tiempo de llegada
-          if (minutesUntilArrival > 10) {
-            // Está lejos, a varias paradas de distancia
-            vehicleStopIndex = Math.max(0, currentStopIndex - 4);
-          } else if (minutesUntilArrival > 5) {
-            // A 2-3 paradas de distancia
-            vehicleStopIndex = Math.max(0, currentStopIndex - 2);
-          } else if (minutesUntilArrival > 2) {
-            // A 1 parada de distancia
-            vehicleStopIndex = Math.max(0, currentStopIndex - 1);
-          }
-          
-          // Progreso en porcentaje entre la parada actual y la siguiente
-          const progressPercent = Math.min(100, Math.max(0, 
-            (minutesUntilArrival <= 2) ? 100 - (minutesUntilArrival * 50) : 0
-          ));
-          
-          // Agregar vehículo
-          vehicles.push({
-            tripId: arrivals[i].tripId,
-            currentStopId: stopsInDirection[vehicleStopIndex]?.stopId || null,
-            nextStopId: vehicleStopIndex < stopsInDirection.length - 1 
-              ? stopsInDirection[vehicleStopIndex + 1]?.stopId 
-              : null,
-            progressPercent: progressPercent
-          });
-        }
-      }
-    }
-    
-    return NextResponse.json({
-      arrivals,
-      stops: stopsInDirection,
-      vehicles,
-      timestamp: Date.now()
-    });
-  } catch (error) {
-    console.error(`Error al obtener datos en tiempo real: ${error}`);
-    return NextResponse.json(
-      { error: 'Error al obtener datos en tiempo real' },
-      { status: 500 }
-    );
-  }
+// --- INTERFACES (Basadas en la estructura esperada del API externa y nuestra respuesta) ---
+interface ExternalApiArrivalDepartureInfo {
+  time?: number; 
+  delay?: number; 
 }
+interface ExternalApiStation {
+  stop_id: string; 
+  stop_name: string;
+  arrival?: ExternalApiArrivalDepartureInfo;
+  departure?: ExternalApiArrivalDepartureInfo;
+}
+interface ExternalApiTripLinea {
+  Trip_Id: string;
+  Route_Id: string;
+  Direction_ID: number | string; 
+  start_time: string;
+  start_date: string;
+  Estaciones: ExternalApiStation[];
+}
+interface ExternalApiEntity {
+  ID: string; 
+  Linea: ExternalApiTripLinea;
+}
+interface ExternalApiResponse {
+  Header: { timestamp: number }; 
+  Entity: ExternalApiEntity[];   
+}
+
+// --- INTERFACES PARA NUESTRA RESPUESTA (LO QUE ESPERA ArrivalsView) ---
+interface Arrival {
+  tripId: string; 
+  routeId: string;
+  headsign: string; 
+  estimatedArrivalTime: number; // Timestamp en SEGUNDOS
+  delaySeconds: number; 
+  status: 'on-time' | 'delayed' | 'early' | 'unknown';
+  departureTimeFromTerminal?: string; 
+  vehicleId?: string; 
+}
+interface StopOnLine { 
+  stopId: string;
+  stopName: string;
+  sequence: number; 
+}
+interface VehiclePosition {
+  tripId: string; 
+  currentStopId?: string | null; 
+  nextStopId?: string | null;    
+}
+
+type RouteToStopsData = Record<string, { stopId: string; stopName: string; sequence: number }[]>;
+interface LocalTrip {
+    route_id: string;
+    service_id: string;
+    trip_id: string;
+    trip_headsign?: string;
+    trip_short_name?: string; 
+    direction_id: string | number; 
+    block_id?: string;
+    shape_id?: string;
+}
+
+// --- Funciones Helper ---
+function loadLocalJsonData<T>(filePathFromPublic: string): T | null {
+    const fullPath = path.join(process.cwd(), 'public', filePathFromPublic);
+    if (!fs.existsSync(fullPath)) {
+        console.error(`[API /api/realtime] Error: Archivo local no encontrado - ${fullPath}`);
+        return null;
+    }
+    try {
+        const fileData = fs.readFileSync(fullPath, 'utf8');
+        return JSON.parse(fileData) as T;
+    } catch (error) {
+        console.error(`[API /api/realtime] Error al leer/parsear archivo local ${filePathFromPublic}:`, error);
+        return null;
+    }
+}
+
+// --- Handler GET ---
+export async function GET(request: NextRequest): Promise<NextResponse> {
+  const searchParams = request.nextUrl.searchParams;
+  const routeIdParam = searchParams.get('routeId');
+  const stopIdParam = searchParams.get('stopId'); // Parada de interés para el usuario
+  const directionIdParam = searchParams.get('direction'); // "0" o "1"
+
+  console.log(`[API /api/realtime] Request: R:${routeIdParam}, S:${stopIdParam}, D:${directionIdParam}`);
+
+  if (!routeIdParam || !stopIdParam || !directionIdParam) {
+    console.error("[API /api/realtime] Error: Parámetros incompletos.");
+    return NextResponse.json({ error: 'Se requieren routeId, stopId y direction' }, { status: 400 });
+  }
+
+  const CLIENT_ID = process.env.SUBTE_API_CLIENT_ID;
+  const CLIENT_SECRET = process.env.SUBTE_API_CLIENT_SECRET;
+
+  if (!CLIENT_ID || !CLIENT_SECRET) {
+      console.error("[API /api/realtime] Error: Credenciales API no configuradas.");
+      return NextResponse.json({ error: 'Error de config del servidor (realtime).' },{ status: 500 });
+  }
+
+  try { // Inicio bloque try
+    // --- CAMBIO: VOLVER A USAR FETCH ---
+    console.log(`[API /api/realtime] Iniciando fetch a API de transporte para Subtes.`);
+    const externalResponse = await fetch(
+      `https://apitransporte.buenosaires.gob.ar/subtes/forecastGTFS?client_id=${CLIENT_ID}&client_secret=${CLIENT_SECRET}`,
+      { 
+          method: 'GET', // Especificar método GET
+          headers: { // Añadir headers si son necesarios (ej. Aceptar JSON)
+              'Accept': 'application/json',
+          },
+          next: { revalidate: 20 } // Revalidar caché cada 20 segundos
+      } 
+    );
+    // --- FIN DEL CAMBIO ---
+
+    if (!externalResponse.ok) {
+      const errorBody = await externalResponse.text(); 
+      console.error(`[API /api/realtime] Error desde API externa: ${externalResponse.status} ${externalResponse.statusText}. Respuesta: ${errorBody.substring(0, 500)}...`); 
+      // Devolver un error más informativo al cliente si es posible
+      let errorMsg = `Error ${externalResponse.status} al contactar servicio de subterráneos.`;
+      if (externalResponse.status === 401 || externalResponse.status === 403) {
+          errorMsg = "Error de autenticación con el servicio de subterráneos. Revisa las credenciales.";
+      } else if (externalResponse.status === 429) {
+          errorMsg = "Límite de peticiones excedido al servicio de subterráneos.";
+      }
+      // Puedes intentar parsear el errorBody como JSON si esperas un formato específico
+      // try { const parsedError = JSON.parse(errorBody); errorMsg = parsedError.message || errorMsg; } catch(e){}
+      return NextResponse.json({ error: errorMsg }, { status: 502 }); // 502 Bad Gateway es apropiado
+    }
+
+    const externalData: ExternalApiResponse = await externalResponse.json();
+    
+    // Validación básica de la respuesta
+    if (!externalData || !externalData.Header || !externalData.Entity) {
+        console.error("[API /api/realtime] Error: Respuesta de API externa inválida o incompleta.");
+        throw new Error("Respuesta inválida del servicio de subterráneos.");
+    }
+
+    console.log(`[API /api/realtime] Respuesta API externa OK: Timestamp ${externalData.Header.timestamp}, Entidades ${externalData.Entity.length}`);
+
+    const processedArrivals: Arrival[] = [];
+    const processedVehicles: VehiclePosition[] = [];
+    const targetDirectionIdNum = parseInt(directionIdParam, 10);
+
+    const localTripsData = loadLocalJsonData<LocalTrip[]>('data/trips.json'); 
+
+    console.log(`[API /api/realtime] Procesando entidades para R:${routeIdParam}, D:${targetDirectionIdNum}. Parada usuario:${stopIdParam}`);
+
+    externalData.Entity.forEach((entity: ExternalApiEntity) => { // Inicio forEach entity
+      const tripInfo = entity.Linea;
+      let tripDirectionIdNum: number | null = null;
+      if (tripInfo.Direction_ID !== undefined && tripInfo.Direction_ID !== null) {
+          const parsedNum = parseInt(tripInfo.Direction_ID.toString(), 10);
+          if (!isNaN(parsedNum)) tripDirectionIdNum = parsedNum;
+      }
+
+      if (tripInfo.Route_Id === routeIdParam && tripDirectionIdNum === targetDirectionIdNum) { // Inicio if trip coincide
+        let stopForArrivalCalculationFound = false;
+        let vehicleCurrentStop: ExternalApiStation | null = null;
+        let vehicleNextStop: ExternalApiStation | null = null;
+        const nowTimestamp = externalData.Header.timestamp;
+
+        for (let i = 0; i < tripInfo.Estaciones.length; i++) { // Inicio for estaciones
+          const estacion: ExternalApiStation = tripInfo.Estaciones[i];
+          
+          // --- Cálculo de Llegadas ---
+          if (estacion.stop_id === stopIdParam) {
+            stopForArrivalCalculationFound = true;
+            const arrivalTime = estacion.arrival?.time;
+            // Solo procesar si hay tiempo de llegada y es futuro o muy reciente
+            if (arrivalTime !== undefined && arrivalTime >= nowTimestamp - 60) { 
+              const delayInSeconds = estacion.arrival?.delay !== undefined ? Number(estacion.arrival.delay) : 0;
+              let arrivalStatus: Arrival['status'] = 'unknown';
+              if (delayInSeconds === 0) arrivalStatus = 'on-time';
+              else if (delayInSeconds < 0 && delayInSeconds >= -180) arrivalStatus = 'early'; 
+              else if (delayInSeconds < -180 || delayInSeconds > 180) arrivalStatus = 'delayed'; 
+              
+              let officialTripHeadsign = "Desconocido";
+              if (localTripsData) {
+                  const matchingLocalTrip = localTripsData.find((t: LocalTrip) => 
+                      t.route_id === tripInfo.Route_Id && 
+                      t.direction_id?.toString() === tripDirectionIdNum?.toString() && 
+                      t.trip_headsign && t.trip_headsign.trim() !== ""
+                  );
+                  if (matchingLocalTrip?.trip_headsign) officialTripHeadsign = matchingLocalTrip.trip_headsign;
+                  else officialTripHeadsign = tripInfo.Estaciones[tripInfo.Estaciones.length - 1]?.stop_name || 'Desconocido';
+              } else {
+                  officialTripHeadsign = tripInfo.Estaciones[tripInfo.Estaciones.length - 1]?.stop_name || 'Desconocido';
+              }
+              
+              processedArrivals.push({
+                tripId: entity.ID, routeId: tripInfo.Route_Id, headsign: officialTripHeadsign,
+                estimatedArrivalTime: arrivalTime, delaySeconds: delayInSeconds, status: arrivalStatus,
+                departureTimeFromTerminal: tripInfo.start_time, vehicleId: entity.ID,
+              });
+            }
+          } // Fin if parada de interés
+
+          // --- Cálculo Posición Vehículo ---
+          const arrivalTime = estacion.arrival?.time;
+          const departureTime = estacion.departure?.time;
+          if (arrivalTime !== undefined) {
+              if (arrivalTime <= nowTimestamp) { 
+                  vehicleCurrentStop = estacion; 
+                  vehicleNextStop = (i + 1 < tripInfo.Estaciones.length) ? tripInfo.Estaciones[i + 1] : null;
+              } else { 
+                  if (!vehicleNextStop) { 
+                      vehicleNextStop = estacion; 
+                      if (i === 0 && !vehicleCurrentStop) vehicleCurrentStop = null; 
+                  }
+                  break; 
+              }
+          } // Fin if arrivalTime existe
+        } // Fin for estaciones
+
+        // Agregar vehículo a la lista (todos los de la línea/dirección)
+        processedVehicles.push({
+            tripId: entity.ID,
+            currentStopId: vehicleCurrentStop?.stop_id || null,
+            nextStopId: vehicleNextStop?.stop_id || null,
+        });
+
+      } // Fin if trip coincide
+    }); // Fin forEach entity
+
+    processedArrivals.sort((a, b) => a.estimatedArrivalTime - b.estimatedArrivalTime);
+    
+    // --- Logging Final ---
+    if (processedArrivals.length > 0) {
+        console.log(`[API /api/realtime] Próximas llegadas para ${stopIdParam} (R:${routeIdParam} D:${directionIdParam}):`);
+        processedArrivals.forEach((arr: Arrival) => {
+            const arrivalD = new Date(arr.estimatedArrivalTime * 1000);
+            const serverNow = new Date();
+            const minutesDiff = Math.max(0, Math.round((arrivalD.getTime() - serverNow.getTime()) / (1000 * 60)));
+            console.log(`  - Trip ${arr.tripId} (Hacia ${arr.headsign}): ${minutesDiff} min (ETA: ${arrivalD.toLocaleTimeString('es-AR')}, Delay: ${arr.delaySeconds}s)`);
+        });
+    } else {
+        console.log(`[API /api/realtime] No se encontraron llegadas futuras para ${stopIdParam} (R:${routeIdParam} D:${directionIdParam}).`);
+    }
+    processedVehicles.forEach((v: VehiclePosition) => {
+        console.log(`  - Vehículo/Servicio (ID ${v.tripId}): Desde ${v.currentStopId || 'Inicio'} -> Hacia ${v.nextStopId || 'Terminal'}`);
+    });
+
+    const routeToStops = loadLocalJsonData<RouteToStopsData>('data/route_to_stops.json');
+    let stopsForLineView: StopOnLine[] = [];
+    if (routeToStops) {
+      const directionKey = `${routeIdParam}_${directionIdParam}`;
+      stopsForLineView = routeToStops[directionKey] || [];
+    }
+
+    return NextResponse.json({
+      arrivals: processedArrivals,
+      stops: stopsForLineView,
+      vehicles: processedVehicles, // Devolveremos la lista de vehículos/servicios activos
+      timestamp: externalData.Header.timestamp * 1000 
+    });
+
+  } catch (error: any) { // Inicio CATCH
+    console.error(`[API /api/realtime] CATCH BLOCK ERROR: ${error.message}`, error.stack);
+    // Devolver un error genérico al cliente, el detalle ya se logueó
+    return NextResponse.json({ error: 'Error al procesar datos en tiempo real.' }, { status: 500 });
+  } // Fin CATCH
+} // Fin export async function GET

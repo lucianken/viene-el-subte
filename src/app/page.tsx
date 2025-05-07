@@ -7,12 +7,18 @@ import DirectionSelector from '@/components/DirectionSelector';
 import ArrivalsView from '@/components/ArrivalsView';
 import SearchBar from '@/components/SearchBar';
 import { Route, Stop } from '@/types';
+// Importar el tipo DirectionOption de tu API
+import type { DirectionOption } from '@/app/api/directions/route';
+
 
 export default function Home() {
   const [routes, setRoutes] = useState<Route[]>([]);
   const [selectedRoute, setSelectedRoute] = useState<Route | null>(null);
   const [selectedStop, setSelectedStop] = useState<Stop | null>(null);
-  const [selectedDirection, setSelectedDirection] = useState<string | null>(null);
+  
+  // CAMBIO: Almacenar el objeto DirectionOption completo
+  const [selectedDirectionInfo, setSelectedDirectionInfo] = useState<DirectionOption | null>(null);
+  
   const [searchActive, setSearchActive] = useState(false);
   const [loading, setLoading] = useState(true);
 
@@ -30,26 +36,63 @@ export default function Home() {
         setLoading(false);
       }
     }
-
     fetchRoutes();
   }, []);
 
   // Resetear selecciones cuando cambia la ruta
   useEffect(() => {
     setSelectedStop(null);
-    setSelectedDirection(null);
+    setSelectedDirectionInfo(null); // CAMBIO
   }, [selectedRoute]);
 
-  // Resetear dirección cuando cambia la parada
+  // Resetear dirección (selectedDirectionInfo) cuando cambia la parada
   useEffect(() => {
-    setSelectedDirection(null);
+    setSelectedDirectionInfo(null); // CAMBIO
   }, [selectedStop]);
 
-  const handleSearchSelect = (stop: Stop, route: Route, direction: string) => {
+  // El tipo de 'directionInfoFromSearch' en handleSearchSelect dependerá de lo que tu SearchBar devuelva.
+  // Idealmente, SearchBar debería devolver un objeto compatible con DirectionOption o suficiente info.
+  const handleSearchSelect = (stop: Stop, route: Route, directionInfoFromSearch: any /* Reemplazar 'any' con el tipo correcto que devuelve SearchBar */) => {
     setSelectedRoute(route);
     setSelectedStop(stop);
-    setSelectedDirection(direction);
+
+    // Necesitas asegurar que directionInfoFromSearch tenga la estructura de DirectionOption
+    // o transformarlo para que lo tenga, especialmente con 'stopId' (de plataforma) y 'rawDirectionId'.
+    // Ejemplo si SearchBar ya devuelve algo compatible:
+    // if (directionInfoFromSearch && typeof directionInfoFromSearch.stopId === 'string' && typeof directionInfoFromSearch.rawDirectionId === 'number') {
+    //   setSelectedDirectionInfo(directionInfoFromSearch as DirectionOption);
+    // } else {
+    //   console.warn("La información de dirección de SearchBar no es compatible o está incompleta.");
+    //   // Podrías necesitar hacer otra llamada API aquí si SearchBar no da todo.
+    //   setSelectedDirectionInfo(null); // O manejarlo de otra forma.
+    // }
+    // Por ahora, para simplificar y si tu SearchBar está incompleto en este aspecto:
+    if (directionInfoFromSearch && typeof directionInfoFromSearch === 'string') { // Si solo devuelve un ID o nombre
+        console.warn("SearchBar devuelve solo un string para dirección, ArrivalsView podría no tener toda la info necesaria para /api/realtime");
+        // Esto es una simplificación, necesitarías una forma de obtener el rawDirectionId y el platform stopId
+        // Para un cambio mínimo y asumiendo que 'directionInfoFromSearch' es el platformStopId:
+        // Y que rawDirectionId se puede inferir o no es estrictamente necesario para la UI en este punto
+        // (aunque sí para /api/realtime).
+        // Este es un punto débil si SearchBar no da toda la info.
+        setSelectedDirectionInfo({
+            stopId: directionInfoFromSearch, // Asumiendo que es el platform stopId
+            lineId: route.route_id,
+            selectedStopName: stop.stop_name,
+            directionDisplayName: "Dirección (desde búsqueda)", // Placeholder
+            rawDirectionId: 0 // Placeholder, LA API /api/realtime LO NECESITA
+        });
+
+    } else if (directionInfoFromSearch && directionInfoFromSearch.stopId && typeof directionInfoFromSearch.rawDirectionId !== 'undefined') {
+        setSelectedDirectionInfo(directionInfoFromSearch as DirectionOption);
+    }
+
+
     setSearchActive(false);
+  };
+
+  // La función que se pasa a DirectionSelector ahora se llama handleDirectionOptionSelected
+  const handleDirectionOptionSelected = (directionOption: DirectionOption) => {
+    setSelectedDirectionInfo(directionOption);
   };
 
   return (
@@ -111,7 +154,8 @@ export default function Home() {
               </section>
             )}
 
-            {selectedRoute && selectedStop && !selectedDirection && (
+            {/* CAMBIO: Condición para mostrar DirectionSelector */}
+            {selectedRoute && selectedStop && !selectedDirectionInfo && (
               <section className="mb-8">
                 <div className="flex items-center justify-between mb-4">
                   <h2 className="text-xl font-semibold text-gray-800">Seleccioná una dirección</h2>
@@ -127,20 +171,21 @@ export default function Home() {
                 </div>
                 <DirectionSelector 
                   routeId={selectedRoute.route_id} 
-                  stopId={selectedStop.stop_id} 
+                  // No pasar stopId aquí ya que DirectionSelector no lo espera en sus props
                   route={selectedRoute}
                   stop={selectedStop}
-                  onSelect={setSelectedDirection} 
+                  onSelect={handleDirectionOptionSelected} // CAMBIO
                 />
               </section>
             )}
 
-            {selectedRoute && selectedStop && selectedDirection && (
+            {/* CAMBIO: Condición para mostrar ArrivalsView */}
+            {selectedRoute && selectedStop && selectedDirectionInfo && (
               <section>
                 <div className="flex items-center justify-between mb-4">
                   <h2 className="text-xl font-semibold text-gray-800">Próximas llegadas</h2>
                   <button 
-                    onClick={() => setSelectedDirection(null)}
+                    onClick={() => setSelectedDirectionInfo(null)} // CAMBIO
                     className="text-blue-600 flex items-center"
                   >
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -151,8 +196,9 @@ export default function Home() {
                 </div>
                 <ArrivalsView 
                   routeId={selectedRoute.route_id}
-                  stopId={selectedStop.stop_id}
-                  direction={selectedDirection}
+                  stopId={selectedDirectionInfo.stopId} // CAMBIO: Usar el platformStopId de DirectionOption
+                  // CAMBIO: Usar el rawDirectionId (como string) para la API /api/realtime
+                  direction={selectedDirectionInfo.rawDirectionId.toString()} 
                   routeColor={selectedRoute.route_color || "CCCCCC"}
                   routeName={selectedRoute.route_short_name}
                   route={selectedRoute}
