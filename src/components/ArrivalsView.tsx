@@ -245,8 +245,6 @@ export default function ArrivalsView({
               initialStopsData={apiData.lineStopsWithArrivals}
               currentStopId={stopId} 
               routeColor={routeColor}
-              routeId={routeId}
-              direction={direction}
             />
           ) : ( <div className="py-4 text-center text-gray-500 text-sm"> No se pudo cargar el recorrido de la línea. </div> )}
         </div>

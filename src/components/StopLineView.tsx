@@ -1,66 +1,49 @@
 // src/components/StopLineView.tsx
 "use client";
-import React, { useState, useEffect } from 'react'; // useCallback ya no es necesario aquí
+import React, { useState, useEffect } from 'react';
 
 // --- INTERFACES (Tipos que este componente espera recibir) ---
-
-// Información de arribo para una parada en la lista
 interface ArrivalInfoForDisplay {
   estimatedArrivalTime: number; // Timestamp en SEGUNDOS
   delaySeconds: number;
   status: 'on-time' | 'delayed' | 'early' | 'unknown';
 }
 
-// Estructura de cada parada con su posible arribo y timestamp de actualización
-// Esta interfaz debe coincidir con `ApiStopWithCalculatedArrival` que `ArrivalsView` le pasa
 interface StopDataWithArrival {
   stopId: string;
   stopName: string;
   sequence: number;
   nextArrival?: ArrivalInfoForDisplay;
-  lastUpdateTimestamp?: number; // Timestamp en SEGUNDOS de la última actualización para esta parada
+  lastUpdateTimestamp?: number; // Timestamp en SEGUNDOS
 }
 
-// Props que el componente recibe de ArrivalsView
 interface StopLineViewProps {
-  initialStopsData: StopDataWithArrival[]; // NUEVA PROP
+  initialStopsData: StopDataWithArrival[];
   currentStopId: string;
   routeColor: string;
-  // routeId y direction podrían no ser estrictamente necesarios si toda la lógica de datos
-  // está centralizada, pero se pueden mantener por si se usan para estilos o claves.
-  routeId: string; 
-  direction: string;
+  // ELIMINADAS: routeId y direction ya no se usan aquí directamente
+  // routeId: string; 
+  // direction: string;
 }
 
 const StopLineView: React.FC<StopLineViewProps> = ({ 
   initialStopsData, 
   currentStopId, 
   routeColor,
-  routeId,     // Conservado por si acaso
-  direction    // Conservado por si acaso
+  // ELIMINADAS de la desestructuración: routeId, direction
 }) => {
-  // El estado ahora refleja directamente los datos pasados como props
   const [stopsToDisplay, setStopsToDisplay] = useState<StopDataWithArrival[]>(initialStopsData);
   const [currentTime, setCurrentTime] = useState(new Date());
-  // ELIMINADO: const [loading, setLoading] = useState(true);
 
-  // Actualizar las paradas a mostrar si la prop `initialStopsData` cambia
   useEffect(() => {
-    // Asegurarse de que los datos estén ordenados por secuencia si no vienen ya ordenados
-    // Aunque la API ya debería devolverlos ordenados según route_to_stops.json
     setStopsToDisplay([...initialStopsData].sort((a, b) => a.sequence - b.sequence));
   }, [initialStopsData]);
 
-  // Timer para la hora actual (se mantiene)
   useEffect(() => {
     const timer = setInterval(() => setCurrentTime(new Date()), 1000);
     return () => clearInterval(timer);
   }, []);
 
-  // ELIMINADA: función loadArrivalsForAllStops
-  // ELIMINADO: useEffect que llamaba a loadArrivalsForAllStops (inicial y en intervalo)
-
-  // Funciones helper (se mantienen)
   const formatTime = (timestampInSeconds: number | undefined, includeSeconds = false): string => {
     if (timestampInSeconds === undefined || isNaN(timestampInSeconds)) return "N/A";
     const date = new Date(timestampInSeconds * 1000);
@@ -84,21 +67,17 @@ const StopLineView: React.FC<StopLineViewProps> = ({
     return `${seconds} s`;
   };
 
-  // Renderizado condicional si no hay datos (se mantiene, pero ahora usa stopsToDisplay)
   if (!stopsToDisplay || stopsToDisplay.length === 0) {
     return <div className="text-center text-gray-500 py-4 text-sm">No hay datos de paradas para mostrar.</div>;
   }
   
-  // ELIMINADO: El estado de carga principal de "Cargando información de arribos..."
-  // ya que los datos vienen pre-cargados. ArrivalsView maneja el loading inicial.
-
   return (
     <div className="stop-line-container">
       <div className="relative pl-3 pr-4">
         {stopsToDisplay.length > 0 && (
           <div
             className="absolute top-3 bottom-3 left-3 w-1 transform -translate-x-1/2 rounded-full"
-            style={{ backgroundColor: `#${routeColor}30` }}
+            style={{ backgroundColor: `#${routeColor}30` }} // routeColor sí se usa
           ></div>
         )}
         
@@ -111,9 +90,8 @@ const StopLineView: React.FC<StopLineViewProps> = ({
             </tr>
           </thead>
           <tbody>
-            {/* MODIFICADO: Iterar sobre stopsToDisplay */}
             {stopsToDisplay.map((stop) => {
-              const isCurrentSelectedStop = stop.stopId === currentStopId;
+              const isCurrentSelectedStop = stop.stopId === currentStopId; // currentStopId sí se usa
               const arrivalString = stop.nextArrival ? getTimeUntilArrivalString(stop.nextArrival.estimatedArrivalTime) : "Sin datos";
               
               let arrivalColorClass = 'text-blue-600';
@@ -126,7 +104,12 @@ const StopLineView: React.FC<StopLineViewProps> = ({
 
               return (
                 <tr key={stop.stopId} className={`relative group min-h-[40px] hover:bg-gray-50 transition-colors ${isCurrentSelectedStop ? 'bg-blue-50' : ''}`}>
-                  <td className="relative py-3"> {/* ... (círculo de la parada) ... */} </td>
+                  <td className="relative py-3">
+                    <div className="absolute left-3 top-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10">
+                      {/* El color del borde del círculo usa routeColor */}
+                      <div className={`w-3 h-3 rounded-full border-2 transition-all duration-150 ${isCurrentSelectedStop ? 'bg-blue-600 border-blue-700 scale-125 shadow-md ring-2 ring-blue-300 ring-offset-1' : `border-[#${routeColor}] bg-white shadow-sm group-hover:bg-gray-100`}`}></div>
+                    </div>
+                  </td>
                   <td className={`py-3 ${isCurrentSelectedStop ? 'font-semibold text-blue-700' : 'text-gray-700'}`}>{stop.stopName}</td>
                   <td className="py-3 text-right">
                     {stop.nextArrival ? (
@@ -137,7 +120,6 @@ const StopLineView: React.FC<StopLineViewProps> = ({
                         {arrivalString !== "Llegando" && arrivalString !== "Sin datos" && stop.nextArrival.estimatedArrivalTime && (
                           <span className="text-xs text-gray-500 ml-1">({formatTime(stop.nextArrival.estimatedArrivalTime)})</span>
                         )}
-                        {/* Se mantiene la lógica de lastUpdateTimestamp si se pasa en la prop */}
                         {stop.lastUpdateTimestamp && (
                              <div className="text-xs text-gray-400">(Act: {formatTime(stop.lastUpdateTimestamp, true)})</div>
                         )}
