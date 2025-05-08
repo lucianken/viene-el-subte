@@ -1,1351 +1,1352 @@
-"lineAverageDurations": {
+{
+    "lineAverageDurations": {
     "A": [
-      {
-        "from_stop_id": "1076S",
-        "to_stop_id": "1075S",
-        "average_duration_seconds": 34,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1075S",
-        "to_stop_id": "1074S",
-        "average_duration_seconds": 44,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1074S",
-        "to_stop_id": "1073S",
-        "average_duration_seconds": 45,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1073S",
-        "to_stop_id": "1072S",
-        "average_duration_seconds": 46,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1072S",
-        "to_stop_id": "1071S",
-        "average_duration_seconds": 68,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1071S",
-        "to_stop_id": "1069S",
-        "average_duration_seconds": 90,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1069S",
-        "to_stop_id": "1068S",
-        "average_duration_seconds": 52,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1068S",
-        "to_stop_id": "1067S",
-        "average_duration_seconds": 113,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1067S",
-        "to_stop_id": "1066S",
-        "average_duration_seconds": 75,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1066S",
-        "to_stop_id": "1065S",
-        "average_duration_seconds": 96,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1065S",
-        "to_stop_id": "1064S",
-        "average_duration_seconds": 83,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1064S",
-        "to_stop_id": "1063S",
-        "average_duration_seconds": 69,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1063S",
-        "to_stop_id": "1062S",
-        "average_duration_seconds": 92,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1062S",
-        "to_stop_id": "1061S",
-        "average_duration_seconds": 89,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1061S",
-        "to_stop_id": "1060S",
-        "average_duration_seconds": 92,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1060S",
-        "to_stop_id": "1059S",
-        "average_duration_seconds": 81,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1059N",
-        "to_stop_id": "1060N",
-        "average_duration_seconds": 81,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1060N",
-        "to_stop_id": "1061N",
-        "average_duration_seconds": 92,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1061N",
-        "to_stop_id": "1062N",
-        "average_duration_seconds": 89,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1062N",
-        "to_stop_id": "1063N",
-        "average_duration_seconds": 92,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1063N",
-        "to_stop_id": "1064N",
-        "average_duration_seconds": 69,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1064N",
-        "to_stop_id": "1065N",
-        "average_duration_seconds": 83,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1065N",
-        "to_stop_id": "1066N",
-        "average_duration_seconds": 96,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1066N",
-        "to_stop_id": "1067N",
-        "average_duration_seconds": 75,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1067N",
-        "to_stop_id": "1068N",
-        "average_duration_seconds": 113,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1068N",
-        "to_stop_id": "1070N",
-        "average_duration_seconds": 79,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1070N",
-        "to_stop_id": "1071N",
-        "average_duration_seconds": 63,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1071N",
-        "to_stop_id": "1072N",
-        "average_duration_seconds": 68,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1072N",
-        "to_stop_id": "1073N",
-        "average_duration_seconds": 46,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1073N",
-        "to_stop_id": "1074N",
-        "average_duration_seconds": 45,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1074N",
-        "to_stop_id": "1075N",
-        "average_duration_seconds": 44,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1075N",
-        "to_stop_id": "1076N",
-        "average_duration_seconds": 34,
-        "sample_size": 3
-      }
+        {
+            "from_stop_id": "1076S",
+            "to_stop_id": "1075S",
+            "average_duration_seconds": 34,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1075S",
+            "to_stop_id": "1074S",
+            "average_duration_seconds": 44,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1074S",
+            "to_stop_id": "1073S",
+            "average_duration_seconds": 45,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1073S",
+            "to_stop_id": "1072S",
+            "average_duration_seconds": 46,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1072S",
+            "to_stop_id": "1071S",
+            "average_duration_seconds": 68,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1071S",
+            "to_stop_id": "1069S",
+            "average_duration_seconds": 90,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1069S",
+            "to_stop_id": "1068S",
+            "average_duration_seconds": 52,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1068S",
+            "to_stop_id": "1067S",
+            "average_duration_seconds": 113,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1067S",
+            "to_stop_id": "1066S",
+            "average_duration_seconds": 75,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1066S",
+            "to_stop_id": "1065S",
+            "average_duration_seconds": 96,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1065S",
+            "to_stop_id": "1064S",
+            "average_duration_seconds": 83,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1064S",
+            "to_stop_id": "1063S",
+            "average_duration_seconds": 69,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1063S",
+            "to_stop_id": "1062S",
+            "average_duration_seconds": 92,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1062S",
+            "to_stop_id": "1061S",
+            "average_duration_seconds": 89,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1061S",
+            "to_stop_id": "1060S",
+            "average_duration_seconds": 92,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1060S",
+            "to_stop_id": "1059S",
+            "average_duration_seconds": 81,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1059N",
+            "to_stop_id": "1060N",
+            "average_duration_seconds": 81,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1060N",
+            "to_stop_id": "1061N",
+            "average_duration_seconds": 92,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1061N",
+            "to_stop_id": "1062N",
+            "average_duration_seconds": 89,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1062N",
+            "to_stop_id": "1063N",
+            "average_duration_seconds": 92,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1063N",
+            "to_stop_id": "1064N",
+            "average_duration_seconds": 69,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1064N",
+            "to_stop_id": "1065N",
+            "average_duration_seconds": 83,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1065N",
+            "to_stop_id": "1066N",
+            "average_duration_seconds": 96,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1066N",
+            "to_stop_id": "1067N",
+            "average_duration_seconds": 75,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1067N",
+            "to_stop_id": "1068N",
+            "average_duration_seconds": 113,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1068N",
+            "to_stop_id": "1070N",
+            "average_duration_seconds": 79,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1070N",
+            "to_stop_id": "1071N",
+            "average_duration_seconds": 63,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1071N",
+            "to_stop_id": "1072N",
+            "average_duration_seconds": 68,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1072N",
+            "to_stop_id": "1073N",
+            "average_duration_seconds": 46,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1073N",
+            "to_stop_id": "1074N",
+            "average_duration_seconds": 45,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1074N",
+            "to_stop_id": "1075N",
+            "average_duration_seconds": 44,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1075N",
+            "to_stop_id": "1076N",
+            "average_duration_seconds": 34,
+            "sample_size": 3
+        }
     ],
     "B": [
-      {
-        "from_stop_id": "1093S",
-        "to_stop_id": "1092S",
-        "average_duration_seconds": 43,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1092S",
-        "to_stop_id": "1091S",
-        "average_duration_seconds": 65,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1091S",
-        "to_stop_id": "1090S",
-        "average_duration_seconds": 55,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1090S",
-        "to_stop_id": "1089S",
-        "average_duration_seconds": 55,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1089S",
-        "to_stop_id": "1088S",
-        "average_duration_seconds": 62,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1088S",
-        "to_stop_id": "1087S",
-        "average_duration_seconds": 56,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1087S",
-        "to_stop_id": "1086S",
-        "average_duration_seconds": 64,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1086S",
-        "to_stop_id": "1085S",
-        "average_duration_seconds": 93,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1085S",
-        "to_stop_id": "1083S",
-        "average_duration_seconds": 93,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1083S",
-        "to_stop_id": "1084S",
-        "average_duration_seconds": 92,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1084S",
-        "to_stop_id": "1082S",
-        "average_duration_seconds": 114,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1082S",
-        "to_stop_id": "1081S",
-        "average_duration_seconds": 79,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1081S",
-        "to_stop_id": "1080S",
-        "average_duration_seconds": 117,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1080S",
-        "to_stop_id": "1079S",
-        "average_duration_seconds": 75,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1079S",
-        "to_stop_id": "1078S",
-        "average_duration_seconds": 91,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1078S",
-        "to_stop_id": "1077S",
-        "average_duration_seconds": 73,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1077N",
-        "to_stop_id": "1078N",
-        "average_duration_seconds": 73,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1078N",
-        "to_stop_id": "1079N",
-        "average_duration_seconds": 91,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1079N",
-        "to_stop_id": "1080N",
-        "average_duration_seconds": 75,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1080N",
-        "to_stop_id": "1081N",
-        "average_duration_seconds": 117,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1081N",
-        "to_stop_id": "1082N",
-        "average_duration_seconds": 79,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1082N",
-        "to_stop_id": "1084N",
-        "average_duration_seconds": 114,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1084N",
-        "to_stop_id": "1083N",
-        "average_duration_seconds": 92,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1083N",
-        "to_stop_id": "1085N",
-        "average_duration_seconds": 93,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1085N",
-        "to_stop_id": "1086N",
-        "average_duration_seconds": 93,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1086N",
-        "to_stop_id": "1087N",
-        "average_duration_seconds": 64,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1087N",
-        "to_stop_id": "1088N",
-        "average_duration_seconds": 56,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1088N",
-        "to_stop_id": "1089N",
-        "average_duration_seconds": 62,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1089N",
-        "to_stop_id": "1090N",
-        "average_duration_seconds": 55,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1090N",
-        "to_stop_id": "1091N",
-        "average_duration_seconds": 55,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1091N",
-        "to_stop_id": "1092N",
-        "average_duration_seconds": 65,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1092N",
-        "to_stop_id": "1093N",
-        "average_duration_seconds": 43,
-        "sample_size": 3
-      }
+        {
+            "from_stop_id": "1093S",
+            "to_stop_id": "1092S",
+            "average_duration_seconds": 43,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1092S",
+            "to_stop_id": "1091S",
+            "average_duration_seconds": 65,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1091S",
+            "to_stop_id": "1090S",
+            "average_duration_seconds": 55,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1090S",
+            "to_stop_id": "1089S",
+            "average_duration_seconds": 55,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1089S",
+            "to_stop_id": "1088S",
+            "average_duration_seconds": 62,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1088S",
+            "to_stop_id": "1087S",
+            "average_duration_seconds": 56,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1087S",
+            "to_stop_id": "1086S",
+            "average_duration_seconds": 64,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1086S",
+            "to_stop_id": "1085S",
+            "average_duration_seconds": 93,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1085S",
+            "to_stop_id": "1083S",
+            "average_duration_seconds": 93,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1083S",
+            "to_stop_id": "1084S",
+            "average_duration_seconds": 92,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1084S",
+            "to_stop_id": "1082S",
+            "average_duration_seconds": 114,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1082S",
+            "to_stop_id": "1081S",
+            "average_duration_seconds": 79,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1081S",
+            "to_stop_id": "1080S",
+            "average_duration_seconds": 117,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1080S",
+            "to_stop_id": "1079S",
+            "average_duration_seconds": 75,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1079S",
+            "to_stop_id": "1078S",
+            "average_duration_seconds": 91,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1078S",
+            "to_stop_id": "1077S",
+            "average_duration_seconds": 73,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1077N",
+            "to_stop_id": "1078N",
+            "average_duration_seconds": 73,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1078N",
+            "to_stop_id": "1079N",
+            "average_duration_seconds": 91,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1079N",
+            "to_stop_id": "1080N",
+            "average_duration_seconds": 75,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1080N",
+            "to_stop_id": "1081N",
+            "average_duration_seconds": 117,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1081N",
+            "to_stop_id": "1082N",
+            "average_duration_seconds": 79,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1082N",
+            "to_stop_id": "1084N",
+            "average_duration_seconds": 114,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1084N",
+            "to_stop_id": "1083N",
+            "average_duration_seconds": 92,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1083N",
+            "to_stop_id": "1085N",
+            "average_duration_seconds": 93,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1085N",
+            "to_stop_id": "1086N",
+            "average_duration_seconds": 93,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1086N",
+            "to_stop_id": "1087N",
+            "average_duration_seconds": 64,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1087N",
+            "to_stop_id": "1088N",
+            "average_duration_seconds": 56,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1088N",
+            "to_stop_id": "1089N",
+            "average_duration_seconds": 62,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1089N",
+            "to_stop_id": "1090N",
+            "average_duration_seconds": 55,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1090N",
+            "to_stop_id": "1091N",
+            "average_duration_seconds": 55,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1091N",
+            "to_stop_id": "1092N",
+            "average_duration_seconds": 65,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1092N",
+            "to_stop_id": "1093N",
+            "average_duration_seconds": 43,
+            "sample_size": 3
+        }
     ],
     "C": [
-      {
-        "from_stop_id": "1102E",
-        "to_stop_id": "1101E",
-        "average_duration_seconds": 54,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1101E",
-        "to_stop_id": "1100E",
-        "average_duration_seconds": 111,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1100E",
-        "to_stop_id": "1099E",
-        "average_duration_seconds": 57,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1099E",
-        "to_stop_id": "1098E",
-        "average_duration_seconds": 76,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1098E",
-        "to_stop_id": "1097E",
-        "average_duration_seconds": 54,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1097E",
-        "to_stop_id": "1096E",
-        "average_duration_seconds": 85,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1096E",
-        "to_stop_id": "1095E",
-        "average_duration_seconds": 71,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1095E",
-        "to_stop_id": "1094E",
-        "average_duration_seconds": 75,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1094O",
-        "to_stop_id": "1095O",
-        "average_duration_seconds": 75,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1095O",
-        "to_stop_id": "1096O",
-        "average_duration_seconds": 71,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1096O",
-        "to_stop_id": "1097O",
-        "average_duration_seconds": 85,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1097O",
-        "to_stop_id": "1098O",
-        "average_duration_seconds": 54,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1098O",
-        "to_stop_id": "1099O",
-        "average_duration_seconds": 76,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1099O",
-        "to_stop_id": "1100O",
-        "average_duration_seconds": 57,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1100O",
-        "to_stop_id": "1101O",
-        "average_duration_seconds": 111,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1101O",
-        "to_stop_id": "1102O",
-        "average_duration_seconds": 54,
-        "sample_size": 3
-      }
+        {
+            "from_stop_id": "1102E",
+            "to_stop_id": "1101E",
+            "average_duration_seconds": 54,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1101E",
+            "to_stop_id": "1100E",
+            "average_duration_seconds": 111,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1100E",
+            "to_stop_id": "1099E",
+            "average_duration_seconds": 57,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1099E",
+            "to_stop_id": "1098E",
+            "average_duration_seconds": 76,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1098E",
+            "to_stop_id": "1097E",
+            "average_duration_seconds": 54,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1097E",
+            "to_stop_id": "1096E",
+            "average_duration_seconds": 85,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1096E",
+            "to_stop_id": "1095E",
+            "average_duration_seconds": 71,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1095E",
+            "to_stop_id": "1094E",
+            "average_duration_seconds": 75,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1094O",
+            "to_stop_id": "1095O",
+            "average_duration_seconds": 75,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1095O",
+            "to_stop_id": "1096O",
+            "average_duration_seconds": 71,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1096O",
+            "to_stop_id": "1097O",
+            "average_duration_seconds": 85,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1097O",
+            "to_stop_id": "1098O",
+            "average_duration_seconds": 54,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1098O",
+            "to_stop_id": "1099O",
+            "average_duration_seconds": 76,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1099O",
+            "to_stop_id": "1100O",
+            "average_duration_seconds": 57,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1100O",
+            "to_stop_id": "1101O",
+            "average_duration_seconds": 111,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1101O",
+            "to_stop_id": "1102O",
+            "average_duration_seconds": 54,
+            "sample_size": 3
+        }
     ],
     "D": [
-      {
-        "from_stop_id": "1118S",
-        "to_stop_id": "1117S",
-        "average_duration_seconds": 77,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1117S",
-        "to_stop_id": "1116S",
-        "average_duration_seconds": 55,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1116S",
-        "to_stop_id": "1115S",
-        "average_duration_seconds": 95,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1115S",
-        "to_stop_id": "1114S",
-        "average_duration_seconds": 54,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1114S",
-        "to_stop_id": "1113S",
-        "average_duration_seconds": 96,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1113S",
-        "to_stop_id": "1112S",
-        "average_duration_seconds": 60,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1112S",
-        "to_stop_id": "1111S",
-        "average_duration_seconds": 62,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1111S",
-        "to_stop_id": "1110S",
-        "average_duration_seconds": 63,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1110S",
-        "to_stop_id": "1109S",
-        "average_duration_seconds": 70,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1109S",
-        "to_stop_id": "1108S",
-        "average_duration_seconds": 66,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1108S",
-        "to_stop_id": "1107S",
-        "average_duration_seconds": 104,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1107S",
-        "to_stop_id": "1106S",
-        "average_duration_seconds": 121,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1106S",
-        "to_stop_id": "1105S",
-        "average_duration_seconds": 96,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1105S",
-        "to_stop_id": "1104S",
-        "average_duration_seconds": 67,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1104S",
-        "to_stop_id": "1103S",
-        "average_duration_seconds": 105,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1103N",
-        "to_stop_id": "1104N",
-        "average_duration_seconds": 105,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1104N",
-        "to_stop_id": "1105N",
-        "average_duration_seconds": 67,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1105N",
-        "to_stop_id": "1106N",
-        "average_duration_seconds": 96,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1106N",
-        "to_stop_id": "1107N",
-        "average_duration_seconds": 121,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1107N",
-        "to_stop_id": "1108N",
-        "average_duration_seconds": 104,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1108N",
-        "to_stop_id": "1109N",
-        "average_duration_seconds": 66,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1109N",
-        "to_stop_id": "1110N",
-        "average_duration_seconds": 70,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1110N",
-        "to_stop_id": "1111N",
-        "average_duration_seconds": 63,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1111N",
-        "to_stop_id": "1112N",
-        "average_duration_seconds": 62,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1112N",
-        "to_stop_id": "1113N",
-        "average_duration_seconds": 60,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1113N",
-        "to_stop_id": "1114N",
-        "average_duration_seconds": 96,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1114N",
-        "to_stop_id": "1115N",
-        "average_duration_seconds": 54,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1115N",
-        "to_stop_id": "1116N",
-        "average_duration_seconds": 95,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1116N",
-        "to_stop_id": "1117N",
-        "average_duration_seconds": 55,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1117N",
-        "to_stop_id": "1118N",
-        "average_duration_seconds": 77,
-        "sample_size": 3
-      }
+        {
+            "from_stop_id": "1118S",
+            "to_stop_id": "1117S",
+            "average_duration_seconds": 77,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1117S",
+            "to_stop_id": "1116S",
+            "average_duration_seconds": 55,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1116S",
+            "to_stop_id": "1115S",
+            "average_duration_seconds": 95,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1115S",
+            "to_stop_id": "1114S",
+            "average_duration_seconds": 54,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1114S",
+            "to_stop_id": "1113S",
+            "average_duration_seconds": 96,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1113S",
+            "to_stop_id": "1112S",
+            "average_duration_seconds": 60,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1112S",
+            "to_stop_id": "1111S",
+            "average_duration_seconds": 62,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1111S",
+            "to_stop_id": "1110S",
+            "average_duration_seconds": 63,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1110S",
+            "to_stop_id": "1109S",
+            "average_duration_seconds": 70,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1109S",
+            "to_stop_id": "1108S",
+            "average_duration_seconds": 66,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1108S",
+            "to_stop_id": "1107S",
+            "average_duration_seconds": 104,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1107S",
+            "to_stop_id": "1106S",
+            "average_duration_seconds": 121,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1106S",
+            "to_stop_id": "1105S",
+            "average_duration_seconds": 96,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1105S",
+            "to_stop_id": "1104S",
+            "average_duration_seconds": 67,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1104S",
+            "to_stop_id": "1103S",
+            "average_duration_seconds": 105,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1103N",
+            "to_stop_id": "1104N",
+            "average_duration_seconds": 105,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1104N",
+            "to_stop_id": "1105N",
+            "average_duration_seconds": 67,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1105N",
+            "to_stop_id": "1106N",
+            "average_duration_seconds": 96,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1106N",
+            "to_stop_id": "1107N",
+            "average_duration_seconds": 121,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1107N",
+            "to_stop_id": "1108N",
+            "average_duration_seconds": 104,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1108N",
+            "to_stop_id": "1109N",
+            "average_duration_seconds": 66,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1109N",
+            "to_stop_id": "1110N",
+            "average_duration_seconds": 70,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1110N",
+            "to_stop_id": "1111N",
+            "average_duration_seconds": 63,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1111N",
+            "to_stop_id": "1112N",
+            "average_duration_seconds": 62,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1112N",
+            "to_stop_id": "1113N",
+            "average_duration_seconds": 60,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1113N",
+            "to_stop_id": "1114N",
+            "average_duration_seconds": 96,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1114N",
+            "to_stop_id": "1115N",
+            "average_duration_seconds": 54,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1115N",
+            "to_stop_id": "1116N",
+            "average_duration_seconds": 95,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1116N",
+            "to_stop_id": "1117N",
+            "average_duration_seconds": 55,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1117N",
+            "to_stop_id": "1118N",
+            "average_duration_seconds": 77,
+            "sample_size": 3
+        }
     ],
     "E": [
-      {
-        "from_stop_id": "1164S",
-        "to_stop_id": "1165S",
-        "average_duration_seconds": 66,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1165S",
-        "to_stop_id": "1166S",
-        "average_duration_seconds": 68,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1166S",
-        "to_stop_id": "1119S",
-        "average_duration_seconds": 84,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1119S",
-        "to_stop_id": "1120S",
-        "average_duration_seconds": 66,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1120S",
-        "to_stop_id": "1121S",
-        "average_duration_seconds": 59,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1121S",
-        "to_stop_id": "1122S",
-        "average_duration_seconds": 60,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1122S",
-        "to_stop_id": "1123S",
-        "average_duration_seconds": 72,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1123S",
-        "to_stop_id": "1124S",
-        "average_duration_seconds": 75,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1124S",
-        "to_stop_id": "1125S",
-        "average_duration_seconds": 97,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1125S",
-        "to_stop_id": "1126S",
-        "average_duration_seconds": 92,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1126S",
-        "to_stop_id": "1127S",
-        "average_duration_seconds": 103,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1127S",
-        "to_stop_id": "1128S",
-        "average_duration_seconds": 105,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1128S",
-        "to_stop_id": "1129S",
-        "average_duration_seconds": 93,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1129S",
-        "to_stop_id": "1130S",
-        "average_duration_seconds": 56,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1130S",
-        "to_stop_id": "1131S",
-        "average_duration_seconds": 82,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1131S",
-        "to_stop_id": "1132S",
-        "average_duration_seconds": 85,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1132S",
-        "to_stop_id": "1133S",
-        "average_duration_seconds": 73,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1133N",
-        "to_stop_id": "1132N",
-        "average_duration_seconds": 77,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1132N",
-        "to_stop_id": "1131N",
-        "average_duration_seconds": 55,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1131N",
-        "to_stop_id": "1130N",
-        "average_duration_seconds": 95,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1130N",
-        "to_stop_id": "1129N",
-        "average_duration_seconds": 54,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1129N",
-        "to_stop_id": "1128N",
-        "average_duration_seconds": 96,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1128N",
-        "to_stop_id": "1127N",
-        "average_duration_seconds": 60,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1127N",
-        "to_stop_id": "1126N",
-        "average_duration_seconds": 62,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1126N",
-        "to_stop_id": "1125N",
-        "average_duration_seconds": 63,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1125N",
-        "to_stop_id": "1124N",
-        "average_duration_seconds": 70,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1124N",
-        "to_stop_id": "1123N",
-        "average_duration_seconds": 66,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1123N",
-        "to_stop_id": "1122N",
-        "average_duration_seconds": 104,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1122N",
-        "to_stop_id": "1121N",
-        "average_duration_seconds": 121,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1121N",
-        "to_stop_id": "1120N",
-        "average_duration_seconds": 96,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1120N",
-        "to_stop_id": "1119N",
-        "average_duration_seconds": 67,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1119N",
-        "to_stop_id": "1166N",
-        "average_duration_seconds": 92,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1166N",
-        "to_stop_id": "1165N",
-        "average_duration_seconds": 85,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1165N",
-        "to_stop_id": "1164N",
-        "average_duration_seconds": 73,
-        "sample_size": 3
-      }
+        {
+            "from_stop_id": "1164S",
+            "to_stop_id": "1165S",
+            "average_duration_seconds": 66,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1165S",
+            "to_stop_id": "1166S",
+            "average_duration_seconds": 68,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1166S",
+            "to_stop_id": "1119S",
+            "average_duration_seconds": 84,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1119S",
+            "to_stop_id": "1120S",
+            "average_duration_seconds": 66,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1120S",
+            "to_stop_id": "1121S",
+            "average_duration_seconds": 59,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1121S",
+            "to_stop_id": "1122S",
+            "average_duration_seconds": 60,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1122S",
+            "to_stop_id": "1123S",
+            "average_duration_seconds": 72,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1123S",
+            "to_stop_id": "1124S",
+            "average_duration_seconds": 75,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1124S",
+            "to_stop_id": "1125S",
+            "average_duration_seconds": 97,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1125S",
+            "to_stop_id": "1126S",
+            "average_duration_seconds": 92,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1126S",
+            "to_stop_id": "1127S",
+            "average_duration_seconds": 103,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1127S",
+            "to_stop_id": "1128S",
+            "average_duration_seconds": 105,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1128S",
+            "to_stop_id": "1129S",
+            "average_duration_seconds": 93,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1129S",
+            "to_stop_id": "1130S",
+            "average_duration_seconds": 56,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1130S",
+            "to_stop_id": "1131S",
+            "average_duration_seconds": 82,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1131S",
+            "to_stop_id": "1132S",
+            "average_duration_seconds": 85,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1132S",
+            "to_stop_id": "1133S",
+            "average_duration_seconds": 73,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1133N",
+            "to_stop_id": "1132N",
+            "average_duration_seconds": 77,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1132N",
+            "to_stop_id": "1131N",
+            "average_duration_seconds": 55,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1131N",
+            "to_stop_id": "1130N",
+            "average_duration_seconds": 95,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1130N",
+            "to_stop_id": "1129N",
+            "average_duration_seconds": 54,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1129N",
+            "to_stop_id": "1128N",
+            "average_duration_seconds": 96,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1128N",
+            "to_stop_id": "1127N",
+            "average_duration_seconds": 60,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1127N",
+            "to_stop_id": "1126N",
+            "average_duration_seconds": 62,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1126N",
+            "to_stop_id": "1125N",
+            "average_duration_seconds": 63,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1125N",
+            "to_stop_id": "1124N",
+            "average_duration_seconds": 70,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1124N",
+            "to_stop_id": "1123N",
+            "average_duration_seconds": 66,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1123N",
+            "to_stop_id": "1122N",
+            "average_duration_seconds": 104,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1122N",
+            "to_stop_id": "1121N",
+            "average_duration_seconds": 121,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1121N",
+            "to_stop_id": "1120N",
+            "average_duration_seconds": 96,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1120N",
+            "to_stop_id": "1119N",
+            "average_duration_seconds": 67,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1119N",
+            "to_stop_id": "1166N",
+            "average_duration_seconds": 92,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1166N",
+            "to_stop_id": "1165N",
+            "average_duration_seconds": 85,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1165N",
+            "to_stop_id": "1164N",
+            "average_duration_seconds": 73,
+            "sample_size": 3
+        }
     ],
     "H": [
-      {
-        "from_stop_id": "1163E",
-        "to_stop_id": "1162E",
-        "average_duration_seconds": 75,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1162E",
-        "to_stop_id": "1161E",
-        "average_duration_seconds": 100,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1161E",
-        "to_stop_id": "1160E",
-        "average_duration_seconds": 49,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1160E",
-        "to_stop_id": "1141E",
-        "average_duration_seconds": 66,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1141E",
-        "to_stop_id": "1140E",
-        "average_duration_seconds": 66,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1140E",
-        "to_stop_id": "1139E",
-        "average_duration_seconds": 76,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1139E",
-        "to_stop_id": "1138E",
-        "average_duration_seconds": 101,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1138E",
-        "to_stop_id": "1137E",
-        "average_duration_seconds": 78,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1137E",
-        "to_stop_id": "1136E",
-        "average_duration_seconds": 76,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1136E",
-        "to_stop_id": "1135E",
-        "average_duration_seconds": 97,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1135E",
-        "to_stop_id": "1134E",
-        "average_duration_seconds": 88,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1134O",
-        "to_stop_id": "1135O",
-        "average_duration_seconds": 88,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1135O",
-        "to_stop_id": "1136O",
-        "average_duration_seconds": 97,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1136O",
-        "to_stop_id": "1137O",
-        "average_duration_seconds": 76,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1137O",
-        "to_stop_id": "1138O",
-        "average_duration_seconds": 78,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1138O",
-        "to_stop_id": "1139O",
-        "average_duration_seconds": 101,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1139O",
-        "to_stop_id": "1140O",
-        "average_duration_seconds": 76,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1140O",
-        "to_stop_id": "1141O",
-        "average_duration_seconds": 66,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1141O",
-        "to_stop_id": "1160O",
-        "average_duration_seconds": 66,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1160O",
-        "to_stop_id": "1161O",
-        "average_duration_seconds": 49,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1161O",
-        "to_stop_id": "1162O",
-        "average_duration_seconds": 100,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1162O",
-        "to_stop_id": "1163O",
-        "average_duration_seconds": 75,
-        "sample_size": 3
-      }
+        {
+            "from_stop_id": "1163E",
+            "to_stop_id": "1162E",
+            "average_duration_seconds": 75,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1162E",
+            "to_stop_id": "1161E",
+            "average_duration_seconds": 100,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1161E",
+            "to_stop_id": "1160E",
+            "average_duration_seconds": 49,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1160E",
+            "to_stop_id": "1141E",
+            "average_duration_seconds": 66,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1141E",
+            "to_stop_id": "1140E",
+            "average_duration_seconds": 66,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1140E",
+            "to_stop_id": "1139E",
+            "average_duration_seconds": 76,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1139E",
+            "to_stop_id": "1138E",
+            "average_duration_seconds": 101,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1138E",
+            "to_stop_id": "1137E",
+            "average_duration_seconds": 78,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1137E",
+            "to_stop_id": "1136E",
+            "average_duration_seconds": 76,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1136E",
+            "to_stop_id": "1135E",
+            "average_duration_seconds": 97,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1135E",
+            "to_stop_id": "1134E",
+            "average_duration_seconds": 88,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1134O",
+            "to_stop_id": "1135O",
+            "average_duration_seconds": 88,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1135O",
+            "to_stop_id": "1136O",
+            "average_duration_seconds": 97,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1136O",
+            "to_stop_id": "1137O",
+            "average_duration_seconds": 76,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1137O",
+            "to_stop_id": "1138O",
+            "average_duration_seconds": 78,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1138O",
+            "to_stop_id": "1139O",
+            "average_duration_seconds": 101,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1139O",
+            "to_stop_id": "1140O",
+            "average_duration_seconds": 76,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1140O",
+            "to_stop_id": "1141O",
+            "average_duration_seconds": 66,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1141O",
+            "to_stop_id": "1160O",
+            "average_duration_seconds": 66,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1160O",
+            "to_stop_id": "1161O",
+            "average_duration_seconds": 49,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1161O",
+            "to_stop_id": "1162O",
+            "average_duration_seconds": 100,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1162O",
+            "to_stop_id": "1163O",
+            "average_duration_seconds": 75,
+            "sample_size": 3
+        }
     ],
     "P1": [
-      {
-        "from_stop_id": "1142N",
-        "to_stop_id": "1143N",
-        "average_duration_seconds": 155,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1143N",
-        "to_stop_id": "1144N",
-        "average_duration_seconds": 127,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1144N",
-        "to_stop_id": "1145N",
-        "average_duration_seconds": 60,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1145N",
-        "to_stop_id": "1146N",
-        "average_duration_seconds": 89,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1146N",
-        "to_stop_id": "1147N",
-        "average_duration_seconds": 29,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1147N",
-        "to_stop_id": "1148N",
-        "average_duration_seconds": 49,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1148N",
-        "to_stop_id": "1149N",
-        "average_duration_seconds": 82,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1149N",
-        "to_stop_id": "1150N",
-        "average_duration_seconds": 156,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1150N",
-        "to_stop_id": "1151N",
-        "average_duration_seconds": 62,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1151N",
-        "to_stop_id": "1152N",
-        "average_duration_seconds": 73,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1152N",
-        "to_stop_id": "1153N",
-        "average_duration_seconds": 100,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1153N",
-        "to_stop_id": "1154N",
-        "average_duration_seconds": 65,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1154N",
-        "to_stop_id": "1155N",
-        "average_duration_seconds": 74,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1155S",
-        "to_stop_id": "1154S",
-        "average_duration_seconds": 72,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1154S",
-        "to_stop_id": "1153S",
-        "average_duration_seconds": 64,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1153S",
-        "to_stop_id": "1152S",
-        "average_duration_seconds": 97,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1152S",
-        "to_stop_id": "1151S",
-        "average_duration_seconds": 71,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1151S",
-        "to_stop_id": "1150S",
-        "average_duration_seconds": 60,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1150S",
-        "to_stop_id": "1149S",
-        "average_duration_seconds": 151,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1149S",
-        "to_stop_id": "1148S",
-        "average_duration_seconds": 108,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1148S",
-        "to_stop_id": "1147S",
-        "average_duration_seconds": 48,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1147S",
-        "to_stop_id": "1146S",
-        "average_duration_seconds": 28,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1146S",
-        "to_stop_id": "1145S",
-        "average_duration_seconds": 87,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1145S",
-        "to_stop_id": "1144S",
-        "average_duration_seconds": 58,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1144S",
-        "to_stop_id": "1143S",
-        "average_duration_seconds": 124,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1143S",
-        "to_stop_id": "1142S",
-        "average_duration_seconds": 151,
-        "sample_size": 3
-      }
+        {
+            "from_stop_id": "1142N",
+            "to_stop_id": "1143N",
+            "average_duration_seconds": 155,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1143N",
+            "to_stop_id": "1144N",
+            "average_duration_seconds": 127,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1144N",
+            "to_stop_id": "1145N",
+            "average_duration_seconds": 60,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1145N",
+            "to_stop_id": "1146N",
+            "average_duration_seconds": 89,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1146N",
+            "to_stop_id": "1147N",
+            "average_duration_seconds": 29,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1147N",
+            "to_stop_id": "1148N",
+            "average_duration_seconds": 49,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1148N",
+            "to_stop_id": "1149N",
+            "average_duration_seconds": 82,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1149N",
+            "to_stop_id": "1150N",
+            "average_duration_seconds": 156,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1150N",
+            "to_stop_id": "1151N",
+            "average_duration_seconds": 62,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1151N",
+            "to_stop_id": "1152N",
+            "average_duration_seconds": 73,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1152N",
+            "to_stop_id": "1153N",
+            "average_duration_seconds": 100,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1153N",
+            "to_stop_id": "1154N",
+            "average_duration_seconds": 65,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1154N",
+            "to_stop_id": "1155N",
+            "average_duration_seconds": 74,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1155S",
+            "to_stop_id": "1154S",
+            "average_duration_seconds": 72,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1154S",
+            "to_stop_id": "1153S",
+            "average_duration_seconds": 64,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1153S",
+            "to_stop_id": "1152S",
+            "average_duration_seconds": 97,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1152S",
+            "to_stop_id": "1151S",
+            "average_duration_seconds": 71,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1151S",
+            "to_stop_id": "1150S",
+            "average_duration_seconds": 60,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1150S",
+            "to_stop_id": "1149S",
+            "average_duration_seconds": 151,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1149S",
+            "to_stop_id": "1148S",
+            "average_duration_seconds": 108,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1148S",
+            "to_stop_id": "1147S",
+            "average_duration_seconds": 48,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1147S",
+            "to_stop_id": "1146S",
+            "average_duration_seconds": 28,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1146S",
+            "to_stop_id": "1145S",
+            "average_duration_seconds": 87,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1145S",
+            "to_stop_id": "1144S",
+            "average_duration_seconds": 58,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1144S",
+            "to_stop_id": "1143S",
+            "average_duration_seconds": 124,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1143S",
+            "to_stop_id": "1142S",
+            "average_duration_seconds": 151,
+            "sample_size": 3
+        }
     ],
     "P2": [
-      {
-        "from_stop_id": "1142N",
-        "to_stop_id": "1143N",
-        "average_duration_seconds": 142,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1143N",
-        "to_stop_id": "1144N",
-        "average_duration_seconds": 117,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1144N",
-        "to_stop_id": "1145N",
-        "average_duration_seconds": 55,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1145N",
-        "to_stop_id": "1146N",
-        "average_duration_seconds": 82,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1146N",
-        "to_stop_id": "1147N",
-        "average_duration_seconds": 26,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1147N",
-        "to_stop_id": "1148N",
-        "average_duration_seconds": 45,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1148N",
-        "to_stop_id": "1149N",
-        "average_duration_seconds": 75,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1149N",
-        "to_stop_id": "1150N",
-        "average_duration_seconds": 143,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1150N",
-        "to_stop_id": "1151N",
-        "average_duration_seconds": 56,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1151N",
-        "to_stop_id": "1152N",
-        "average_duration_seconds": 66,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1152N",
-        "to_stop_id": "1153N",
-        "average_duration_seconds": 92,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1153N",
-        "to_stop_id": "1156N",
-        "average_duration_seconds": 55,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1156N",
-        "to_stop_id": "1157N",
-        "average_duration_seconds": 61,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1157N",
-        "to_stop_id": "1158N",
-        "average_duration_seconds": 88,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1158N",
-        "to_stop_id": "1159N",
-        "average_duration_seconds": 88,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1159S",
-        "to_stop_id": "1158S",
-        "average_duration_seconds": 86,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1158S",
-        "to_stop_id": "1157S",
-        "average_duration_seconds": 86,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1157S",
-        "to_stop_id": "1156S",
-        "average_duration_seconds": 60,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1156S",
-        "to_stop_id": "1153S",
-        "average_duration_seconds": 54,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1153S",
-        "to_stop_id": "1152S",
-        "average_duration_seconds": 90,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1152S",
-        "to_stop_id": "1151S",
-        "average_duration_seconds": 65,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1151S",
-        "to_stop_id": "1150S",
-        "average_duration_seconds": 55,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1150S",
-        "to_stop_id": "1149S",
-        "average_duration_seconds": 139,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1149S",
-        "to_stop_id": "1148S",
-        "average_duration_seconds": 99,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1148S",
-        "to_stop_id": "1147S",
-        "average_duration_seconds": 44,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1147S",
-        "to_stop_id": "1146S",
-        "average_duration_seconds": 26,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1146S",
-        "to_stop_id": "1145S",
-        "average_duration_seconds": 80,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1145S",
-        "to_stop_id": "1144S",
-        "average_duration_seconds": 54,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1144S",
-        "to_stop_id": "1143S",
-        "average_duration_seconds": 114,
-        "sample_size": 3
-      },
-      {
-        "from_stop_id": "1143S",
-        "to_stop_id": "1142S",
-        "average_duration_seconds": 139,
-        "sample_size": 3
-      }
+        {
+            "from_stop_id": "1142N",
+            "to_stop_id": "1143N",
+            "average_duration_seconds": 142,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1143N",
+            "to_stop_id": "1144N",
+            "average_duration_seconds": 117,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1144N",
+            "to_stop_id": "1145N",
+            "average_duration_seconds": 55,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1145N",
+            "to_stop_id": "1146N",
+            "average_duration_seconds": 82,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1146N",
+            "to_stop_id": "1147N",
+            "average_duration_seconds": 26,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1147N",
+            "to_stop_id": "1148N",
+            "average_duration_seconds": 45,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1148N",
+            "to_stop_id": "1149N",
+            "average_duration_seconds": 75,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1149N",
+            "to_stop_id": "1150N",
+            "average_duration_seconds": 143,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1150N",
+            "to_stop_id": "1151N",
+            "average_duration_seconds": 56,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1151N",
+            "to_stop_id": "1152N",
+            "average_duration_seconds": 66,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1152N",
+            "to_stop_id": "1153N",
+            "average_duration_seconds": 92,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1153N",
+            "to_stop_id": "1156N",
+            "average_duration_seconds": 55,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1156N",
+            "to_stop_id": "1157N",
+            "average_duration_seconds": 61,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1157N",
+            "to_stop_id": "1158N",
+            "average_duration_seconds": 88,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1158N",
+            "to_stop_id": "1159N",
+            "average_duration_seconds": 88,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1159S",
+            "to_stop_id": "1158S",
+            "average_duration_seconds": 86,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1158S",
+            "to_stop_id": "1157S",
+            "average_duration_seconds": 86,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1157S",
+            "to_stop_id": "1156S",
+            "average_duration_seconds": 60,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1156S",
+            "to_stop_id": "1153S",
+            "average_duration_seconds": 54,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1153S",
+            "to_stop_id": "1152S",
+            "average_duration_seconds": 90,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1152S",
+            "to_stop_id": "1151S",
+            "average_duration_seconds": 65,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1151S",
+            "to_stop_id": "1150S",
+            "average_duration_seconds": 55,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1150S",
+            "to_stop_id": "1149S",
+            "average_duration_seconds": 139,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1149S",
+            "to_stop_id": "1148S",
+            "average_duration_seconds": 99,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1148S",
+            "to_stop_id": "1147S",
+            "average_duration_seconds": 44,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1147S",
+            "to_stop_id": "1146S",
+            "average_duration_seconds": 26,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1146S",
+            "to_stop_id": "1145S",
+            "average_duration_seconds": 80,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1145S",
+            "to_stop_id": "1144S",
+            "average_duration_seconds": 54,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1144S",
+            "to_stop_id": "1143S",
+            "average_duration_seconds": 114,
+            "sample_size": 3
+        },
+        {
+            "from_stop_id": "1143S",
+            "to_stop_id": "1142S",
+            "average_duration_seconds": 139,
+            "sample_size": 3
+        }
     ]
-  }
+}
 }
