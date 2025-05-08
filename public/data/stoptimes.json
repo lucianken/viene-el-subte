@@ -1,0 +1,86 @@
+[
+  {
+    "trip_id": "A01",
+    "arrival_time": "12:00:00",
+    "departure_time": "12:00:24",
+    "stop_id": "1076S",
+    "stop_sequence": "1"
+  },
+  {
+    "trip_id": "A01",
+    "arrival_time": "12:00:58",
+    "departure_time": "12:01:22",
+    "stop_id": "1075S",
+    "stop_sequence": "2"
+  },
+  {
+    "trip_id": "A01",
+    "arrival_time": "12:02:06",
+    "departure_time": "12:02:30",
+    "stop_id": "1074S",
+    "stop_sequence": "3"
+  },
+  {
+    "trip_id": "A02",
+    "arrival_time": "12:00:00",
+    "departure_time": "12:00:20",
+    "stop_id": "1076S",
+    "stop_sequence": "1"
+  },
+  {
+    "trip_id": "A02",
+    "arrival_time": "12:00:50",
+    "departure_time": "12:01:10",
+    "stop_id": "1075S",
+    "stop_sequence": "2"
+  },
+  {
+    "trip_id": "P1-01",
+    "arrival_time": "12:00:00",
+    "departure_time": "12:00:15",
+    "stop_id": "P001S",
+    "stop_sequence": "1"
+  },
+  {
+    "trip_id": "P1-01",
+    "arrival_time": "12:01:00",
+    "departure_time": "12:01:15",
+    "stop_id": "P002S",
+    "stop_sequence": "2"
+  },
+  {
+    "trip_id": "P1-01",
+    "arrival_time": "12:02:00",
+    "departure_time": "12:02:15",
+    "stop_id": "P003S",
+    "stop_sequence": "3"
+  },
+  {
+    "trip_id": "B01",
+    "arrival_time": "12:00:00",
+    "departure_time": "12:00:24",
+    "stop_id": "B01S",
+    "stop_sequence": "1"
+  },
+  {
+    "trip_id": "B01",
+    "arrival_time": "11:59:58",
+    "departure_time": "12:01:22",
+    "stop_id": "B02S",
+    "stop_sequence": "2"
+  },
+  {
+    "trip_id": "C01",
+    "arrival_time": "12:00:00",
+    "departure_time": "INVALID_TIME",
+    "stop_id": "C01S",
+    "stop_sequence": "1"
+  },
+  {
+    "trip_id": "C01",
+    "arrival_time": "12:01:00",
+    "departure_time": "12:01:22",
+    "stop_id": "C02S",
+    "stop_sequence": "2"
+  }
+]
