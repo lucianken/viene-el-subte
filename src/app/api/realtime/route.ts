@@ -24,8 +24,12 @@ interface Arrival extends ArrivalBase {
     isEstimate?: boolean; 
 }
 interface StopOnLine { stopId: string; stopName: string; sequence: number; }
-interface ApiArrivalInfoForStopList extends ArrivalBase {} 
-interface ApiStopWithCalculatedArrival extends StopOnLine { nextArrival?: ApiArrivalInfoForStopList; }
+// CORREGIDO: Eliminada interfaz vacía ApiArrivalInfoForStopList
+// interface ApiArrivalInfoForStopList extends ArrivalBase {} 
+// CORREGIDO: ApiStopWithCalculatedArrival ahora usa ArrivalBase directamente
+interface ApiStopWithCalculatedArrival extends StopOnLine { 
+    nextArrival?: ArrivalBase; // Usar ArrivalBase en lugar de ApiArrivalInfoForStopList
+}
 interface RealtimeApiRouteResponse { 
     arrivals: Arrival[]; 
     lineStopsWithArrivals: ApiStopWithCalculatedArrival[]; 
@@ -34,13 +38,11 @@ interface RealtimeApiRouteResponse {
 
 // --- DATOS LOCALES --- 
 type RouteToStopsData = Record<string, StopOnLine[]>;
-// Interfaz LocalTrip eliminada si ya no se usa trips.json
 interface AverageDuration { from_stop_id: string; to_stop_id: string; average_duration_seconds: number; sample_size: number; }
 interface LineAverageDurations { [lineShortName: string]: AverageDuration[]; }
 interface AverageDurationsData { lineAverageDurations: LineAverageDurations; }
 
 // --- HELPERS ---
-// loadLocalJsonData es necesaria para route_to_stops y tiempopromedio
 function loadLocalJsonData<T>(filePathFromPublic: string): T | null {
     const fullPath = path.join(process.cwd(), 'public', filePathFromPublic);
     if (!fs.existsSync(fullPath)) {
@@ -66,7 +68,8 @@ function getTotalTravelTime(
     const startIndex = stopSequence.findIndex(s => s.stopId === startStopId);
     const endIndex = stopSequence.findIndex(s => s.stopId === endStopId);
     if (startIndex === -1 || endIndex === -1 || startIndex >= endIndex) {
-        console.warn(`[getTotalTravelTime] Índices inválidos o fuera de orden: ${startStopId}(${startIndex}) -> ${endStopId}(${endIndex})`);
+        // No loguear como warning si no se encuentran, es un caso esperado a veces
+        // console.warn(`[getTotalTravelTime] Índices inválidos o fuera de orden: ${startStopId}(${startIndex}) -> ${endStopId}(${endIndex})`);
         return null;
     }
     let totalDuration = 0;
@@ -89,7 +92,8 @@ function calculateSubsequentArrivalEstimates(
     lineShortName: string,
     directionId: string, 
     stopSequence: StopOnLine[],
-    bestArrivalPerStop: Map<string, ApiArrivalInfoForStopList>,
+    // CORREGIDO: Usar ArrivalBase en el tipo del Map
+    bestArrivalPerStop: Map<string, ArrivalBase>, 
     averageDurationsData: AverageDurationsData | null,
     dwellTimeSeconds: number,
     maxEstimates: number,
@@ -153,9 +157,11 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       { method: 'GET', headers: { 'Accept': 'application/json' }, next: { revalidate: 20 } } 
     );
     if (!externalResponse.ok) { 
+        // CORREGIDO: Usar errorBody en el console.error
         const errorBody = await externalResponse.text(); 
-        console.error(`[API /api/realtime] Error desde API externa: ${externalResponse.status} ${externalResponse.statusText}.`); 
-        let errorMsg = `Error ${externalResponse.status} al contactar servicio de subterráneos.`;
+        console.error(`[API /api/realtime] Error desde API externa: ${externalResponse.status} ${externalResponse.statusText}. Body: ${errorBody.substring(0, 500)}`); 
+        // CORREGIDO: Cambiar let a const para errorMsg
+        const errorMsg = `Error ${externalResponse.status} al contactar servicio de subterráneos.`;
         return NextResponse.json({ error: errorMsg }, { status: 502 });
     }
     const externalData: ExternalApiResponse = await externalResponse.json();
@@ -185,7 +191,8 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     const lineShortName = routeIdParam.replace(/^Linea/, ''); 
     const processedArrivalsForSelectedStop: Arrival[] = [];
     const targetDirectionIdNum = parseInt(directionIdParam, 10); 
-    const bestArrivalPerStopId = new Map<string, ApiArrivalInfoForStopList>();
+    // CORREGIDO: Usar ArrivalBase en el tipo del Map
+    const bestArrivalPerStopId = new Map<string, ArrivalBase>(); 
 
     // --- Bucle principal para poblar bestArrivalPerStopId y processedArrivalsForSelectedStop ---
     externalData.Entity.forEach((entity) => {
@@ -204,12 +211,13 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
                     if (isValidReport) {
                         const estimatedArrivalTimeForStation = headerTime + delayAtStation;
                         if (estimatedArrivalTimeForStation >= headerTime - 60) { 
-                            let arrivalStatusForStation: ApiArrivalInfoForStopList['status'] = 'unknown';
+                            let arrivalStatusForStation: ArrivalBase['status'] = 'unknown';
                             if (delayAtStation === 0) arrivalStatusForStation = 'on-time';
                             else if (delayAtStation < 0 && delayAtStation >= -180) arrivalStatusForStation = 'early';
                             else if (delayAtStation < -180 || delayAtStation > 180) arrivalStatusForStation = 'delayed';
                             
-                            const currentArrivalInfo: ApiArrivalInfoForStopList = {
+                            // CORREGIDO: Usar ArrivalBase
+                            const currentArrivalInfo: ArrivalBase = {
                                 estimatedArrivalTime: estimatedArrivalTimeForStation, delaySeconds: delayAtStation, status: arrivalStatusForStation
                             };
                             const existingBest = bestArrivalPerStopId.get(stationDataFromTrip.stop_id);
@@ -256,6 +264,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     let lineStopsWithArrivalsData: ApiStopWithCalculatedArrival[] = [];
     lineStopsWithArrivalsData = currentStopSequence.map((baseStop: StopOnLine): ApiStopWithCalculatedArrival => ({
         stopId: baseStop.stopId, stopName: baseStop.stopName, sequence: baseStop.sequence,
+        // CORREGIDO: Usar ArrivalBase aquí también si es necesario (nextArrival es de tipo ArrivalBase)
         nextArrival: bestArrivalPerStopId.get(baseStop.stopId) 
     }));
     

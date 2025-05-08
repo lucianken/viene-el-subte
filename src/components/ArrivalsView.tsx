@@ -7,10 +7,11 @@ import { Route, Stop } from '@/types'; // Tus tipos globales
 
 // --- INTERFACES DEL FRONTEND PARA LA RESPUESTA DE /api/realtime ---
 
-// SIMPLIFICADO: ArrivalInfo ya no necesita headsign
+// Interfaz para un arribo individual (puede ser real o estimado)
 interface ArrivalInfo { 
   tripId: string; 
   routeId: string; 
+  // headsign removido
   estimatedArrivalTime: number; // SEGUNDOS
   delaySeconds: number; 
   status: 'on-time' | 'delayed' | 'early' | 'unknown'; 
@@ -41,10 +42,7 @@ interface RealtimeDataForView {
   timestamp: number; // Timestamp en MILISEGUNDOS
 }
 
-// --- OTROS TIPOS ---
-// Interfaz LocalTrip probablemente ya no sea necesaria aquí si no usamos trips.json
-// interface LocalTrip { /* ... */ }
-
+// --- Interfaz de Props ---
 interface ArrivalsViewProps {
   routeId: string;
   stopId: string;
@@ -67,16 +65,11 @@ export default function ArrivalsView({
   stop 
 }: ArrivalsViewProps) {
   const [apiData, setApiData] = useState<RealtimeDataForView | null>(null);
-  // const [localTrips, setLocalTrips] = useState<LocalTrip[]>([]); // Ya no necesario
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [currentTime, setCurrentTime] = useState(new Date());
   const [updating, setUpdating] = useState(false);
-  // const [generalDirectionHeadsign, setGeneralDirectionHeadsign] = useState<string>("Desconocida"); // Ya no necesario
-
-  // ELIMINADO: useEffect para loadLocalTrips
-  // ELIMINADO: useCallback getOfficialHeadsign
-  // ELIMINADO: useEffect para calcular generalDirectionHeadsign
+  // Estados y lógica relacionados a headsign/localTrips eliminados
 
   // --- Funciones Helper ---
   const isColorBright = (color: string): boolean => {
@@ -158,6 +151,7 @@ export default function ArrivalsView({
           </div>
           <div className={`text-sm text-right sm:text-left ${secondaryHeaderTextClass}`}>
             <p className={mainHeaderTextClass}>Hora: {currentTime.toLocaleTimeString('es-AR', {hour: '2-digit', minute: '2-digit', second: '2-digit'})}</p>
+            {/* Usando '!' para asegurar a TS que apiData no es null aquí */}
             <p>Act: {formatTime(apiData!.timestamp / 1000, true)}</p> 
           </div>
         </div> 
@@ -176,7 +170,6 @@ export default function ArrivalsView({
           <h4 className="text-base font-semibold mb-3 text-gray-700">Próximas llegadas</h4>
           {apiData!.arrivals && apiData!.arrivals.length > 0 ? (
             <ul className="space-y-3">
-              {/* Mostrar hasta 4 arribos */}
               {apiData!.arrivals.slice(0, 4).map((arrival, index) => { 
                 const arrivalString = getTimeUntilArrivalString(arrival.estimatedArrivalTime);
                 let arrivalColorClass = 'text-blue-600';
@@ -187,37 +180,32 @@ export default function ArrivalsView({
                 }
                 if (arrivalString === "N/A") arrivalColorClass = 'text-gray-400';
                 
-                // Determinar etiqueta de prefijo
                 let labelPrefix = "";
-                const arrivalNumber = index + 1; // Número de orden (1, 2, 3, 4)
+                const arrivalNumber = index + 1; 
 
                 if (arrival.isEstimate) {
-                    // Es un arribo estimado
                     labelPrefix = `${arrivalNumber}. Próximo subte estimado en: `;
                 } else {
                     // Es un arribo real (directo de la API)
-                    if (arrivalNumber === 1) {
-                        labelPrefix = "Próximo subte en: ";
-                    } else {
-                        // Manejar si la API llegara a devolver más de un arribo real
-                        labelPrefix = `${arrivalNumber}. Próximo subte en: `; 
-                    }
+                    // Solo mostramos el número si hay más de un arribo total, 
+                    // o siempre si prefieres consistencia.
+                    // Por simplicidad, ahora mostramos el número solo para estimados > 1
+                    // Pero el prefijo es diferente.
+                    //labelPrefix = `${arrivalNumber}. Próximo subte en: `; // Opción con número siempre
+                     labelPrefix = "Próximo subte en: "; // Opción sin número para el primero real
                 }
 
                 return (
-                  // Usar arrivalNumber para la key si tripId puede repetirse en estimados
                   <li key={`${arrival.tripId}_${arrivalNumber}`} className={`flex items-center gap-3 ${arrival.isEstimate ? 'opacity-75' : ''}`}>
                     <div className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 font-bold text-sm`} style={{ backgroundColor: headerBgColor, color: mainHeaderTextClass }}>
-                      {/* Mostrar número de arribo en el círculo */}
+                      {/* Mostrar número de arribo */}
                       {arrivalNumber}
                     </div>
                     <div className="flex-grow">
-                       {/* Mostrar etiqueta y tiempo */}
                       <p className="font-medium text-gray-800">
                         {labelPrefix}
                         <span className={`font-semibold ${arrivalColorClass}`}> {arrivalString} </span>
                       </p>
-                      {/* Mostrar hora y hora de inicio (solo para el real) */}
                       <div className="text-xs text-gray-500 flex flex-wrap items-center gap-x-2">
                         {arrivalString !== "Llegando" && arrivalString !== "N/A" && arrival.estimatedArrivalTime && (
                           <span className="ml-1">({formatTime(arrival.estimatedArrivalTime)})</span>

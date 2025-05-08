@@ -204,6 +204,7 @@ export default function Home() {
                   stopId={selectedDirectionInfo.stopId} // CAMBIO: Usar el platformStopId de DirectionOption
                   // CAMBIO: Usar el rawDirectionId (como string) para la API /api/realtime
                   direction={selectedDirectionInfo.rawDirectionId.toString()} 
+                  directionDisplayName={selectedDirectionInfo.directionDisplayName} 
                   routeColor={selectedRoute.route_color || "CCCCCC"}
                   routeName={selectedRoute.route_short_name}
                   route={selectedRoute}
