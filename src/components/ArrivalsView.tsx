@@ -6,22 +6,26 @@ import StopLineView from './StopLineView';
 import { Route, Stop } from '@/types'; // Tus tipos globales
 
 // --- INTERFACES DEL FRONTEND PARA LA RESPUESTA DE /api/realtime ---
-interface ArrivalFromApi {
-  tripId: string;
-  routeId: string;
-  headsign?: string;
-  estimatedArrivalTime: number; // Timestamp en SEGUNDOS
-  delaySeconds: number;
-  status: 'on-time' | 'delayed' | 'early' | 'unknown';
-  departureTimeFromTerminal?: string;
-  vehicleId?: string;
+
+// SIMPLIFICADO: ArrivalInfo ya no necesita headsign
+interface ArrivalInfo { 
+  tripId: string; 
+  routeId: string; 
+  estimatedArrivalTime: number; // SEGUNDOS
+  delaySeconds: number; 
+  status: 'on-time' | 'delayed' | 'early' | 'unknown'; 
+  departureTimeFromTerminal?: string; 
+  vehicleId?: string; 
+  isEstimate?: boolean; 
 }
 
+// Para la información de arribo en la lista de paradas de la línea (StopLineView)
 interface ApiArrivalInfoForStopList {
     estimatedArrivalTime: number; // SEGUNDOS
     delaySeconds: number;
     status: 'on-time' | 'delayed' | 'early' | 'unknown';
 }
+// Para cada parada en la lista de la línea (StopLineView)
 interface ApiStopWithCalculatedArrival {
     stopId: string;
     stopName: string;
@@ -30,24 +34,22 @@ interface ApiStopWithCalculatedArrival {
     lastUpdateTimestamp?: number; // Timestamp en SEGUNDOS
 }
 
+// Interfaz completa de la respuesta que ArrivalsView espera de /api/realtime
 interface RealtimeDataForView { 
-  arrivals: ArrivalFromApi[];
-  lineStopsWithArrivals: ApiStopWithCalculatedArrival[];
+  arrivals: ArrivalInfo[]; // Array de arribos (reales + estimados) - SIN headsign
+  lineStopsWithArrivals: ApiStopWithCalculatedArrival[]; 
   timestamp: number; // Timestamp en MILISEGUNDOS
 }
 
-interface LocalTrip {
-    route_id: string; 
-    service_id: string;
-    trip_id: string;
-    trip_headsign?: string;
-    direction_id: string | number; 
-}
+// --- OTROS TIPOS ---
+// Interfaz LocalTrip probablemente ya no sea necesaria aquí si no usamos trips.json
+// interface LocalTrip { /* ... */ }
 
 interface ArrivalsViewProps {
   routeId: string;
   stopId: string;
-  direction: string;
+  direction: string; // rawDirectionId '0' o '1'
+  directionDisplayName: string; // **IMPORTANTE**: Se espera esta prop
   routeColor: string;
   routeName: string;
   route: Route; 
@@ -58,50 +60,25 @@ export default function ArrivalsView({
   routeId, 
   stopId, 
   direction,
+  directionDisplayName, // Recibir el nombre de la dirección
   routeColor,
   routeName,
   route,
   stop 
 }: ArrivalsViewProps) {
   const [apiData, setApiData] = useState<RealtimeDataForView | null>(null);
-  const [localTrips, setLocalTrips] = useState<LocalTrip[]>([]);
+  // const [localTrips, setLocalTrips] = useState<LocalTrip[]>([]); // Ya no necesario
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [currentTime, setCurrentTime] = useState(new Date());
   const [updating, setUpdating] = useState(false);
-  const [generalDirectionHeadsign, setGeneralDirectionHeadsign] = useState<string>("Desconocida");
+  // const [generalDirectionHeadsign, setGeneralDirectionHeadsign] = useState<string>("Desconocida"); // Ya no necesario
 
-  useEffect(() => {
-    async function loadLocalTrips() {
-      try {
-        const response = await fetch('/data/trips.json'); 
-        if (!response.ok) { console.warn('[ArrivalsView] Advertencia: No se pudo cargar trips.json localmente.'); setLocalTrips([]); return; }
-        const data: LocalTrip[] = await response.json(); setLocalTrips(data);
-      } catch (err) { console.error('[ArrivalsView] Error fatal al cargar trips.json:', err); setLocalTrips([]); }
-    }
-    loadLocalTrips();
-  }, []);
+  // ELIMINADO: useEffect para loadLocalTrips
+  // ELIMINADO: useCallback getOfficialHeadsign
+  // ELIMINADO: useEffect para calcular generalDirectionHeadsign
 
-  const getOfficialHeadsign = useCallback((currentRouteId: string, currentDirectionId: string): string => {
-    if (localTrips.length === 0) return "Desconocida";
-    const matchingTrip = localTrips.find(trip => 
-        trip.route_id === currentRouteId &&
-        trip.direction_id.toString() === currentDirectionId && 
-        trip.trip_headsign && trip.trip_headsign.trim() !== ""
-    );
-    return matchingTrip?.trip_headsign || "Desconocida";
-  }, [localTrips]);
-
-  useEffect(() => {
-    let headsignToShow = "Desconocida"; 
-    const firstArrivalHeadsign = apiData?.arrivals?.[0]?.headsign;
-    if (firstArrivalHeadsign && firstArrivalHeadsign.trim() !== "" && firstArrivalHeadsign.trim().toLowerCase() !== "desconocido") { headsignToShow = firstArrivalHeadsign; } 
-    else if (localTrips.length > 0) { headsignToShow = getOfficialHeadsign(routeId, direction); } 
-    else if (route.route_long_name) { const parts = route.route_long_name.split(' - '); const dirIndex = parseInt(direction, 10); if (parts.length === 2 && (dirIndex === 0 || dirIndex === 1)) { headsignToShow = parts[dirIndex]; } }
-    setGeneralDirectionHeadsign(headsignToShow);
-  }, [apiData, localTrips, routeId, direction, route, getOfficialHeadsign]);
-
-  // --- Funciones Helper (DEBEN ESTAR COMPLETAS EN TU CÓDIGO REAL) ---
+  // --- Funciones Helper ---
   const isColorBright = (color: string): boolean => {
     const hex = color.replace('#', ''); if (hex.length !== 6 && hex.length !== 3) return false;
     let r_hex, g_hex, b_hex; if (hex.length === 3) { r_hex = hex[0]+hex[0]; g_hex = hex[1]+hex[1]; b_hex = hex[2]+hex[2]; } else { r_hex = hex.substring(0, 2); g_hex = hex.substring(2, 4); b_hex = hex.substring(4, 6); }
@@ -150,6 +127,7 @@ export default function ArrivalsView({
   useEffect(() => { fetchData(); const interval = setInterval(fetchData, 15000); return () => clearInterval(interval); }, [fetchData]);
   useEffect(() => { const timer = setInterval(() => setCurrentTime(new Date()), 1000); return () => clearInterval(timer); }, []);
   
+  // Guardas para null/error/loading
   if (loading && !apiData) { 
     return ( <div className="flex justify-center items-center h-64 bg-white rounded-lg shadow-lg"> <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div> </div> );
   }
@@ -160,8 +138,10 @@ export default function ArrivalsView({
       return <div className="p-8 text-center text-gray-500 bg-white rounded-lg shadow-lg">No hay datos disponibles en este momento.</div>;
   }
 
+  // A partir de aquí, apiData NO es null
   return (
     <div className="bg-gray-50 rounded-lg shadow-xl overflow-hidden">
+      {/* Cabecera */}
       <div className="p-4" style={{ backgroundColor: headerBgColor }}>
         <div className={`flex flex-col sm:flex-row justify-between sm:items-center gap-2 ${mainHeaderTextClass}`}>
           <div className="flex items-center">
@@ -170,43 +150,35 @@ export default function ArrivalsView({
             </div>
             <div>
               <h3 className="text-xl font-bold">{route.route_long_name}</h3>
+              {/* Usar directionDisplayName de las props */}
               <p className={`text-sm ${secondaryHeaderTextClass}`}>
-                Parada: {stop.stop_name} - Dirección: {generalDirectionHeadsign}
+                Parada: {stop.stop_name} - Dirección: {directionDisplayName} 
               </p>
             </div>
           </div>
           <div className={`text-sm text-right sm:text-left ${secondaryHeaderTextClass}`}>
             <p className={mainHeaderTextClass}>Hora: {currentTime.toLocaleTimeString('es-AR', {hour: '2-digit', minute: '2-digit', second: '2-digit'})}</p>
-            {/* CORREGIDO: Removido el ?? '...' */}
-            <p>Act: {formatTime(apiData.timestamp / 1000, true)}</p> 
+            <p>Act: {formatTime(apiData!.timestamp / 1000, true)}</p> 
           </div>
-        </div> {/* Cierre del flex container principal del header */}
+        </div> 
         
-        {/* CORREGIDO: Contenido del indicador de actualización DENTRO del renderizado condicional y antes del cierre del div del header */}
         {updating && (
           <div className={`mt-1 flex items-center justify-end sm:justify-start ${secondaryHeaderTextClass} opacity-75`}>
-            <div 
-              className="animate-spin h-4 w-4 border-2 rounded-full border-t-transparent mr-2"
-              style={{ 
-                borderColor: isColorBright(headerBgColor) ? 'rgba(0,0,0,0.5)' : 'rgba(255,255,255,0.5)', 
-                borderTopColor: 'transparent' 
-              }}
-            ></div>
+            <div className="animate-spin h-4 w-4 border-2 rounded-full border-t-transparent mr-2" style={{ borderColor: isColorBright(headerBgColor) ? 'rgba(0,0,0,0.5)' : 'rgba(255,255,255,0.5)', borderTopColor: 'transparent' }}></div>
             <span className="text-xs">Actualizando...</span>
           </div>
         )}
-      </div> {/* ESTE es el cierre correcto del div del header con clase "p-4" */}
+      </div> 
 
       {/* Cuerpo del componente */}
       <div className="bg-white">
         <div className="p-4 sm:p-6 border-b border-gray-200">
           <h4 className="text-base font-semibold mb-3 text-gray-700">Próximas llegadas</h4>
-          {apiData.arrivals && apiData.arrivals.length > 0 ? (
+          {apiData!.arrivals && apiData!.arrivals.length > 0 ? (
             <ul className="space-y-3">
-              {apiData.arrivals.map((arrival) => {
+              {/* Mostrar hasta 4 arribos */}
+              {apiData!.arrivals.slice(0, 4).map((arrival, index) => { 
                 const arrivalString = getTimeUntilArrivalString(arrival.estimatedArrivalTime);
-                const displayHeadsign = (arrival.headsign && arrival.headsign.trim() !== "" && arrival.headsign.trim().toLowerCase() !== "desconocido") 
-                                        ? arrival.headsign : generalDirectionHeadsign;
                 let arrivalColorClass = 'text-blue-600';
                 if (arrival.estimatedArrivalTime !== undefined) {
                     const diffSecondsTotal = Math.round(((arrival.estimatedArrivalTime * 1000) - currentTime.getTime()) / 1000);
@@ -214,21 +186,44 @@ export default function ArrivalsView({
                     else if (diffSecondsTotal <= 60) arrivalColorClass = 'text-red-600';
                 }
                 if (arrivalString === "N/A") arrivalColorClass = 'text-gray-400';
+                
+                // Determinar etiqueta de prefijo
+                let labelPrefix = "";
+                const arrivalNumber = index + 1; // Número de orden (1, 2, 3, 4)
+
+                if (arrival.isEstimate) {
+                    // Es un arribo estimado
+                    labelPrefix = `${arrivalNumber}. Próximo subte estimado en: `;
+                } else {
+                    // Es un arribo real (directo de la API)
+                    if (arrivalNumber === 1) {
+                        labelPrefix = "Próximo subte en: ";
+                    } else {
+                        // Manejar si la API llegara a devolver más de un arribo real
+                        labelPrefix = `${arrivalNumber}. Próximo subte en: `; 
+                    }
+                }
 
                 return (
-                  <li key={`${arrival.tripId}_${arrival.estimatedArrivalTime}`} className="flex items-center gap-3">
+                  // Usar arrivalNumber para la key si tripId puede repetirse en estimados
+                  <li key={`${arrival.tripId}_${arrivalNumber}`} className={`flex items-center gap-3 ${arrival.isEstimate ? 'opacity-75' : ''}`}>
                     <div className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 font-bold text-sm`} style={{ backgroundColor: headerBgColor, color: mainHeaderTextClass }}>
-                      {routeName}
+                      {/* Mostrar número de arribo en el círculo */}
+                      {arrivalNumber}
                     </div>
                     <div className="flex-grow">
-                      <p className="font-medium text-gray-800">{displayHeadsign}</p>
-                      <div className="text-sm text-gray-500 flex flex-wrap items-center gap-x-2">
+                       {/* Mostrar etiqueta y tiempo */}
+                      <p className="font-medium text-gray-800">
+                        {labelPrefix}
                         <span className={`font-semibold ${arrivalColorClass}`}> {arrivalString} </span>
+                      </p>
+                      {/* Mostrar hora y hora de inicio (solo para el real) */}
+                      <div className="text-xs text-gray-500 flex flex-wrap items-center gap-x-2">
                         {arrivalString !== "Llegando" && arrivalString !== "N/A" && arrival.estimatedArrivalTime && (
-                          <span className="text-xs text-gray-500">({formatTime(arrival.estimatedArrivalTime)})</span>
+                          <span className="ml-1">({formatTime(arrival.estimatedArrivalTime)})</span>
                         )}
-                        {arrival.departureTimeFromTerminal && typeof arrival.departureTimeFromTerminal === 'string' &&
-                         <span className="text-xs text-gray-400">(Inicio: {arrival.departureTimeFromTerminal.substring(0, 5)})</span>}
+                        {!arrival.isEstimate && arrival.departureTimeFromTerminal && typeof arrival.departureTimeFromTerminal === 'string' &&
+                         <span className="ml-1">(Inicio: {arrival.departureTimeFromTerminal.substring(0, 5)})</span>}
                       </div>
                     </div>
                   </li>
@@ -240,9 +235,9 @@ export default function ArrivalsView({
         
         <div className="p-4 sm:p-6">
           <h4 className="text-base font-semibold mb-4 text-gray-700">Línea</h4>
-          {apiData.lineStopsWithArrivals && apiData.lineStopsWithArrivals.length > 0 ? (
+          {apiData!.lineStopsWithArrivals && apiData!.lineStopsWithArrivals.length > 0 ? (
             <StopLineView 
-              initialStopsData={apiData.lineStopsWithArrivals}
+              initialStopsData={apiData!.lineStopsWithArrivals}
               currentStopId={stopId} 
               routeColor={routeColor}
             />
