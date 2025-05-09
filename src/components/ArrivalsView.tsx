@@ -35,11 +35,20 @@ interface ApiStopWithCalculatedArrival {
     lastUpdateTimestamp?: number; // Timestamp en SEGUNDOS
 }
 
+// Interfaz para información de frecuencia
+interface FrequencyInfo {
+  startTime: string;
+  endTime: string;
+  headwaySeconds: number;
+}
+
 // Interfaz completa de la respuesta que ArrivalsView espera de /api/realtime
 interface RealtimeDataForView { 
   arrivals: ArrivalInfo[]; // Array de arribos (reales + estimados) - SIN headsign
   lineStopsWithArrivals: ApiStopWithCalculatedArrival[]; 
   timestamp: number; // Timestamp en MILISEGUNDOS
+  frequency?: FrequencyInfo; // Nueva propiedad para la frecuencia
+  shouldShowNoDataMessage?: boolean; // Para mostrar el mensaje de "GCBA no reporta datos"
 }
 
 // --- Interfaz de Props ---
@@ -91,6 +100,13 @@ export default function ArrivalsView({
     if (diffSecondsTotal <= 10) return "Llegando"; if (diffSecondsTotal < 0) return "Llegando";
     const minutes = Math.floor(diffSecondsTotal / 60); const seconds = diffSecondsTotal % 60;
     if (minutes > 0) return `${minutes} min ${seconds} s`; else return `${seconds} s`;
+  };
+  
+  // Función para formatear los segundos en formato mm:ss
+  const formatHeadwayTime = (seconds: number): string => {
+    const minutes = Math.floor(seconds / 60);
+    const remainingSeconds = seconds % 60;
+    return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
   };
   // --- Fin Funciones Helper ---
   
@@ -151,10 +167,16 @@ export default function ArrivalsView({
           </div>
           <div className={`text-sm text-right sm:text-left ${secondaryHeaderTextClass}`}>
             <p className={mainHeaderTextClass}>Hora: {currentTime.toLocaleTimeString('es-AR', {hour: '2-digit', minute: '2-digit', second: '2-digit'})}</p>
-            {/* Usando '!' para asegurar a TS que apiData no es null aquí */}
-            <p>Act: {formatTime(apiData!.timestamp / 1000, true)}</p> 
+            <p>Act: {formatTime(apiData.timestamp / 1000, true)}</p> 
           </div>
         </div> 
+        
+        {/* Información de frecuencia */}
+        {apiData.frequency && (
+          <div className={`mt-2 text-sm ${mainHeaderTextClass}`}>
+            <p>En este horario ({apiData.frequency.startTime}-{apiData.frequency.endTime}) la frecuencia es de {formatHeadwayTime(apiData.frequency.headwaySeconds)} entre trenes.</p>
+          </div>
+        )}
         
         {updating && (
           <div className={`mt-1 flex items-center justify-end sm:justify-start ${secondaryHeaderTextClass} opacity-75`}>
@@ -168,9 +190,15 @@ export default function ArrivalsView({
       <div className="bg-white">
         <div className="p-4 sm:p-6 border-b border-gray-200">
           <h4 className="text-base font-semibold mb-3 text-gray-700">Próximas llegadas</h4>
-          {apiData!.arrivals && apiData!.arrivals.length > 0 ? (
+          
+          {/* Mensaje para líneas sin datos reportados */}
+          {apiData.shouldShowNoDataMessage ? (
+            <div className="py-4 text-center text-red-600 font-semibold">
+              El GCBA no reporta datos para esta línea
+            </div>
+          ) : apiData.arrivals && apiData.arrivals.length > 0 ? (
             <ul className="space-y-3">
-              {apiData!.arrivals.slice(0, 4).map((arrival, index) => { 
+              {apiData.arrivals.slice(0, 4).map((arrival, index) => { 
                 const arrivalString = getTimeUntilArrivalString(arrival.estimatedArrivalTime);
                 let arrivalColorClass = 'text-blue-600';
                 if (arrival.estimatedArrivalTime !== undefined) {
@@ -186,19 +214,12 @@ export default function ArrivalsView({
                 if (arrival.isEstimate) {
                     labelPrefix = `${arrivalNumber}. Próximo subte estimado en: `;
                 } else {
-                    // Es un arribo real (directo de la API)
-                    // Solo mostramos el número si hay más de un arribo total, 
-                    // o siempre si prefieres consistencia.
-                    // Por simplicidad, ahora mostramos el número solo para estimados > 1
-                    // Pero el prefijo es diferente.
-                    //labelPrefix = `${arrivalNumber}. Próximo subte en: `; // Opción con número siempre
-                     labelPrefix = "Próximo subte en: "; // Opción sin número para el primero real
+                    labelPrefix = "Próximo subte en: ";
                 }
 
                 return (
                   <li key={`${arrival.tripId}_${arrivalNumber}`} className={`flex items-center gap-3 ${arrival.isEstimate ? 'opacity-75' : ''}`}>
                     <div className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 font-bold text-sm`} style={{ backgroundColor: headerBgColor, color: mainHeaderTextClass }}>
-                      {/* Mostrar número de arribo */}
                       {arrivalNumber}
                     </div>
                     <div className="flex-grow">
@@ -210,8 +231,7 @@ export default function ArrivalsView({
                         {arrivalString !== "Llegando" && arrivalString !== "N/A" && arrival.estimatedArrivalTime && (
                           <span className="ml-1">({formatTime(arrival.estimatedArrivalTime)})</span>
                         )}
-                        {!arrival.isEstimate && arrival.departureTimeFromTerminal && typeof arrival.departureTimeFromTerminal === 'string' &&
-                         <span className="ml-1">(Inicio: {arrival.departureTimeFromTerminal.substring(0, 5)})</span>}
+                        {/* Eliminado el departureTimeFromTerminal para quitarlo de la vista */}
                       </div>
                     </div>
                   </li>
@@ -223,9 +243,9 @@ export default function ArrivalsView({
         
         <div className="p-4 sm:p-6">
           <h4 className="text-base font-semibold mb-4 text-gray-700">Línea</h4>
-          {apiData!.lineStopsWithArrivals && apiData!.lineStopsWithArrivals.length > 0 ? (
+          {apiData.lineStopsWithArrivals && apiData.lineStopsWithArrivals.length > 0 ? (
             <StopLineView 
-              initialStopsData={apiData!.lineStopsWithArrivals}
+              initialStopsData={apiData.lineStopsWithArrivals}
               currentStopId={stopId} 
               routeColor={routeColor}
             />

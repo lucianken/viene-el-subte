@@ -24,16 +24,17 @@ interface Arrival extends ArrivalBase {
     isEstimate?: boolean; 
 }
 interface StopOnLine { stopId: string; stopName: string; sequence: number; }
-// CORREGIDO: Eliminada interfaz vacía ApiArrivalInfoForStopList
-// interface ApiArrivalInfoForStopList extends ArrivalBase {} 
-// CORREGIDO: ApiStopWithCalculatedArrival ahora usa ArrivalBase directamente
-interface ApiStopWithCalculatedArrival extends StopOnLine { 
-    nextArrival?: ArrivalBase; // Usar ArrivalBase en lugar de ApiArrivalInfoForStopList
-}
+interface ApiStopWithCalculatedArrival extends StopOnLine { nextArrival?: ArrivalBase; }
 interface RealtimeApiRouteResponse { 
     arrivals: Arrival[]; 
     lineStopsWithArrivals: ApiStopWithCalculatedArrival[]; 
     timestamp: number; // MILISEGUNDOS
+    frequency?: { // Nueva propiedad para la frecuencia
+      startTime: string;
+      endTime: string;
+      headwaySeconds: number;
+    };
+    shouldShowNoDataMessage?: boolean; // Para indicar si mostrar el mensaje de GCBA no reporta datos
 }
 
 // --- DATOS LOCALES --- 
@@ -41,6 +42,15 @@ type RouteToStopsData = Record<string, StopOnLine[]>;
 interface AverageDuration { from_stop_id: string; to_stop_id: string; average_duration_seconds: number; sample_size: number; }
 interface LineAverageDurations { [lineShortName: string]: AverageDuration[]; }
 interface AverageDurationsData { lineAverageDurations: LineAverageDurations; }
+
+// --- INTERFACE PARA FRECUENCIAS ---
+interface Frequency {
+  trip_id: string;
+  start_time: string;
+  end_time: string;
+  headway_secs: number;
+  exact_times: number;
+}
 
 // --- HELPERS ---
 function loadLocalJsonData<T>(filePathFromPublic: string): T | null {
@@ -68,8 +78,6 @@ function getTotalTravelTime(
     const startIndex = stopSequence.findIndex(s => s.stopId === startStopId);
     const endIndex = stopSequence.findIndex(s => s.stopId === endStopId);
     if (startIndex === -1 || endIndex === -1 || startIndex >= endIndex) {
-        // No loguear como warning si no se encuentran, es un caso esperado a veces
-        // console.warn(`[getTotalTravelTime] Índices inválidos o fuera de orden: ${startStopId}(${startIndex}) -> ${endStopId}(${endIndex})`);
         return null;
     }
     let totalDuration = 0;
@@ -86,45 +94,29 @@ function getTotalTravelTime(
     return totalDuration; 
 }
 
-function calculateSubsequentArrivalEstimates(
-    targetStopId: string,
-    routeId: string,
-    lineShortName: string,
-    directionId: string, 
-    stopSequence: StopOnLine[],
-    // CORREGIDO: Usar ArrivalBase en el tipo del Map
-    bestArrivalPerStop: Map<string, ArrivalBase>, 
-    averageDurationsData: AverageDurationsData | null,
-    dwellTimeSeconds: number,
-    maxEstimates: number,
-    headerTimestamp: number
-): Arrival[] { 
-    const estimatedArrivals: Arrival[] = [];
-    const targetStopIndex = stopSequence.findIndex(s => s.stopId === targetStopId);
-
-    if (targetStopIndex < 1 || !averageDurationsData) { return estimatedArrivals; }
-    const durationsForLine = averageDurationsData.lineAverageDurations[lineShortName];
-    if (!durationsForLine) { return estimatedArrivals; }
-
-    for (let i = 1; i <= maxEstimates; i++) {
-        const prevStopIndex = targetStopIndex - i;
-        if (prevStopIndex < 0) break; 
-        const prevStopN = stopSequence[prevStopIndex];
-        const arrivalAtPrevStopN = bestArrivalPerStop.get(prevStopN.stopId);
-        if (arrivalAtPrevStopN) {
-            const travelTime = getTotalTravelTime(prevStopN.stopId, targetStopId, stopSequence, durationsForLine);
-            if (travelTime !== null) {
-                const estimatedArrivalTimeAtTarget = arrivalAtPrevStopN.estimatedArrivalTime + travelTime + (i * dwellTimeSeconds);
-                if (estimatedArrivalTimeAtTarget > headerTimestamp) {
-                    estimatedArrivals.push({
-                        tripId: `ESTIMATE_${i}_FROM_${prevStopN.stopId}`, routeId: routeId, 
-                        estimatedArrivalTime: estimatedArrivalTimeAtTarget, delaySeconds: 0, status: 'unknown', isEstimate: true 
-                    });
-                }
-            }
-        }
-    }
-    return estimatedArrivals; 
+// Función para obtener la frecuencia actual basada en el trip_id y la hora actual
+function getCurrentFrequency(tripId: string, frequencies: Frequency[]): Frequency | null {
+    if (!frequencies || !frequencies.length) return null;
+    
+    // Obtener la hora actual
+    const now = new Date();
+    const currentTime = `${now.getHours()}:${now.getMinutes()}:${now.getSeconds()}`;
+    
+    // Buscar la frecuencia que corresponde al trip_id y al rango horario actual
+    return frequencies.find(f => {
+        if (f.trip_id !== tripId) return false;
+        
+        // Convertir los tiempos a segundos para comparar
+        const startTimeParts = f.start_time.split(':').map(Number);
+        const endTimeParts = f.end_time.split(':').map(Number);
+        const currentTimeParts = currentTime.split(':').map(Number);
+        
+        const startSeconds = startTimeParts[0] * 3600 + startTimeParts[1] * 60 + (startTimeParts[2] || 0);
+        const endSeconds = endTimeParts[0] * 3600 + endTimeParts[1] * 60 + (endTimeParts[2] || 0);
+        const currentSeconds = currentTimeParts[0] * 3600 + currentTimeParts[1] * 60 + currentTimeParts[2];
+        
+        return currentSeconds >= startSeconds && currentSeconds <= endSeconds;
+    }) || null;
 }
 
 // --- Handler GET ---
@@ -148,7 +140,12 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     }
 
     const DWELL_TIME_SECONDS = 24;
-    const NUMBER_OF_ESTIMATES_TO_GENERATE = 3;
+    const NUMBER_OF_ESTIMATES_TO_GENERATE = 3; // Para tener hasta 3 estimados (total 4 arribos con el real)
+    const MAX_ARRIVALS_TO_RETURN = 4;
+    
+    // Definir las líneas que tienen reportes válidos
+    const LINES_WITH_VALID_REPORTS = new Set(['LineaA', 'LineaB', 'LineaE']);
+    const shouldShowNoDataMessage = !LINES_WITH_VALID_REPORTS.has(routeIdParam);
    
     // *** Fetch a la API externa *** 
     console.log(`[API /api/realtime] Iniciando fetch a API de transporte para Subtes.`);
@@ -157,10 +154,8 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       { method: 'GET', headers: { 'Accept': 'application/json' }, next: { revalidate: 20 } } 
     );
     if (!externalResponse.ok) { 
-        // CORREGIDO: Usar errorBody en el console.error
         const errorBody = await externalResponse.text(); 
-        console.error(`[API /api/realtime] Error desde API externa: ${externalResponse.status} ${externalResponse.statusText}. Body: ${errorBody.substring(0, 500)}`); 
-        // CORREGIDO: Cambiar let a const para errorMsg
+        console.error(`[API /api/realtime] Error desde API externa: ${externalResponse.status} ${externalResponse.statusText}. Body: ${errorBody.substring(0,500)}`); 
         const errorMsg = `Error ${externalResponse.status} al contactar servicio de subterráneos.`;
         return NextResponse.json({ error: errorMsg }, { status: 502 });
     }
@@ -173,6 +168,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     // *** Cargar datos locales necesarios ***
     const routeToStopsDefinition = loadLocalJsonData<RouteToStopsData>('data/route_to_stops.json');
     const averageDurationsData = loadLocalJsonData<AverageDurationsData>('data/tiempopromedioentreestaciones.json'); 
+    const frequenciesData = loadLocalJsonData<Frequency[]>('data/frequencies.json');
     
     if (!routeToStopsDefinition || !averageDurationsData) {
         console.error("[API /api/realtime] Error: No se pudieron cargar route_to_stops o tiempopromedioentreestaciones.");
@@ -189,12 +185,10 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     }
 
     const lineShortName = routeIdParam.replace(/^Linea/, ''); 
-    const processedArrivalsForSelectedStop: Arrival[] = [];
     const targetDirectionIdNum = parseInt(directionIdParam, 10); 
-    // CORREGIDO: Usar ArrivalBase en el tipo del Map
-    const bestArrivalPerStopId = new Map<string, ArrivalBase>(); 
-
-    // --- Bucle principal para poblar bestArrivalPerStopId y processedArrivalsForSelectedStop ---
+    const bestArrivalPerStopId = new Map<string, ArrivalBase>();
+    
+    // --- 1. Poblar bestArrivalPerStopId ---
     externalData.Entity.forEach((entity) => {
         const tripInfo = entity.Linea;
         let tripDirectionIdNum: number | null = null;
@@ -207,16 +201,27 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
                 if (stationDataFromTrip.arrival?.time) { 
                     const arrivalTimeAtStation = stationDataFromTrip.arrival.time;
                     const delayAtStation = stationDataFromTrip.arrival?.delay ?? 0; 
-                    const isValidReport = delayAtStation > 0 || (arrivalTimeAtStation !== headerTime);
+                    
+                    // ----- LÓGICA DE isValidReport CORRECTA Y RESTAURADA -----
+                    let isValidReport: boolean;
+                    if (LINES_WITH_VALID_REPORTS.has(tripInfo.Route_Id)) {
+                        // Para Líneas A, B, E, cualquier reporte con tiempo de arribo es considerado válido
+                        // ya que la API externa puede enviar estos incluso con delay 0 y tiempo igual al header.
+                        isValidReport = true; 
+                    } else {
+                        // Para otras líneas, mantener la lógica original de filtrado más estricta
+                        isValidReport = delayAtStation > 0 || (arrivalTimeAtStation !== headerTime);
+                    }
+                    // ----- FIN LÓGICA isValidReport -----
+
                     if (isValidReport) {
                         const estimatedArrivalTimeForStation = headerTime + delayAtStation;
-                        if (estimatedArrivalTimeForStation >= headerTime - 60) { 
+                        if (estimatedArrivalTimeForStation >= headerTime - 60) { // Considerar arribos hasta 60s en el pasado
                             let arrivalStatusForStation: ArrivalBase['status'] = 'unknown';
                             if (delayAtStation === 0) arrivalStatusForStation = 'on-time';
                             else if (delayAtStation < 0 && delayAtStation >= -180) arrivalStatusForStation = 'early';
                             else if (delayAtStation < -180 || delayAtStation > 180) arrivalStatusForStation = 'delayed';
                             
-                            // CORREGIDO: Usar ArrivalBase
                             const currentArrivalInfo: ArrivalBase = {
                                 estimatedArrivalTime: estimatedArrivalTimeForStation, delaySeconds: delayAtStation, status: arrivalStatusForStation
                             };
@@ -224,55 +229,115 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
                             if (!existingBest || currentArrivalInfo.estimatedArrivalTime < existingBest.estimatedArrivalTime) {
                                 bestArrivalPerStopId.set(stationDataFromTrip.stop_id, currentArrivalInfo);
                             }
-
-                            if (stationDataFromTrip.stop_id === stopIdParam) {
-                                processedArrivalsForSelectedStop.push({
-                                    tripId: entity.ID, routeId: routeIdParam, 
-                                    estimatedArrivalTime: estimatedArrivalTimeForStation, 
-                                    delaySeconds: delayAtStation, status: arrivalStatusForStation,
-                                    departureTimeFromTerminal: tripInfo.start_time, vehicleId: entity.ID, 
-                                    isEstimate: false 
-                                });
-                            }
                         }
                     }
                 }
             });
         }
     });
-    processedArrivalsForSelectedStop.sort((a, b) => a.estimatedArrivalTime - b.estimatedArrivalTime);
-    // --- Fin del bucle ---
 
-    // *** Calcular Estimados ***
-    const subsequentEstimates = calculateSubsequentArrivalEstimates(
-        stopIdParam, routeIdParam, lineShortName, directionIdParam,
-        currentStopSequence, bestArrivalPerStopId, averageDurationsData,
-        DWELL_TIME_SECONDS, NUMBER_OF_ESTIMATES_TO_GENERATE, headerTime
-    );
-
-    // *** Combinar y Limpiar Arribos Finales ***
+    // --- 2. Construir lista de arribos para la parada seleccionada (targetStopId) ---
     const finalArrivals: Arrival[] = [];
-    const realArrival1 = processedArrivalsForSelectedStop[0];
-    if (realArrival1 && realArrival1.estimatedArrivalTime >= headerTime) { 
-        finalArrivals.push(realArrival1); 
-    }
-    finalArrivals.push(...subsequentEstimates);
-    finalArrivals.sort((a, b) => a.estimatedArrivalTime - b.estimatedArrivalTime);
-    const limitedFinalArrivals = finalArrivals.slice(0, NUMBER_OF_ESTIMATES_TO_GENERATE + 1);
+    const targetStopIndex = currentStopSequence.findIndex(s => s.stopId === stopIdParam);
 
-    // *** Construir Datos para StopLineView ***
+    if (targetStopIndex === -1) { 
+        console.warn(`Parada seleccionada ${stopIdParam} no encontrada en la secuencia de la ruta ${routeIdParam}`);
+        return NextResponse.json({ arrivals: [], lineStopsWithArrivals: [], timestamp: headerTime * 1000 });
+    }
+
+    // --- 2.A. Añadir Arribo Real (directo) a targetStopId ---
+    const arrivalAtTarget = bestArrivalPerStopId.get(stopIdParam);
+    let ultimoTiempoDeArriboRelevanteEnTarget = -Infinity; 
+    let tripIdForFrequency = '';
+
+    if (arrivalAtTarget && arrivalAtTarget.estimatedArrivalTime > headerTime) {
+        let tripDetailsSourceEntity = externalData.Entity.find(e => e.Linea.Route_Id === routeIdParam && parseInt(e.Linea.Direction_ID.toString(),10) === targetDirectionIdNum && e.Linea.Estaciones.some(s => s.stop_id === stopIdParam && s.arrival?.time && arrivalAtTarget.estimatedArrivalTime && s.arrival.time === (arrivalAtTarget.estimatedArrivalTime - arrivalAtTarget.delaySeconds)));
+        if (!tripDetailsSourceEntity) { tripDetailsSourceEntity = externalData.Entity.find(e => e.Linea.Route_Id === routeIdParam && parseInt(e.Linea.Direction_ID.toString(),10) === targetDirectionIdNum); }
+        
+        // Guardar el trip_id para buscar la frecuencia
+        if (tripDetailsSourceEntity && tripDetailsSourceEntity.Linea.Trip_Id) {
+            tripIdForFrequency = tripDetailsSourceEntity.Linea.Trip_Id;
+        }
+        
+        finalArrivals.push({
+            ...arrivalAtTarget,
+            tripId: tripDetailsSourceEntity?.ID || `REAL_${stopIdParam}_${arrivalAtTarget.estimatedArrivalTime}`,
+            routeId: routeIdParam,
+            departureTimeFromTerminal: tripDetailsSourceEntity?.Linea.start_time,
+            vehicleId: tripDetailsSourceEntity?.ID,
+            isEstimate: false,
+        });
+        ultimoTiempoDeArriboRelevanteEnTarget = arrivalAtTarget.estimatedArrivalTime;
+    }
+    
+    // --- 2.B. Buscar Quiebres y Proyectar (Iterando HACIA ATRÁS) ---
+    let ultimoTiempoDeArriboReportado = arrivalAtTarget ? arrivalAtTarget.estimatedArrivalTime : Infinity;
+    const durationsForLine = averageDurationsData.lineAverageDurations[lineShortName];
+
+    if (durationsForLine) { 
+        for (let N = 1; N <= targetStopIndex && finalArrivals.length < MAX_ARRIVALS_TO_RETURN; N++) {
+            const currentIndex = targetStopIndex - N;
+            const currentStop = currentStopSequence[currentIndex];
+            const arrivalAtCurrentStop = bestArrivalPerStopId.get(currentStop.stopId);
+
+            if (!arrivalAtCurrentStop || arrivalAtCurrentStop.estimatedArrivalTime <= headerTime) {
+                ultimoTiempoDeArriboReportado = Infinity; 
+                continue;
+            }
+
+            if (arrivalAtCurrentStop.estimatedArrivalTime > ultimoTiempoDeArriboReportado) {
+                const travelTime_CurrentToTarget = getTotalTravelTime(currentStop.stopId, stopIdParam, currentStopSequence, durationsForLine);
+                if (travelTime_CurrentToTarget !== null) {
+                    const numIntermediateDwells = N; 
+                    const projectedArrivalTime = arrivalAtCurrentStop.estimatedArrivalTime + travelTime_CurrentToTarget + (numIntermediateDwells * DWELL_TIME_SECONDS);
+                    if (projectedArrivalTime > headerTime && projectedArrivalTime > ultimoTiempoDeArriboRelevanteEnTarget) {
+                        finalArrivals.push({
+                            status: arrivalAtCurrentStop.status, // Heredar status
+                            delaySeconds: arrivalAtCurrentStop.delaySeconds, // Heredar delay
+                            tripId: `ESTIMATE_${N}_FROM_${currentStop.stopId}`,
+                            routeId: routeIdParam, 
+                            estimatedArrivalTime: projectedArrivalTime, 
+                            isEstimate: true,
+                        });
+                        ultimoTiempoDeArriboRelevanteEnTarget = projectedArrivalTime;
+                    }
+                }
+            }
+            ultimoTiempoDeArriboReportado = arrivalAtCurrentStop.estimatedArrivalTime;
+        }
+    }
+
+    // --- 3. Post-Procesamiento Final de Arribos ---
+    finalArrivals.sort((a, b) => a.estimatedArrivalTime - b.estimatedArrivalTime);
+    const limitedFinalArrivals = finalArrivals.slice(0, MAX_ARRIVALS_TO_RETURN);
+
+    // --- 4. Construir Datos para StopLineView ---
     let lineStopsWithArrivalsData: ApiStopWithCalculatedArrival[] = [];
     lineStopsWithArrivalsData = currentStopSequence.map((baseStop: StopOnLine): ApiStopWithCalculatedArrival => ({
         stopId: baseStop.stopId, stopName: baseStop.stopName, sequence: baseStop.sequence,
-        // CORREGIDO: Usar ArrivalBase aquí también si es necesario (nextArrival es de tipo ArrivalBase)
         nextArrival: bestArrivalPerStopId.get(baseStop.stopId) 
     }));
     
-    // *** Crear y Devolver Respuesta Exitosa ***
+    // --- 5. Buscar información de frecuencia ---
+    let frequency = null;
+    if (frequenciesData && tripIdForFrequency) {
+        const currentFrequency = getCurrentFrequency(tripIdForFrequency, frequenciesData);
+        if (currentFrequency) {
+            frequency = {
+                startTime: currentFrequency.start_time,
+                endTime: currentFrequency.end_time,
+                headwaySeconds: currentFrequency.headway_secs
+            };
+        }
+    }
+    
+    // --- 6. Crear y Devolver Respuesta Exitosa ---
     const responsePayload: RealtimeApiRouteResponse = {
       arrivals: limitedFinalArrivals, 
       lineStopsWithArrivals: lineStopsWithArrivalsData,
-      timestamp: headerTime * 1000 
+      timestamp: headerTime * 1000,
+      frequency: frequency ?? undefined,
+      shouldShowNoDataMessage: shouldShowNoDataMessage 
     };
     return NextResponse.json(responsePayload);
 
