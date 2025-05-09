@@ -94,13 +94,22 @@ export default function ArrivalsView({
     return date.toLocaleTimeString('es-AR', { hour: '2-digit', minute: '2-digit', second: includeSeconds ? '2-digit' : undefined });
   };
   const getTimeUntilArrivalString = (arrivalTimestampInSeconds: number | undefined): string => {
-    if (arrivalTimestampInSeconds === undefined || isNaN(arrivalTimestampInSeconds)) return "N/A"; 
-    const arrivalTimeMs = arrivalTimestampInSeconds * 1000; const diffMs = arrivalTimeMs - currentTime.getTime();
-    const diffSecondsTotal = Math.round(diffMs / 1000);
-    if (diffSecondsTotal <= 10) return "Llegando"; if (diffSecondsTotal < 0) return "Llegando";
-    const minutes = Math.floor(diffSecondsTotal / 60); const seconds = diffSecondsTotal % 60;
-    if (minutes > 0) return `${minutes} min ${seconds} s`; else return `${seconds} s`;
-  };
+  if (arrivalTimestampInSeconds === undefined || isNaN(arrivalTimestampInSeconds)) return "N/A"; 
+  const arrivalTimeMs = arrivalTimestampInSeconds * 1000;
+  const diffMs = arrivalTimeMs - currentTime.getTime();
+  const diffSecondsTotal = Math.round(diffMs / 1000);
+  
+  // Si está llegando o ya pasó
+  if (diffSecondsTotal <= 10) return "Llegando";
+  if (diffSecondsTotal < 0) return "Llegando";
+  
+  // Si es menos de un minuto, mostrar ">1"
+  if (diffSecondsTotal < 60) return ">1 min";
+  
+  // Redondeo pesimista (hacia arriba) para el resto
+  const minutes = Math.ceil(diffSecondsTotal / 60);
+  return `${minutes} min`;
+};
   
   // Función para formatear los segundos en formato mm:ss
   const formatHeadwayTime = (seconds: number): string => {

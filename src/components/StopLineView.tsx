@@ -54,18 +54,23 @@ const StopLineView: React.FC<StopLineViewProps> = ({
     });
   };
 
-  const getTimeUntilArrivalString = (arrivalTimestampInSeconds: number | undefined): string => {
-    if (arrivalTimestampInSeconds === undefined || isNaN(arrivalTimestampInSeconds)) return "Sin datos";
-    const arrivalTimeMs = arrivalTimestampInSeconds * 1000;
-    const diffMs = arrivalTimeMs - currentTime.getTime();
-    const diffSecondsTotal = Math.round(diffMs / 1000);
-    if (diffSecondsTotal <= 10) return "Llegando";
-    if (diffSecondsTotal < 0) return "Llegando";
-    const minutes = Math.floor(diffSecondsTotal / 60);
-    const seconds = diffSecondsTotal % 60;
-    if (minutes > 0) return `${minutes} min ${seconds} s`;
-    return `${seconds} s`;
-  };
+const getTimeUntilArrivalString = (arrivalTimestampInSeconds: number | undefined): string => {
+  if (arrivalTimestampInSeconds === undefined || isNaN(arrivalTimestampInSeconds)) return "Sin datos";
+  const arrivalTimeMs = arrivalTimestampInSeconds * 1000;
+  const diffMs = arrivalTimeMs - currentTime.getTime();
+  const diffSecondsTotal = Math.round(diffMs / 1000);
+  
+  // Si está llegando o ya pasó
+  if (diffSecondsTotal <= 10) return "Llegando";
+  if (diffSecondsTotal < 0) return "Llegando";
+  
+  // Si es menos de un minuto, mostrar ">1"
+  if (diffSecondsTotal < 60) return ">1 min";
+  
+  // Redondeo pesimista (hacia arriba) para el resto
+  const minutes = Math.ceil(diffSecondsTotal / 60);
+  return `${minutes} min`;
+};
 
   if (!stopsToDisplay || stopsToDisplay.length === 0) {
     return <div className="text-center text-gray-500 py-4 text-sm">No hay datos de paradas para mostrar.</div>;
