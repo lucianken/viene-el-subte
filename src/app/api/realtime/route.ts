@@ -140,7 +140,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     }
 
     const DWELL_TIME_SECONDS = 24;
-    const NUMBER_OF_ESTIMATES_TO_GENERATE = 3; // Para tener hasta 3 estimados (total 4 arribos con el real)
+    // const NUMBER_OF_ESTIMATES_TO_GENERATE = 3; // Para tener hasta 3 estimados (total 4 arribos con el real)
     const MAX_ARRIVALS_TO_RETURN = 4;
     
     // Definir las líneas que tienen reportes válidos
